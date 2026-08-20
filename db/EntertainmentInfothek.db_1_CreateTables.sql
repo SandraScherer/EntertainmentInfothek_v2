@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS "Book_Award" (
 	"BookID"	TEXT,
 	"AwardID"	TEXT,
 	"Category"	TEXT,
-	"Year"	TEXT,
+	"Date"	TEXT,
 	"Winner"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
@@ -1148,7 +1148,7 @@ CREATE TABLE IF NOT EXISTS "Hardware" (
 CREATE TABLE IF NOT EXISTS "Image" (
 	"ID"	TEXT NOT NULL,
 	"FileName"	TEXT,
-	"Description"	TEXT,
+	"Content"	TEXT,
 	"TypeID"	TEXT,
 	"CountryID"	TEXT,
 	"Details"	TEXT,
@@ -2371,7 +2371,7 @@ CREATE TABLE IF NOT EXISTS "Publication_Publisher" (
 );
 CREATE TABLE IF NOT EXISTS "RAM" (
 	"ID"	TEXT NOT NULL,
-	"Memory"	TEXT,
+	"Name"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -3744,7 +3744,7 @@ CREATE TABLE IF NOT EXISTS "User" (
 );
 CREATE TABLE IF NOT EXISTS "Version" (
 	"ID"	TEXT NOT NULL,
-	"VersionNo"	TEXT,
+	"Name"	TEXT,
 	"ReleaseDate"	TEXT,
 	"TypeID"	TEXT,
 	"PlatformID"	TEXT,
