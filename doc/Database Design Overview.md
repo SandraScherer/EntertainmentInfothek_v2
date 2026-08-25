@@ -21,7 +21,7 @@
 |               |                          | WorldwideGross           | WorldwideGross           | WorldwideGross     |
 |               |                          | WorldwideGrossDate       | WorldwideGrossDate       | WorldwideGrossDate |
 | CastStatusID  | CastStatusID             | CastStatusID             | CastStatusID             | CastStatusID       |
-|               | CrewStatusID             | CrewStatusID             | CrewSTatusID             |                    |
+|               | CrewStatusID             | CrewStatusID             | CrewSTatusID             | CrewStatusID       |
 | ConnectionID  |                          | ConnectionID             | ConnectionID             | ConnectionID       |
 | Details       | Details                  | Details                  | Details                  | Details            |
 | Notes         | Notes                    | Notes                    | Notes                    | Notes              |

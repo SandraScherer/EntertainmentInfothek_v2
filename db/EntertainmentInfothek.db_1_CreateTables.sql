@@ -3435,7 +3435,8 @@ CREATE TABLE IF NOT EXISTS "TechnicalSpecification" (
 	"NoOfPlayersOffline"	TEXT,
 	"NoOfPlayersOfflineMultitap"	TEXT,
 	"NoOfPlayersOnline"	TEXT,
-	"Annotation"	TEXT,
+	"EnglishAnnotation"	TEXT,
+	"GermanAnnotation"	TEXT,
 	"MiscAttributes"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
@@ -3732,8 +3733,6 @@ CREATE TABLE IF NOT EXISTS "User" (
 	"Name"	TEXT,
 	"EMail"	TEXT,
 	"PersonID"	TEXT,
-	"EnglishRole"	TEXT,
-	"GermanRole"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -3767,6 +3766,7 @@ CREATE TABLE IF NOT EXISTS "VideoGame" (
 	"WorldwideGross"	TEXT,
 	"WorldwideGrossDate"	TEXT,
 	"CastStatusID"	TEXT,
+	"CrewStatusID"	TEXT,
 	"ConnectionID"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
@@ -3774,6 +3774,7 @@ CREATE TABLE IF NOT EXISTS "VideoGame" (
 	"LastUpdated"	TEXT,
 	PRIMARY KEY("ID"),
 	FOREIGN KEY("CastStatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("CrewStatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("ConnectionID") REFERENCES "Connection"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("TypeID") REFERENCES "Type"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
@@ -3783,7 +3784,7 @@ CREATE TABLE IF NOT EXISTS "VideoGame_Award" (
 	"VideoGameID"	TEXT,
 	"AwardID"	TEXT,
 	"Category"	TEXT,
-	"Year"	TEXT,
+	"Date"	TEXT,
 	"Winner"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
@@ -4162,6 +4163,7 @@ CREATE TABLE IF NOT EXISTS "Weblink" (
 	FOREIGN KEY("LanguageID") REFERENCES "Language"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
 );
+
 CREATE VIEW "CastList" AS
 SELECT Movie_Cast.MovieID, Movie_Cast.ActorID, Person.FirstName, Person.LastName, Person.NameAddOn, Movie_Cast.EnglishCharacterDisplayText, Movie_Cast.GermanCharacterDisplayText, Movie_Cast.Details, Movie_Cast.Notes
 FROM Movie_Cast, Person
@@ -4170,4 +4172,5 @@ UNION
 SELECT Series_Cast.SeriesID, Series_Cast.ActorID, Person.FirstName, Person.LastName, Person.NameAddOn, Series_Cast.EnglishCharacterDisplayText, Series_Cast.GermanCharacterDisplayText, Series_Cast.Details, Series_Cast.Notes
 FROM Series_Cast, Person
 WHERE Series_Cast.ActorID = Person.ID;
+
 COMMIT;
