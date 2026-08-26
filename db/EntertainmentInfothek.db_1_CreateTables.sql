@@ -2247,13 +2247,9 @@ CREATE TABLE IF NOT EXISTS "Person" (
 	"StatusID"	TEXT,
 	"LastUpdated"	TEXT,
 	PRIMARY KEY("ID"),
-	FOREIGN KEY("EmployerID") REFERENCES "Company"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY("GenderID") REFERENCES "Type"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("LocationOfBirthID") REFERENCES "Location"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("LocationOfDeathID") REFERENCES "Location"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY("PositionID") REFERENCES "Position"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY("ProfessionID") REFERENCES "Profession"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY("SpeciesID") REFERENCES "Species"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("TypeID") REFERENCES "Type"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -3391,7 +3387,7 @@ CREATE TABLE IF NOT EXISTS "SoundMode" (
 CREATE TABLE IF NOT EXISTS "Species" (
 	"ID"	TEXT NOT NULL,
 	"EnglishName"	TEXT,
-	"GemanName"	TEXT,
+	"GermanName"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -3867,8 +3863,8 @@ CREATE TABLE IF NOT EXISTS "VideoGame_Creator" (
 	"LastUpdated"	TEXT,
 	PRIMARY KEY("ID"),
 	FOREIGN KEY("PersonID") REFERENCES "Person"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
-	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
-	FOREIGN KEY("VideoGameID") REFERENCES "VideoGame"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("VideoGameID") REFERENCES "VideoGame"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
 );
 CREATE TABLE IF NOT EXISTS "VideoGame_Description" (
 	"ID"	TEXT NOT NULL,
@@ -4165,12 +4161,19 @@ CREATE TABLE IF NOT EXISTS "Weblink" (
 );
 
 CREATE VIEW "CastList" AS
-SELECT Movie_Cast.MovieID, Movie_Cast.ActorID, Person.FirstName, Person.LastName, Person.NameAddOn, Movie_Cast.EnglishCharacterDisplayText, Movie_Cast.GermanCharacterDisplayText, Movie_Cast.Details, Movie_Cast.Notes
+SELECT Movie_Cast.MovieID, Movie_Cast.ActorID, Person.FirstName, Person.LastName, Person.NameAddOn, Movie_Cast.EnglishRole, Movie_Cast.GermanRole, Movie_Cast.Details, Movie_Cast.Notes
 FROM Movie_Cast, Person
 WHERE Movie_Cast.ActorID = Person.ID
 UNION
-SELECT Series_Cast.SeriesID, Series_Cast.ActorID, Person.FirstName, Person.LastName, Person.NameAddOn, Series_Cast.EnglishCharacterDisplayText, Series_Cast.GermanCharacterDisplayText, Series_Cast.Details, Series_Cast.Notes
+SELECT Series_Cast.SeriesID, Series_Cast.ActorID, Person.FirstName, Person.LastName, Person.NameAddOn, Series_Cast.EnglishRole, Series_Cast.GermanRole, Series_Cast.Details, Series_Cast.Notes
 FROM Series_Cast, Person
 WHERE Series_Cast.ActorID = Person.ID;
+
+/*
+CREATE VIEW "SeriesCastList" AS
+SELECT Episode_Cast.EpisodeID, Episode_Cast.ActorID, Person.FirstName, Person.LastName, Person.NameAddOn, Episode_Cast.EnglishRole, Episode_Cast.GermanRole, Episode_Cast.Details, Episode_Cast.Notes
+FROM Episode_Cast, Person
+WHERE Episode_Cast.ActorID = Person.ID;
+*/
 
 COMMIT;
