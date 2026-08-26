@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 CREATE TABLE IF NOT EXISTS "AspectRatio" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS "AspectRatio" (
 );
 CREATE TABLE IF NOT EXISTS "Award" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"PresenterID"	TEXT,
 	"EnglishRole"	TEXT,
 	"GermanRole"	TEXT,
@@ -242,7 +242,7 @@ CREATE TABLE IF NOT EXISTS "BusinessModel" (
 );
 CREATE TABLE IF NOT EXISTS "CDROMDriveSpeed" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -252,7 +252,7 @@ CREATE TABLE IF NOT EXISTS "CDROMDriveSpeed" (
 );
 CREATE TABLE IF NOT EXISTS "CPU" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -262,7 +262,7 @@ CREATE TABLE IF NOT EXISTS "CPU" (
 );
 CREATE TABLE IF NOT EXISTS "Camera" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"Lenses"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
@@ -273,7 +273,7 @@ CREATE TABLE IF NOT EXISTS "Camera" (
 );
 CREATE TABLE IF NOT EXISTS "Certification" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"ImageID"	TEXT,
 	"CountryID"	TEXT,
 	"Details"	TEXT,
@@ -309,7 +309,7 @@ CREATE TABLE IF NOT EXISTS "Color" (
 );
 CREATE TABLE IF NOT EXISTS "Company" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"NameAddOn"	TEXT,
 	"TypeID"	TEXT,
 	"Details"	TEXT,
@@ -322,7 +322,7 @@ CREATE TABLE IF NOT EXISTS "Company" (
 );
 CREATE TABLE IF NOT EXISTS "Connection" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"ConnectionID"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
@@ -345,7 +345,7 @@ CREATE TABLE IF NOT EXISTS "ControllerType" (
 );
 CREATE TABLE IF NOT EXISTS "CopyProtection" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -381,7 +381,7 @@ CREATE TABLE IF NOT EXISTS "Difficulty" (
 );
 CREATE TABLE IF NOT EXISTS "DirectX" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -1115,7 +1115,7 @@ CREATE TABLE IF NOT EXISTS "Episode_Writer" (
 );
 CREATE TABLE IF NOT EXISTS "FilmFormat" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -1199,7 +1199,7 @@ CREATE TABLE IF NOT EXISTS "InputDeviceFeature" (
 );
 CREATE TABLE IF NOT EXISTS "Laboratory" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
     "LocationID"   TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
@@ -1238,7 +1238,7 @@ CREATE TABLE IF NOT EXISTS "Location" (
 );
 CREATE TABLE IF NOT EXISTS "MacOSSprocket" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -1248,7 +1248,7 @@ CREATE TABLE IF NOT EXISTS "MacOSSprocket" (
 );
 CREATE TABLE IF NOT EXISTS "MediaType" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -2219,7 +2219,7 @@ CREATE TABLE IF NOT EXISTS "MultiplayerOption" (
 );
 CREATE TABLE IF NOT EXISTS "OperatingSystem" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -2266,7 +2266,7 @@ CREATE TABLE IF NOT EXISTS "Perspective" (
 );
 CREATE TABLE IF NOT EXISTS "Platform" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -2367,7 +2367,7 @@ CREATE TABLE IF NOT EXISTS "Publication_Publisher" (
 );
 CREATE TABLE IF NOT EXISTS "RAM" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -3366,7 +3366,7 @@ CREATE TABLE IF NOT EXISTS "SoundDevice" (
 );
 CREATE TABLE IF NOT EXISTS "SoundMix" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -3376,7 +3376,7 @@ CREATE TABLE IF NOT EXISTS "SoundMix" (
 );
 CREATE TABLE IF NOT EXISTS "SoundMode" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -3726,7 +3726,7 @@ CREATE TABLE IF NOT EXISTS "Type" (
 );
 CREATE TABLE IF NOT EXISTS "User" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"EMail"	TEXT,
 	"PersonID"	TEXT,
 	"Details"	TEXT,
@@ -3739,7 +3739,7 @@ CREATE TABLE IF NOT EXISTS "User" (
 );
 CREATE TABLE IF NOT EXISTS "Version" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"ReleaseDate"	TEXT,
 	"TypeID"	TEXT,
 	"PlatformID"	TEXT,
@@ -4137,7 +4137,7 @@ CREATE TABLE IF NOT EXISTS "VideoMode" (
 );
 CREATE TABLE IF NOT EXISTS "VideoResolution" (
 	"ID"	TEXT NOT NULL,
-	"Name"	TEXT,
+	"OriginalName"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
