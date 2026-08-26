@@ -149,55 +149,57 @@
 
 ## "Bigger" Reference Tables (with and without Dependents)
 
-| Award        | Certification | Company      | Connection   | Image       | Laboratory  | Location    | Person              | Publication   | Text         | User         | Version      | Weblink     |     |
-| ------------ | ------------- | ------------ | ------------ | ----------- | ----------- | ----------- | ------------------- | ------------- | ------------ | ------------ | ------------ | ----------- | --- |
-| ID           | ID            | ID           | ID           | ID          | ID          | ID          | ID                  | ID            | ID           | ID           | ID           | ID          |     |
-|              |               |              |              |             |             |             |                     |               |              |              |              | URL         |     |
-| OriginalName | OriginalName  | OriginalName | OriginalName |             |             |             |                     |               |              | OriginalName | OriginalName |             |     |
-|              |               |              |              |             |             | EnglishName |                     |               |              |              |              | EnglishName |     |
-|              |               |              |              |             |             | GermanName  |                     |               |              |              |              | GermanName  |     |
-|              |               |              |              |             |             |             | FirstName           |               |              |              |              |             |     |
-|              |               |              |              |             |             |             | LastName            |               |              |              |              |             |     |
-|              |               | NameAddOn    |              |             |             |             | NameAddOn           |               |              |              |              |             |     |
-|              |               |              |              | FileName    |             |             |                     |               |              |              |              |             |     |
-|              |               |              |              |             |             |             |                     |               |              | EMail        |              |             |     |
-|              |               |              |              |             |             |             | BirthName           |               |              |              |              |             |     |
-|              |               |              |              | Content     |             |             |                     |               | Content      |              |              |             |     |
-|              |               |              |              |             |             |             |                     | ISBN13        |              |              |              |             |     |
-|              |               |              |              |             |             |             |                     | ISBN10        |              |              |              |             |     |
-|              |               |              |              |             |             |             | DateOfBirth         |               |              |              |              |             |     |
-|              |               |              |              |             |             |             |                     | ReleaseDate   |              |              | ReleaseDate  |             |     |
-|              | ImageID       |              |              |             |             |             |                     |               |              |              |              |             |     |
-|              |               |              |              |             | LocationID  | LocationID  | LocationOfBirthID   |               |              |              |              |             |     |
-|              |               |              |              |             |             |             | DateOfDeath         |               |              |              |              |             |     |
-|              |               |              |              |             |             |             | LocationOfDeathID   |               |              |              |              |             |     |
-|              |               |              |              |             |             |             | EnglishCauseOfDeath |               |              |              |              |             |     |
-|              |               |              |              |             |             |             | GermanCauseOfDeath  |               |              |              |              |             |     |
-|              |               |              |              |             |             |             | GenderID            |               |              |              |              |             |     |
-|              |               |              |              |             |             |             | Height              |               |              |              |              |             |     |
-|              |               | TypeID       |              | TypeID      |             |             | TypeID              |               |              |              | TypeID       |             |     |
-|              | CountryID     |              |              | CountryID   |             | CountryID   |                     |               |              |              |              |             |     |
-|              |               |              |              |             |             |             |                     |               | LanguageID   |              |              | LanguageID  |     |
-|              |               |              | ConnectionID |             |             |             |                     |               |              |              |              |             |     |
-|              |               |              |              |             |             |             |                     | FormatID      |              |              |              |             |     |
-|              |               |              |              |             |             |             |                     | EditionID     |              |              |              |             |     |
-|              |               |              |              |             |             |             |                     |               |              |              | PlatformID   |             |     |
-|              |               |              |              |             |             |             |                     | NoOfPages     |              |              |              |             |     |
-| PresenterID  |               |              |              |             |             |             |                     |               |              |              |              |             |     |
-|              |               |              |              |             |             |             |                     |               |              | PersonID     |              |             |     |
-| EnglishRole  |               |              |              |             |             |             |                     |               |              | EnglishRole  |              |             |     |
-| GermanRole   |               |              |              |             |             |             |                     |               |              | GermanRole   |              |             |     |
-| Details      | Details       | Details      | Details      | Details     | Details     | Details     | Details             | Details       | Details      | Details      | Details      | Details     |     |
-| Notes        | Notes         | Notes        | Notes        | Notes       | Notes       | Notes       | Notes               | Notes         | Notes        | Notes        | Notes        | Notes       |     |
-| StatusID     | StatusID      | StatusID     | StatusID     | StatusID    | StatusID    | StatusID    | StatusID            | StatusID      | StatusID     | StatusID     | StatusID     | StatusID    |     |
-| LastUpdated  | LastUpdated   | LastUpdated  | LastUpdated  | LastUpdated | LastUpdated | LastUpdated | LastUpdated         | LastUpdated   | LastUpdated  | LastUpdated  | LastUpdated  | LastUpdated |     |
-| ---          | ---           | ---          | ---          | ---         | ---         | ---         | ---                 | ---           | ---          | ---          | ---          | ---         |     |
-|              |               |              |              |             |             |             | (todo)              |               |              |              |              |             |     |
-|              |               |              |              |             |             |             |                     |               | Author       |              |              |             |     |
-|              |               |              |              |             |             |             |                     | Certification |              |              |              |             |     |
-|              |               |              |              |             |             |             |                     | Language      |              |              |              |             |     |
-|              |               |              |              |             |             |             |                     | Publisher     |              |              |              |             |     |
-|              |               |              |              | Source      |             |             |                     |               | Source       |              |              |             |     |
+| Award        | Certification | Company      | Connection   | Image          | Laboratory  | Location    | Person              | Publication   | Text         | User         | Version      | Weblink     |     |
+| ------------ | ------------- | ------------ | ------------ | -------------- | ----------- | ----------- | ------------------- | ------------- | ------------ | ------------ | ------------ | ----------- | --- |
+| ID           | ID            | ID           | ID           | ID             | ID          | ID          | ID                  | ID            | ID           | ID           | ID           | ID          |     |
+|              |               |              |              |                |             |             |                     |               |              |              |              | URL         |     |
+| OriginalName | OriginalName  | OriginalName | OriginalName |                |             |             |                     |               |              | OriginalName | OriginalName |             |     |
+|              |               |              |              |                |             | EnglishName |                     |               |              |              |              | EnglishName |     |
+|              |               |              |              |                |             | GermanName  |                     |               |              |              |              | GermanName  |     |
+|              |               |              |              |                |             |             | FirstName           |               |              |              |              |             |     |
+|              |               |              |              |                |             |             | LastName            |               |              |              |              |             |     |
+|              |               | NameAddOn    |              |                |             |             | NameAddOn           |               |              |              |              |             |     |
+|              |               |              |              | FileName       |             |             |                     |               |              |              |              |             |     |
+|              |               |              |              |                |             |             |                     |               |              | EMail        |              |             |     |
+|              |               |              |              |                |             |             | BirthName           |               |              |              |              |             |     |
+|              |               |              |              |                |             |             |                     |               | Content      |              |              |             |     |
+|              |               |              |              | EnglishContent |             |             |                     |               |              |              |              |             |     |
+|              |               |              |              | GermanContent  |             |             |                     |               |              |              |              |             |     |
+|              |               |              |              |                |             |             |                     | ISBN13        |              |              |              |             |     |
+|              |               |              |              |                |             |             |                     | ISBN10        |              |              |              |             |     |
+|              |               |              |              |                |             |             | DateOfBirth         |               |              |              |              |             |     |
+|              |               |              |              |                |             |             |                     | ReleaseDate   |              |              | ReleaseDate  |             |     |
+|              | ImageID       |              |              |                |             |             |                     |               |              |              |              |             |     |
+|              |               |              |              |                | LocationID  | LocationID  | LocationOfBirthID   |               |              |              |              |             |     |
+|              |               |              |              |                |             |             | DateOfDeath         |               |              |              |              |             |     |
+|              |               |              |              |                |             |             | LocationOfDeathID   |               |              |              |              |             |     |
+|              |               |              |              |                |             |             | EnglishCauseOfDeath |               |              |              |              |             |     |
+|              |               |              |              |                |             |             | GermanCauseOfDeath  |               |              |              |              |             |     |
+|              |               |              |              |                |             |             | GenderID            |               |              |              |              |             |     |
+|              |               |              |              |                |             |             | Height              |               |              |              |              |             |     |
+|              |               | TypeID       |              |                |             |             | TypeID              |               |              |              | TypeID       |             |     |
+|              | CountryID     |              |              |                |             | CountryID   |                     |               |              |              |              |             |     |
+|              |               |              |              |                |             |             |                     |               | LanguageID   |              |              | LanguageID  |     |
+|              |               |              | ConnectionID |                |             |             |                     |               |              |              |              |             |     |
+|              |               |              |              |                |             |             |                     | FormatID      |              |              |              |             |     |
+|              |               |              |              |                |             |             |                     | EditionID     |              |              |              |             |     |
+|              |               |              |              |                |             |             |                     |               |              |              | PlatformID   |             |     |
+|              |               |              |              |                |             |             |                     | NoOfPages     |              |              |              |             |     |
+| PresenterID  |               |              |              |                |             |             |                     |               |              |              |              |             |     |
+|              |               |              |              |                |             |             |                     |               |              | PersonID     |              |             |     |
+| EnglishRole  |               |              |              |                |             |             |                     |               |              | EnglishRole  |              |             |     |
+| GermanRole   |               |              |              |                |             |             |                     |               |              | GermanRole   |              |             |     |
+| Details      | Details       | Details      | Details      | Details        | Details     | Details     | Details             | Details       | Details      | Details      | Details      | Details     |     |
+| Notes        | Notes         | Notes        | Notes        | Notes          | Notes       | Notes       | Notes               | Notes         | Notes        | Notes        | Notes        | Notes       |     |
+| StatusID     | StatusID      | StatusID     | StatusID     | StatusID       | StatusID    | StatusID    | StatusID            | StatusID      | StatusID     | StatusID     | StatusID     | StatusID    |     |
+| LastUpdated  | LastUpdated   | LastUpdated  | LastUpdated  | LastUpdated    | LastUpdated | LastUpdated | LastUpdated         | LastUpdated   | LastUpdated  | LastUpdated  | LastUpdated  | LastUpdated |     |
+| ---          | ---           | ---          | ---          | ---            | ---         | ---         | ---                 | ---           | ---          | ---          | ---          | ---         |     |
+|              |               |              |              |                |             |             | (todo)              |               |              |              |              |             |     |
+|              |               |              |              |                |             |             |                     |               | Author       |              |              |             |     |
+|              |               |              |              |                |             |             |                     | Certification |              |              |              |             |     |
+|              |               |              |              |                |             |             |                     | Language      |              |              |              |             |     |
+|              |               |              |              |                |             |             |                     | Publisher     |              |              |              |             |     |
+|              |               |              |              | Source         |             |             |                     |               | Source       |              |              |             |     |
 
 
 ## Basic Reference Tables (no Dependents)
