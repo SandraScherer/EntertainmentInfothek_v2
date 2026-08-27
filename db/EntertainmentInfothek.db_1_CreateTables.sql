@@ -29,7 +29,6 @@ CREATE TABLE IF NOT EXISTS "Book" (
 	"EnglishTitle"	TEXT,
 	"GermanTitle"	TEXT,
 	"TypeID"	TEXT,
-	"ReleaseDate"	TEXT,
 	"CastStatusID"	TEXT,
 	"ConnectionID"	TEXT,
 	"Details"	TEXT,
@@ -420,7 +419,6 @@ CREATE TABLE IF NOT EXISTS "Episode" (
 	"EnglishTitle"	TEXT,
 	"GermanTitle"	TEXT,
 	"SeriesID"	TEXT,
-	"ReleaseDate"	TEXT,
 	"SeasonNo"	TEXT,
 	"EpisodeNo"	TEXT,
 	"CastStatusID"	TEXT,
@@ -954,6 +952,20 @@ CREATE TABLE IF NOT EXISTS "Episode_ProductionManagement" (
 	FOREIGN KEY("PersonID") REFERENCES "Person"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
 );
+CREATE TABLE IF NOT EXISTS "Episode_ReleaseDate" (
+	"ID"	TEXT NOT NULL,
+	"EpisodeID"	TEXT,
+	"ReleaseDate"	TEXT,
+	"EnglishDescription"	TEXT,
+	"GermanDescription"	TEXT,
+	"Details"	TEXT,
+	"Notes"	TEXT,
+	"StatusID"	TEXT,
+	"LastUpdated"	TEXT,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("EpisodeID") REFERENCES "Episode"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
+);
 CREATE TABLE IF NOT EXISTS "Episode_Review" (
 	"ID"	TEXT NOT NULL,
 	"EpisodeID"	TEXT,
@@ -1151,8 +1163,8 @@ CREATE TABLE IF NOT EXISTS "Hardware" (
 CREATE TABLE IF NOT EXISTS "Image" (
 	"ID"	TEXT NOT NULL,
 	"FileName"	TEXT,
-	"EnglishContent"	TEXT,
-	"GermanContent"	TEXT,
+	"EnglishDescription"	TEXT,
+	"GermanDescription"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
@@ -1262,7 +1274,6 @@ CREATE TABLE IF NOT EXISTS "Movie" (
 	"EnglishTitle"	TEXT,
 	"GermanTitle"	TEXT,
 	"TypeID"	TEXT,
-	"ReleaseDate"	TEXT,
 	"Budget"	TEXT,
 	"WorldwideGross"	TEXT,
 	"WorldwideGrossDate"	TEXT,
@@ -1970,6 +1981,20 @@ CREATE TABLE IF NOT EXISTS "Movie_ProductionManagement" (
 	FOREIGN KEY("PersonID") REFERENCES "Person"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
 );
+CREATE TABLE IF NOT EXISTS "Movie_ReleaseDate" (
+	"ID"	TEXT NOT NULL,
+	"MovieID"	TEXT,
+	"ReleaseDate"	TEXT,
+	"EnglishDescription"	TEXT,
+	"GermanDescription"	TEXT,
+	"Details"	TEXT,
+	"Notes"	TEXT,
+	"StatusID"	TEXT,
+	"LastUpdated"	TEXT,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("MovieID") REFERENCES "Movie"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
+);
 CREATE TABLE IF NOT EXISTS "Movie_Review" (
 	"ID"	TEXT NOT NULL,
 	"MovieID"	TEXT,
@@ -2393,8 +2418,6 @@ CREATE TABLE IF NOT EXISTS "Series" (
 	"EnglishTitle"	TEXT,
 	"GermanTitle"	TEXT,
 	"TypeID"	TEXT,
-	"ReleaseDateFirstEpisode"	TEXT,
-	"ReleaseDateLastEpisode"	TEXT,
 	"NoOfSeasons"	TEXT,
 	"NoOfEpisodes"	TEXT,
 	"Budget"	TEXT,
@@ -3115,6 +3138,34 @@ CREATE TABLE IF NOT EXISTS "Series_ProductionManagement" (
 	"LastUpdated"	TEXT,
 	PRIMARY KEY("ID"),
 	FOREIGN KEY("PersonID") REFERENCES "Person"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("SeriesID") REFERENCES "Series"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
+);
+CREATE TABLE IF NOT EXISTS "Series_ReleaseDateFirstEpisode" (
+	"ID"	TEXT NOT NULL,
+	"SeriesID"	TEXT,
+	"ReleaseDate"	TEXT,
+	"EnglishDescription"	TEXT,
+	"GermanDescription"	TEXT,
+	"Details"	TEXT,
+	"Notes"	TEXT,
+	"StatusID"	TEXT,
+	"LastUpdated"	TEXT,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("SeriesID") REFERENCES "Series"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
+);
+CREATE TABLE IF NOT EXISTS "Series_ReleaseDateLastEpisode" (
+	"ID"	TEXT NOT NULL,
+	"SeriesID"	TEXT,
+	"ReleaseDate"	TEXT,
+	"EnglishDescription"	TEXT,
+	"GermanDescription"	TEXT,
+	"Details"	TEXT,
+	"Notes"	TEXT,
+	"StatusID"	TEXT,
+	"LastUpdated"	TEXT,
+	PRIMARY KEY("ID"),
 	FOREIGN KEY("SeriesID") REFERENCES "Series"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -4028,6 +4079,8 @@ CREATE TABLE IF NOT EXISTS "VideoGame_ReleaseDate" (
 	"VideoGameID"	TEXT,
 	"ReleaseDate"	TEXT,
 	"PlatformID"	TEXT,
+	"EnglishDescription"	TEXT,
+	"GermanDescription"	TEXT,
 	"Details"	TEXT,
 	"Notes"	TEXT,
 	"StatusID"	TEXT,
