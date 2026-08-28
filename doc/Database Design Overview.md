@@ -36,7 +36,6 @@
 |               |                          |                          |                          | Completion         |
 |               |                          | Country                  | Country                  |                    |
 | Crew          | Crew                     | Crew                     | Crew                     | Crew               |
-| Description   | Description              | Description              | Description              | Description        |
 |               |                          |                          |                          | Developer          |
 |               |                          |                          |                          | Difficulty         |
 |               | Distributor              | Distributor              | Distributor              | Distributor        |
@@ -58,13 +57,12 @@
 |               | ReleaseDate              | ReleaseDate              |                          | ReleaseDate        |
 |               |                          |                          | ReleaseDateFirstEpisode  |                    |
 |               |                          |                          | ReleaseDateLastEpisode   |                    |
-| Review        | Review                   | Review                   | Review                   | Review             |
 |               | Runtime                  | Runtime                  | Runtime                  |                    |
 | Score         |                          | Score                    | Score                    | Score              |
 |               |                          |                          |                          | Setting            |
 |               |                          | SoundMix                 | SoundMix                 |                    |
 |               | SpecialEffectsCompany    | SpecialEffectsCompany    | SpecialEffectsCompany    |                    |
-| Trivia        | Trivia                   | Trivia                   | Trivia                   | Trivia             |
+| Text          | Text                     | Text                     | Text                     | Text               |
 | User          |                          | User                     | User                     | User               |
 |               |                          |                          |                          | Version            |
 | Weblink       |                          | Weblink                  | Weblink                  | Weblink            |
@@ -173,7 +171,7 @@
 |              |               |              |              |             |                    |             |             |                     | Publisher     |              |              |              |             |     |
 |              |               |              |              |             | Source             |             |             |                     |               | Source       |              |              |             |     |
 |              |               |              |              |             |                    |             |             | Species             |               |              |              |              |             |     |
-|              |               |              |              |             |                    |             |             | Trivia              |               |              |              |              |             |     |
+|              |               |              |              |             |                    |             |             | Text                |               |              |              |              |             |     |
 |              |               |              |              |             |                    |             |             | Weblink             |               |              |              |              |             |     |
 
 
