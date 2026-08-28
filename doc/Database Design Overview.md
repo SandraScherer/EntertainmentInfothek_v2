@@ -35,7 +35,6 @@
 |               |                          | Color                    | Color                    |                    |
 |               |                          |                          |                          | Completion         |
 |               |                          | Country                  | Country                  |                    |
-| Cover         |                          | Cover                    | Cover                    | Cover              |
 | Crew          | Crew                     | Crew                     | Crew                     | Crew               |
 | Description   | Description              | Description              | Description              | Description        |
 |               |                          |                          |                          | Developer          |
@@ -45,14 +44,12 @@
 |               | FilmingDate              | FilmingDate              | FilmingDate              |                    |
 |               | FilmingLocation          | FilmingLocation          | FilmingLocation          |                    |
 | Genre         |                          | Genre                    | Genre                    | Genre              |
-|               | Image                    | Image                    | Image                    | Image              |
+| Image         | Image                    | Image                    | Image                    | Image              |
 |               |                          | Laboratory               | Laboratory               |                    |
 | Language      |                          | Language                 | Language                 | Language           |
-| Logo          |                          | Logo                     | Logo                     | Logo               |
 |               |                          | NegativeFormat           | NegativeFormat           |                    |
 |               | OtherCompany             | OtherCompany             | OtherCompany             |                    |
 |               |                          |                          |                          | Perspective        |
-|               |                          | Poster                   | Poster                   |                    |
 |               |                          | PrintedFilmFormat        | PrintedFilmFormat        |                    |
 |               | ProductionCompany        | ProductionCompany        | ProductionCompany        |                    |
 |               | ProductionDate           | ProductionDate           | ProductionDate           |                    |
