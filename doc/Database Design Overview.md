@@ -33,12 +33,11 @@
 |               | Certification            | Certification            | Certification            | Certification      |
 |               |                          | CinematographicProcess   | CinematographicProcess   |                    |
 |               |                          | Color                    | Color                    |                    |
+|               | CompanyCredits           | CompanyCredits           | CompanyCredits           | CompanyCredits     |
 |               |                          |                          |                          | Completion         |
 |               |                          | Country                  | Country                  |                    |
 | Crew          | Crew                     | Crew                     | Crew                     | Crew               |
-|               |                          |                          |                          | Developer          |
 |               |                          |                          |                          | Difficulty         |
-|               | Distributor              | Distributor              | Distributor              | Distributor        |
 |               | FilmLength               | FilmLength               | FilmLength               |                    |
 |               | FilmingDate              | FilmingDate              | FilmingDate              |                    |
 |               | FilmingLocation          | FilmingLocation          | FilmingLocation          |                    |
@@ -47,12 +46,9 @@
 |               |                          | Laboratory               | Laboratory               |                    |
 | Language      |                          | Language                 | Language                 | Language           |
 |               |                          | NegativeFormat           | NegativeFormat           |                    |
-|               | OtherCompany             | OtherCompany             | OtherCompany             |                    |
 |               |                          |                          |                          | Perspective        |
 |               |                          | PrintedFilmFormat        | PrintedFilmFormat        |                    |
-|               | ProductionCompany        | ProductionCompany        | ProductionCompany        |                    |
 |               | ProductionDate           | ProductionDate           | ProductionDate           |                    |
-|               |                          |                          |                          | Publisher          |
 | Publication   |                          |                          |                          |                    |
 |               | ReleaseDate              | ReleaseDate              |                          | ReleaseDate        |
 |               |                          |                          | ReleaseDateFirstEpisode  |                    |
@@ -61,7 +57,6 @@
 | Score         |                          | Score                    | Score                    | Score              |
 |               |                          |                          |                          | Setting            |
 |               |                          | SoundMix                 | SoundMix                 |                    |
-|               | SpecialEffectsCompany    | SpecialEffectsCompany    | SpecialEffectsCompany    |                    |
 | Text          | Text                     | Text                     | Text                     | Text               |
 | User          |                          | User                     | User                     | User               |
 |               |                          |                          |                          | Version            |
