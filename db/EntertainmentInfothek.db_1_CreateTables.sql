@@ -311,17 +311,6 @@ CREATE TABLE IF NOT EXISTS "Connection" (
 	FOREIGN KEY("ConnectionID") REFERENCES "Connection"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
 );
-CREATE TABLE IF NOT EXISTS "ControllerType" (
-	"ID"	TEXT NOT NULL,
-	"EnglishName"	TEXT,
-	"GermanName"	TEXT,
-	"Details"	TEXT,
-	"Notes"	TEXT,
-	"StatusID"	TEXT,
-	"LastUpdated"	TEXT,
-	PRIMARY KEY("ID"),
-	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
-);
 CREATE TABLE IF NOT EXISTS "CopyProtection" (
 	"ID"	TEXT NOT NULL,
 	"OriginalName"	TEXT,
@@ -2326,20 +2315,6 @@ CREATE TABLE IF NOT EXISTS "TechnicalSpecification_SupportedAdditionalHardware" 
 	"LastUpdated"	TEXT,
 	PRIMARY KEY("ID"),
 	FOREIGN KEY("HardwareID") REFERENCES "Hardware"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
-	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
-	FOREIGN KEY("TechnicalSpecificationID") REFERENCES "TechnicalSpecification"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
-);
-CREATE TABLE IF NOT EXISTS "TechnicalSpecification_SupportedControllerType" (
-	"ID"	TEXT NOT NULL,
-	"TechnicalSpecificationID"	TEXT,
-	"ControllerTypeID"	TEXT,
-	"Order"	TEXT,
-	"Details"	TEXT,
-	"Notes"	TEXT,
-	"StatusID"	TEXT,
-	"LastUpdated"	TEXT,
-	PRIMARY KEY("ID"),
-	FOREIGN KEY("ControllerTypeID") REFERENCES "ControllerType"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("TechnicalSpecificationID") REFERENCES "TechnicalSpecification"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
 );
