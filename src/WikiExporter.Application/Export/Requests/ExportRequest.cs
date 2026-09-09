@@ -2,6 +2,7 @@ namespace WikiExporter.Application.Export.Requests;
 
 public enum ExportEntityType { Movie, Series, Episode, Book, VideoGame, Person, Connection }
 public enum ExportLanguage { Original, English, German }
+public enum ExportFormat { DokuWiki, Obsidian }
 
 public abstract record ExportScope
 {
@@ -14,4 +15,6 @@ public abstract record ExportScope
 public sealed record ExportRequest(
     ExportEntityType EntityType,
     ExportScope Scope,
-    ExportLanguage Language);
+    ExportLanguage Language,
+    ExportFormat Format = ExportFormat.Obsidian,
+    string? OutputDirectory = null);
