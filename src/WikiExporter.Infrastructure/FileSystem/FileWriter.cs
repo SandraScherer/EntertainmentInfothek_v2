@@ -1,3 +1,4 @@
+using WikiExporter.Application.Exceptions;
 using WikiExporter.Application.Interfaces;
 
 namespace WikiExporter.Infrastructure.FileSystem;
@@ -14,14 +15,32 @@ public sealed class FileWriter
         string content,
         CancellationToken cancellationToken)
     {
-        Directory.CreateDirectory(folder);
+        try
+        {
+            Directory.CreateDirectory(
+                folder);
 
-        var path =
-            Path.Combine(folder, fileName);
+            var path =
+                Path.Combine(
+                    folder,
+                    fileName);
 
-        await File.WriteAllTextAsync(
-            path,
-            content,
-            cancellationToken);
+            await File.WriteAllTextAsync(
+                path,
+                content,
+                cancellationToken);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            throw new ExportFailedException(
+                "No write permission.",
+                ex);
+        }
+        catch (IOException ex)
+        {
+            throw new ExportFailedException(
+                "Error writing export file.",
+                ex);
+        }
     }
 }

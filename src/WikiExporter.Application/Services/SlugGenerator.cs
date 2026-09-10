@@ -2,6 +2,8 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
+using WikiExporter.Application.Exceptions;
+
 namespace WikiExporter.Application.Services;
 
 /// <summary>
@@ -13,7 +15,9 @@ public static class SlugGenerator
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            return "unknown";
+            throw new ValidationException(
+                "Unable to create slug.");
+
         }
 
         value = value.Trim();

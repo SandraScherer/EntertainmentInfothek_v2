@@ -3,6 +3,7 @@ using WikiExporter.Application.DTOs;
 using WikiExporter.Application.Interfaces;
 using WikiExporter.Application.Models;
 using WikiExporter.Application.Services;
+using WikiExporter.Application.Validation;
 
 namespace WikiExporter.Application.Builders;
 
@@ -16,6 +17,9 @@ public sealed class MovieExportDocumentBuilder
         MovieExportDto dto,
         string language)
     {
+        MovieExportValidator.Validate(
+            dto);
+
         var title = ResolveTitle(dto, language);
 
         var document = new ExportDocument

@@ -1,7 +1,9 @@
 using Microsoft.Extensions.Logging;
 
+using WikiExporter.Application.Exceptions;
 using WikiExporter.Application.Interfaces;
 using WikiExporter.Application.Models;
+using WikiExporter.Application.Validation;
 
 namespace WikiExporter.Application.UseCases;
 
@@ -59,7 +61,8 @@ public sealed class ExportMovieUseCase
         ExportRequest request,
         CancellationToken cancellationToken)
     {
-        ArgumentNullException.ThrowIfNull(request);
+        ExportRequestValidator.Validate(
+            request);
 
         _logger.LogInformation(
             "Movie export started for {MovieId}",
@@ -68,27 +71,51 @@ public sealed class ExportMovieUseCase
         try
         {
             // 1. Movie laden
+            _logger.LogDebug(
+                "Loading movie.");
+
             var dto =
                 await _repository.GetForExportAsync(
                     request.RecordId,
                     cancellationToken);
 
+            cancellationToken
+                .ThrowIfCancellationRequested();
+
             // 2. ExportDocument erzeugen
+            _logger.LogDebug(
+                "Building export document.");
+
             var document =
                 _builder.Build(
                     dto,
                     request.Language);
 
+            cancellationToken
+                .ThrowIfCancellationRequested();
+
             // 3. Renderer auswählen
+            _logger.LogDebug(
+                "Rendering markdown.");
+
             var renderer =
                 _rendererFactory.Create(
                     request.Format);
+
+            cancellationToken
+                .ThrowIfCancellationRequested();
 
             // 4. Markdown rendern
             var markdown =
                  renderer.Render(document);
 
+            cancellationToken
+                .ThrowIfCancellationRequested();
+
             // 5. Dateiendung bestimmen
+            _logger.LogDebug(
+                "Writing output file.");
+
             var extension =
                 request.Format switch
                 {
@@ -98,9 +125,15 @@ public sealed class ExportMovieUseCase
                         $"Unsupported format: {request.Format}")
                 };
 
+            cancellationToken
+                .ThrowIfCancellationRequested();
+
             // 6. Dateiname erzeugen
             var fileName =
                 document.Slug + extension;
+
+            cancellationToken
+                .ThrowIfCancellationRequested();
 
             // 7. Datei schreiben
             await _fileWriter.WriteAsync(
@@ -126,22 +159,64 @@ public sealed class ExportMovieUseCase
                 Errors = Array.Empty<string>()
             };
         }
-        catch (Exception ex)
+        catch (ValidationException ex)
         {
-            _logger.LogError(
+            _logger.LogWarning(
                 ex,
-                "Movie export failed for {MovieId}",
-                request.RecordId);
+                "Validation failed.");
 
             return new ExportResult
             {
                 Success = false,
-                FilePath = string.Empty,
-                Warnings = Array.Empty<string>(),
-                Errors = new[]
-                {
+                Errors =
+                [
                     ex.Message
-                }
+                ]
+            };
+        }
+        catch (MovieNotFoundException ex)
+        {
+            _logger.LogWarning(
+                ex,
+                "Movie not found.");
+
+            return new ExportResult
+            {
+                Success = false,
+                Errors =
+                [
+                    ex.Message
+                ]
+            };
+        }
+        catch (ExportFailedException ex)
+        {
+            _logger.LogError(
+                ex,
+                "Export failed.");
+
+            return new ExportResult
+            {
+                Success = false,
+                Errors =
+                [
+                    ex.Message
+                ]
+            };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogCritical(
+                ex,
+                "Unexpected export failure.");
+
+            return new ExportResult
+            {
+                Success = false,
+                Errors =
+                [
+                    "Unexpected error occurred."
+                ]
             };
         }
     }
