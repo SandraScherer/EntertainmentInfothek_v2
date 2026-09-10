@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikiExporter.Application", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikiExporter.Persistence", "src\WikiExporter.Persistence\WikiExporter.Persistence.csproj", "{33333333-3333-3333-3333-333333333333}"
 EndProject
-Project("{FAE04EC0-301F-BF4B-00C04F79EFBC}") = "WikiExporter.Export", "src\WikiExporter.Export\WikiExporter.Export.csproj", "{44444444-4444-4444-4444-444444444444}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikiExporter.Export", "src\WikiExporter.Export\WikiExporter.Export.csproj", "{44444444-4444-4444-4444-444444444444}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikiExporter.Export.Tests", "tests\WikiExporter.Export.Tests\WikiExporter.Export.Tests.csproj", "{55555555-5555-5555-5555-555555555555}"
 EndProject
@@ -38,4 +38,5 @@ GlobalSection(ProjectConfigurationPlatforms) = postSolution
     {22222222-2222-2222-2222-222222222222}.Release|Any CPU.Build.0 = Release|Any CPU
     {33333333-3333-3333-3333-333333333333}.Release|Any CPU.ActiveCfg = Release|Any CPU
     {33333333-3333-3333-3333-333333333333}.Release|Any CPU.Build.0 = Release|Any CPU
+EndGlobalSection
 EndGlobal
