@@ -48,7 +48,7 @@ public sealed class ObsidianRendererTests
                     "Feld",
                     "Wert"
                 },
-                Rows =
+                Rows = new List<IList<string>>
                 {
                     new List<string>
                     {

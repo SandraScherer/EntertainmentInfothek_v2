@@ -62,12 +62,8 @@ public sealed class MovieRepository
                                         c.GermanRole ??
                                         c.EnglishRole ??
                                         "",
-                                    Order =
-                                        int.TryParse(
-                                            c.Order,
-                                            out var o)
-                                            ? o
-                                            : 0
+                                    OrderText =
+                                        c.Order
                                 })
                             .ToList(),
 
@@ -88,12 +84,8 @@ public sealed class MovieRepository
                                         c.EnglishRole ??
                                         "",
 
-                                    Order =
-                                        int.TryParse(
-                                            c.Order,
-                                            out var o)
-                                            ? o
-                                            : 0
+                                    OrderText =
+                                        c.Order
                                 })
                             .ToList(),
 

@@ -4,5 +4,6 @@ namespace WikiExporter.Application.Interfaces;
 
 public interface IMarkdownRenderer
 {
-    string Render(ExportDocument document);
+    string Render(
+        ExportDocument document);
 }

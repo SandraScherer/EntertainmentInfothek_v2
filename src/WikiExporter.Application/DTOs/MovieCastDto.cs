@@ -6,5 +6,5 @@ public sealed class MovieCastDto
 
     public string Role { get; init; } = string.Empty;
 
-    public int Order { get; init; }
+    public string? OrderText { get; init; }
 }

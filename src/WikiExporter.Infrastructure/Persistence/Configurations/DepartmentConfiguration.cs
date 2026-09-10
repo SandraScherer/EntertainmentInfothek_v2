@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 using WikiExporter.Infrastructure.Persistence.Entities;
 
 namespace WikiExporter.Infrastructure.Persistence.Configurations;
@@ -20,10 +21,10 @@ public sealed class DepartmentConfiguration
         builder.Property(x => x.Id)
             .HasColumnName("ID");
 
-        builder.Property(x => x.GermanName)
-            .HasColumnName("GermanName");
-
         builder.Property(x => x.EnglishName)
             .HasColumnName("EnglishName");
+
+        builder.Property(x => x.GermanName)
+            .HasColumnName("GermanName");
     }
 }

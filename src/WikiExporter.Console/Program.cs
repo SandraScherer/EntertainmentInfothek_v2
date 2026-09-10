@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -10,117 +9,151 @@ using WikiExporter.Console.Menus;
 
 using WikiExporter.Infrastructure.DependencyInjection;
 
-var builder =
-    Host.CreateDefaultBuilder(args);
+var host =
+    Host.CreateDefaultBuilder(args)
+        .ConfigureServices(
+            (context, services) =>
+            {
+                services.AddWikiExporter(
+                    context.Configuration);
 
-builder.ConfigureAppConfiguration(
-    configuration =>
-    {
-        configuration.AddJsonFile(
-            "appsettings.json",
-            false,
-            true);
-    });
+                services.AddTransient<MainMenu>();
 
-builder.ConfigureServices(
-    (context, services) =>
-    {
-        services.AddWikiExporter(
-            context.Configuration);
+                services.AddTransient<MovieSelectionMenu>();
 
-        services.AddTransient<
-            MainMenu>();
+                services.AddTransient<FormatSelectionMenu>();
+            })
+        .ConfigureLogging(logging =>
+        {
+            logging.ClearProviders();
 
-        services.AddTransient<
-            MovieSelectionMenu>();
-
-        services.AddTransient<
-            FormatSelectionMenu>();
-    });
-
-builder.ConfigureLogging(
-    logging =>
-    {
-        logging.ClearProviders();
-
-        logging.AddConsole();
-    });
-
-var host = builder.Build();
+            logging.AddConsole();
+        })
+        .Build();
 
 await using var scope =
     host.Services.CreateAsyncScope();
 
-var provider =
+var services =
     scope.ServiceProvider;
 
 var logger =
-    provider.GetRequiredService<
-        ILoggerFactory>()
-    .CreateLogger("Program");
+    services
+        .GetRequiredService<
+            ILoggerFactory>()
+        .CreateLogger("Program");
 
-var menu =
-    provider.GetRequiredService<
+var mainMenu =
+    services.GetRequiredService<
         MainMenu>();
 
 while (true)
 {
-    var choice =
-        menu.Show();
+    var selection =
+        mainMenu.Show();
 
-    if (choice == 0)
+    switch (selection)
     {
-        break;
+        case 0:
+        {
+            logger.LogInformation(
+                "Application terminated.");
+
+            return;
+        }
+
+        case 1:
+        {
+            await ExecuteMovieExport(
+                services,
+                logger);
+
+            break;
+        }
+
+        default:
+        {
+            System.Console.WriteLine(
+                "Unknown menu option.");
+
+            break;
+        }
     }
 
-     if (choice != 1)
-     {
-         continue;
-     }
+    System.Console.WriteLine();
+    System.Console.WriteLine(
+        "Press ENTER to continue...");
 
-     // Movie Workflow
+    System.Console.ReadLine();
 }
 
-var movieMenu =
-    provider.GetRequiredService<
-        MovieSelectionMenu>();
+static async Task ExecuteMovieExport(
+    IServiceProvider services,
+    ILogger logger)
+{
+    var movieMenu =
+        services.GetRequiredService<
+            MovieSelectionMenu>();
 
-var movieId =
-    await movieMenu
-        .SelectMovieAsync();
+    var formatMenu =
+        services.GetRequiredService<
+            FormatSelectionMenu>();
 
-var formatMenu =
-    provider.GetRequiredService<
-        FormatSelectionMenu>();
+    var movieId =
+        await movieMenu.SelectMovieAsync();
 
-var format =
-    formatMenu.SelectFormat();
-
-var useCase =
-    provider.GetRequiredService<
-        ExportMovieUseCase>();
-
-var request =
-    new ExportRequest
+    if (string.IsNullOrWhiteSpace(movieId))
     {
-        RecordId = movieId,
-        Language = "de-DE",
-        Format = format,
-        OutputFolder = "Exports"
-    };
+        System.Console.WriteLine(
+            "Invalid Movie ID.");
 
-logger.LogInformation(
-    "Export started");
+        return;
+    }
 
-var result =
-    await useCase.ExecuteAsync(
-        request,
-        CancellationToken.None);
+    var format =
+        formatMenu.SelectFormat();
 
-logger.LogInformation(
-    "Export finished");
+    var useCase =
+        services.GetRequiredService<
+            ExportMovieUseCase>();
 
-System.Console.WriteLine();
+    var request =
+        new ExportRequest
+        {
+            RecordId = movieId,
+            Language = "de-DE",
+            Format = format,
+            OutputFolder = "Exports"
+        };
 
-System.Console.WriteLine(
-    $"File created: {result.FilePath}");
+    logger.LogInformation(
+        "Starting export for Movie {MovieId}",
+        movieId);
+
+    var result =
+        await useCase.ExecuteAsync(
+            request,
+            CancellationToken.None);
+
+    if (result.Success)
+    {
+        logger.LogInformation(
+            "Export completed.");
+
+        System.Console.WriteLine();
+
+        System.Console.WriteLine(
+            $"File created: {result.FilePath}");
+    }
+    else
+    {
+        logger.LogError(
+            "Export failed.");
+
+        foreach (var error in result.Errors)
+        {
+            System.Console.WriteLine(
+                $"ERROR: {error}");
+        }
+    }
+}

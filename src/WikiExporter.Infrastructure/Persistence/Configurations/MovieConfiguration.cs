@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 using WikiExporter.Infrastructure.Persistence.Entities;
 
 namespace WikiExporter.Infrastructure.Persistence.Configurations;

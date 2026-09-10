@@ -97,7 +97,7 @@ public sealed class MovieExportDocumentBuilder
                 "Feld",
                 "Wert"
             },
-            Rows =
+            Rows = new List<IList<string>>
             {
                 new List<string>
                 {
@@ -127,7 +127,7 @@ public sealed class MovieExportDocumentBuilder
             {
                 Title = "Allgemein",
                 Order = 1,
-                Blocks =
+                Blocks = new List<ExportBlock>
                 {
                     table
                 }
@@ -148,7 +148,7 @@ public sealed class MovieExportDocumentBuilder
             {
                 Title = "Genres",
                 Order = 2,
-                Blocks =
+                Blocks = new List<ExportBlock>
                 {
                     new ListBlock
                     {
@@ -215,7 +215,14 @@ public sealed class MovieExportDocumentBuilder
         };
 
         foreach (var item
-                in dto.Cast.OrderBy(x => x.Order))
+                in dto.Cast
+                    .OrderBy(x =>
+                        int.TryParse(
+                            x.OrderText,
+                            out var value)
+                                ? value
+                                : int.MaxValue)
+                )
         {
             table.Rows.Add(
                 new List<string>
@@ -230,7 +237,7 @@ public sealed class MovieExportDocumentBuilder
             {
                 Title = "Besetzung",
                 Order = 4,
-                Blocks =
+                Blocks = new List<ExportBlock>
                 {
                     table
                 }
@@ -257,7 +264,14 @@ public sealed class MovieExportDocumentBuilder
         };
 
         foreach (var item
-                 in dto.Crew.OrderBy(x => x.Order))
+                 in dto.Crew
+                    .OrderBy(x =>
+                        int.TryParse(
+                            x.OrderText,
+                            out var value)
+                                ? value
+                                : int.MaxValue)
+                )
         {
             table.Rows.Add(
                 new List<string>
@@ -273,7 +287,7 @@ public sealed class MovieExportDocumentBuilder
             {
                 Title = "Crew",
                 Order = 5,
-                Blocks =
+                Blocks = new List<ExportBlock>
                 {
                     table
                 }

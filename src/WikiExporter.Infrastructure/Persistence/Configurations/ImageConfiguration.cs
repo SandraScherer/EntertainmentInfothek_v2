@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 using WikiExporter.Infrastructure.Persistence.Entities;
 
 namespace WikiExporter.Infrastructure.Persistence.Configurations;
@@ -23,10 +24,10 @@ public sealed class ImageConfiguration
         builder.Property(x => x.FileName)
             .HasColumnName("FileName");
 
-        builder.Property(x => x.GermanDescription)
-            .HasColumnName("GermanDescription");
-
         builder.Property(x => x.EnglishDescription)
             .HasColumnName("EnglishDescription");
+
+        builder.Property(x => x.GermanDescription)
+            .HasColumnName("GermanDescription");
     }
 }

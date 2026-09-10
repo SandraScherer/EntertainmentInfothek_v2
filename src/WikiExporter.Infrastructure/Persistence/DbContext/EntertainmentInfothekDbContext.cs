@@ -18,6 +18,20 @@ public sealed class EntertainmentInfothekDbContext
 
     public DbSet<GenreEntity> Genres => Set<GenreEntity>();
 
+    public DbSet<PersonEntity> Persons => Set<PersonEntity>();
+
+    public DbSet<DepartmentEntity> Departments => Set<DepartmentEntity>();
+
+    public DbSet<TextEntity> Texts => Set<TextEntity>();
+
+    public DbSet<TextTypeEntity> TextTypes => Set<TextTypeEntity>();
+
+    public DbSet<ImageEntity> Images => Set<ImageEntity>();
+
+    public DbSet<WeblinkEntity> Weblinks => Set<WeblinkEntity>();
+
+    public DbSet<StatusEntity> Statuses => Set<StatusEntity>();
+
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)
     {
