@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/WikiExporter.Application/WikiExporter.Application.csproj" />
+    <Project Path="src/WikiExporter.Console/WikiExporter.Console.csproj" />
+    <Project Path="src/WikiExporter.Domain/WikiExporter.Domain.csproj" />
+    <Project Path="src/WikiExporter.Infrastructure/WikiExporter.Infrastructure.csproj" />
+    <Project Path="src/WikiExporter.Markdown/WikiExporter.Markdown.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/WikiExporter.Application.Tests/WikiExporter.Application.Tests.csproj" />
+    <Project Path="tests/WikiExporter.Infrastructure.Tests/WikiExporter.Infrastructure.Tests.csproj" />
+    <Project Path="tests/WikiExporter.Markdown.Tests/WikiExporter.Markdown.Tests.csproj" />
+  </Folder>
+</Solution>
