@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Camera</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class CameraConfiguration : IEntityTypeConfiguration<Camera>
+public sealed class CameraConfiguration : IEntityTypeConfiguration<CameraEntity>
 {
-    public void Configure(EntityTypeBuilder<Camera> builder)
+    public void Configure(EntityTypeBuilder<CameraEntity> builder)
     {
         builder.ToTable("Camera");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class CameraConfiguration : IEntityTypeConfiguration<Camera>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Camera.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Cameras).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Cameras).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

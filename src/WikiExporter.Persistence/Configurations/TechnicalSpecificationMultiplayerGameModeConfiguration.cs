@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification_MultiplayerGameMode</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class TechnicalSpecificationMultiplayerGameModeConfiguration : IEntityTypeConfiguration<TechnicalSpecificationMultiplayerGameMode>
+public sealed class TechnicalSpecificationMultiplayerGameModeConfiguration : IEntityTypeConfiguration<TechnicalSpecificationMultiplayerGameModeEntity>
 {
-    public void Configure(EntityTypeBuilder<TechnicalSpecificationMultiplayerGameMode> builder)
+    public void Configure(EntityTypeBuilder<TechnicalSpecificationMultiplayerGameModeEntity> builder)
     {
         builder.ToTable("TechnicalSpecification_MultiplayerGameMode");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class TechnicalSpecificationMultiplayerGameModeConfiguration : IEn
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: TechnicalSpecification_MultiplayerGameMode.MultiplayerGameModeID -> MultiplayerGameMode.ID
-        builder.HasOne(x => x.MultiplayerGameMode).WithMany(x => x.TechnicalSpecificationMultiplayerGameModes).HasForeignKey(x => x.MultiplayerGameModeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MultiplayerGameModeEntity).WithMany(x => x.TechnicalSpecificationMultiplayerGameModes).HasForeignKey(x => x.MultiplayerGameModeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_MultiplayerGameMode.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.TechnicalSpecificationMultiplayerGameModes).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TechnicalSpecificationMultiplayerGameModes).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_MultiplayerGameMode.TechnicalSpecificationID -> TechnicalSpecification.ID
-        builder.HasOne(x => x.TechnicalSpecification).WithMany(x => x.TechnicalSpecificationMultiplayerGameModes).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany(x => x.TechnicalSpecificationMultiplayerGameModes).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

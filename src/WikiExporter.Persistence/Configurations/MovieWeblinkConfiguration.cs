@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Movie_Weblink</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class MovieWeblinkConfiguration : IEntityTypeConfiguration<MovieWeblink>
+public sealed class MovieWeblinkConfiguration : IEntityTypeConfiguration<MovieWeblinkEntity>
 {
-    public void Configure(EntityTypeBuilder<MovieWeblink> builder)
+    public void Configure(EntityTypeBuilder<MovieWeblinkEntity> builder)
     {
         builder.ToTable("Movie_Weblink");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class MovieWeblinkConfiguration : IEntityTypeConfiguration<MovieWe
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Movie_Weblink.MovieID -> Movie.ID
-        builder.HasOne(x => x.Movie).WithMany(x => x.MovieWeblinks).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MovieEntity).WithMany(x => x.MovieWeblinks).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Weblink.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.MovieWeblinks).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MovieWeblinks).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Weblink.WeblinkID -> Weblink.ID
-        builder.HasOne(x => x.Weblink).WithMany(x => x.MovieWeblinks).HasForeignKey(x => x.WeblinkId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.WeblinkEntity).WithMany(x => x.MovieWeblinks).HasForeignKey(x => x.WeblinkId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

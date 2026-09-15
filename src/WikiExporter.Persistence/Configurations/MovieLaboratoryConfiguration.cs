@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Movie_Laboratory</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class MovieLaboratoryConfiguration : IEntityTypeConfiguration<MovieLaboratory>
+public sealed class MovieLaboratoryConfiguration : IEntityTypeConfiguration<MovieLaboratoryEntity>
 {
-    public void Configure(EntityTypeBuilder<MovieLaboratory> builder)
+    public void Configure(EntityTypeBuilder<MovieLaboratoryEntity> builder)
     {
         builder.ToTable("Movie_Laboratory");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class MovieLaboratoryConfiguration : IEntityTypeConfiguration<Movi
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Movie_Laboratory.LaboratoryID -> Laboratory.ID
-        builder.HasOne(x => x.Laboratory).WithMany(x => x.MovieLaboratorys).HasForeignKey(x => x.LaboratoryId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LaboratoryEntity).WithMany(x => x.MovieLaboratorys).HasForeignKey(x => x.LaboratoryId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Laboratory.MovieID -> Movie.ID
-        builder.HasOne(x => x.Movie).WithMany(x => x.MovieLaboratorys).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MovieEntity).WithMany(x => x.MovieLaboratorys).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Laboratory.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.MovieLaboratorys).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MovieLaboratorys).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

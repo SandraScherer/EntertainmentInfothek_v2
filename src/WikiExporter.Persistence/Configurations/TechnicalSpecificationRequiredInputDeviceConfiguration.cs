@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification_RequiredInputDevice</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class TechnicalSpecificationRequiredInputDeviceConfiguration : IEntityTypeConfiguration<TechnicalSpecificationRequiredInputDevice>
+public sealed class TechnicalSpecificationRequiredInputDeviceConfiguration : IEntityTypeConfiguration<TechnicalSpecificationRequiredInputDeviceEntity>
 {
-    public void Configure(EntityTypeBuilder<TechnicalSpecificationRequiredInputDevice> builder)
+    public void Configure(EntityTypeBuilder<TechnicalSpecificationRequiredInputDeviceEntity> builder)
     {
         builder.ToTable("TechnicalSpecification_RequiredInputDevice");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class TechnicalSpecificationRequiredInputDeviceConfiguration : IEn
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: TechnicalSpecification_RequiredInputDevice.InputDeviceID -> InputDevice.ID
-        builder.HasOne(x => x.InputDevice).WithMany(x => x.TechnicalSpecificationRequiredInputDevices).HasForeignKey(x => x.InputDeviceId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.InputDeviceEntity).WithMany(x => x.TechnicalSpecificationRequiredInputDevices).HasForeignKey(x => x.InputDeviceId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_RequiredInputDevice.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.TechnicalSpecificationRequiredInputDevices).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TechnicalSpecificationRequiredInputDevices).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_RequiredInputDevice.TechnicalSpecificationID -> TechnicalSpecification.ID
-        builder.HasOne(x => x.TechnicalSpecification).WithMany(x => x.TechnicalSpecificationRequiredInputDevices).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany(x => x.TechnicalSpecificationRequiredInputDevices).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

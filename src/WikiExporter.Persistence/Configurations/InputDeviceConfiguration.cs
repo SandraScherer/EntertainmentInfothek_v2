@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>InputDevice</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class InputDeviceConfiguration : IEntityTypeConfiguration<InputDevice>
+public sealed class InputDeviceConfiguration : IEntityTypeConfiguration<InputDeviceEntity>
 {
-    public void Configure(EntityTypeBuilder<InputDevice> builder)
+    public void Configure(EntityTypeBuilder<InputDeviceEntity> builder)
     {
         builder.ToTable("InputDevice");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class InputDeviceConfiguration : IEntityTypeConfiguration<InputDev
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: InputDevice.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.InputDevices).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.InputDevices).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

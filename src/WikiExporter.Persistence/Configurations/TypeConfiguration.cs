@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Type</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class TypeConfiguration : IEntityTypeConfiguration<Type>
+public sealed class TypeConfiguration : IEntityTypeConfiguration<TypeEntity>
 {
-    public void Configure(EntityTypeBuilder<Type> builder)
+    public void Configure(EntityTypeBuilder<TypeEntity> builder)
     {
         builder.ToTable("Type");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class TypeConfiguration : IEntityTypeConfiguration<Type>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Type.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Types).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Types).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Country</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class CountryConfiguration : IEntityTypeConfiguration<Country>
+public sealed class CountryConfiguration : IEntityTypeConfiguration<CountryEntity>
 {
-    public void Configure(EntityTypeBuilder<Country> builder)
+    public void Configure(EntityTypeBuilder<CountryEntity> builder)
     {
         builder.ToTable("Country");
         builder.HasKey(x => x.Id);
@@ -24,6 +24,6 @@ public sealed class CountryConfiguration : IEntityTypeConfiguration<Country>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Country.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Countrys).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Countrys).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

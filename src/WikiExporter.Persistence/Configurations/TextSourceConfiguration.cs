@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Text_Source</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class TextSourceConfiguration : IEntityTypeConfiguration<TextSource>
+public sealed class TextSourceConfiguration : IEntityTypeConfiguration<TextSourceEntity>
 {
-    public void Configure(EntityTypeBuilder<TextSource> builder)
+    public void Configure(EntityTypeBuilder<TextSourceEntity> builder)
     {
         builder.ToTable("Text_Source");
         builder.HasKey(x => x.Id);
@@ -23,12 +23,12 @@ public sealed class TextSourceConfiguration : IEntityTypeConfiguration<TextSourc
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Text_Source.CompanyID -> Company.ID
-        builder.HasOne(x => x.Company).WithMany(x => x.TextSources).HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CompanyEntity).WithMany(x => x.TextSources).HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Text_Source.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.TextSources).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TextSources).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Text_Source.TextID -> Text.ID
-        builder.HasOne(x => x.Text).WithMany(x => x.TextSources).HasForeignKey(x => x.TextId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TextEntity).WithMany(x => x.TextSources).HasForeignKey(x => x.TextId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

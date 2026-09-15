@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Language</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class LanguageConfiguration : IEntityTypeConfiguration<Language>
+public sealed class LanguageConfiguration : IEntityTypeConfiguration<LanguageEntity>
 {
-    public void Configure(EntityTypeBuilder<Language> builder)
+    public void Configure(EntityTypeBuilder<LanguageEntity> builder)
     {
         builder.ToTable("Language");
         builder.HasKey(x => x.Id);
@@ -21,6 +21,6 @@ public sealed class LanguageConfiguration : IEntityTypeConfiguration<Language>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Language.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Languages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Languages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

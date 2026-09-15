@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Episode_Image</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class EpisodeImageConfiguration : IEntityTypeConfiguration<EpisodeImage>
+public sealed class EpisodeImageConfiguration : IEntityTypeConfiguration<EpisodeImageEntity>
 {
-    public void Configure(EntityTypeBuilder<EpisodeImage> builder)
+    public void Configure(EntityTypeBuilder<EpisodeImageEntity> builder)
     {
         builder.ToTable("Episode_Image");
         builder.HasKey(x => x.Id);
@@ -22,12 +22,12 @@ public sealed class EpisodeImageConfiguration : IEntityTypeConfiguration<Episode
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Episode_Image.EpisodeID -> Episode.ID
-        builder.HasOne(x => x.Episode).WithMany(x => x.EpisodeImages).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.EpisodeEntity).WithMany(x => x.EpisodeImages).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_Image.ImageID -> Image.ID
-        builder.HasOne(x => x.Image).WithMany(x => x.EpisodeImages).HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.ImageEntity).WithMany(x => x.EpisodeImages).HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_Image.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.EpisodeImages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.EpisodeImages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

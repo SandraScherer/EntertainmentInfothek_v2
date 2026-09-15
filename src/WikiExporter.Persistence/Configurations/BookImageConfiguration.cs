@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Book_Image</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class BookImageConfiguration : IEntityTypeConfiguration<BookImage>
+public sealed class BookImageConfiguration : IEntityTypeConfiguration<BookImageEntity>
 {
-    public void Configure(EntityTypeBuilder<BookImage> builder)
+    public void Configure(EntityTypeBuilder<BookImageEntity> builder)
     {
         builder.ToTable("Book_Image");
         builder.HasKey(x => x.Id);
@@ -22,12 +22,12 @@ public sealed class BookImageConfiguration : IEntityTypeConfiguration<BookImage>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Book_Image.BookID -> Book.ID
-        builder.HasOne(x => x.Book).WithMany(x => x.BookImages).HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.BookEntity).WithMany(x => x.BookImages).HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_Image.ImageID -> Image.ID
-        builder.HasOne(x => x.Image).WithMany(x => x.BookImages).HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.ImageEntity).WithMany(x => x.BookImages).HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_Image.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.BookImages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.BookImages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Employer</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class EmployerConfiguration : IEntityTypeConfiguration<Employer>
+public sealed class EmployerConfiguration : IEntityTypeConfiguration<EmployerEntity>
 {
-    public void Configure(EntityTypeBuilder<Employer> builder)
+    public void Configure(EntityTypeBuilder<EmployerEntity> builder)
     {
         builder.ToTable("Employer");
         builder.HasKey(x => x.Id);
@@ -21,9 +21,9 @@ public sealed class EmployerConfiguration : IEntityTypeConfiguration<Employer>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Employer.CompanyID -> Company.ID
-        builder.HasOne(x => x.Company).WithMany(x => x.Employers).HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CompanyEntity).WithMany(x => x.Employers).HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Employer.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Employers).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Employers).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

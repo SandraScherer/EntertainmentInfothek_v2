@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Text</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class TextConfiguration : IEntityTypeConfiguration<Text>
+public sealed class TextConfiguration : IEntityTypeConfiguration<TextEntity>
 {
-    public void Configure(EntityTypeBuilder<Text> builder)
+    public void Configure(EntityTypeBuilder<TextEntity> builder)
     {
         builder.ToTable("Text");
         builder.HasKey(x => x.Id);
@@ -20,9 +20,9 @@ public sealed class TextConfiguration : IEntityTypeConfiguration<Text>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Text.LanguageID -> Language.ID
-        builder.HasOne(x => x.Language).WithMany(x => x.Texts).HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LanguageEntity).WithMany(x => x.Texts).HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Text.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Texts).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Texts).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

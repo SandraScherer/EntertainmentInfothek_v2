@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Publication_Language</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class PublicationLanguageConfiguration : IEntityTypeConfiguration<PublicationLanguage>
+public sealed class PublicationLanguageConfiguration : IEntityTypeConfiguration<PublicationLanguageEntity>
 {
-    public void Configure(EntityTypeBuilder<PublicationLanguage> builder)
+    public void Configure(EntityTypeBuilder<PublicationLanguageEntity> builder)
     {
         builder.ToTable("Publication_Language");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class PublicationLanguageConfiguration : IEntityTypeConfiguration<
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Publication_Language.LanguageID -> Language.ID
-        builder.HasOne(x => x.Language).WithMany(x => x.PublicationLanguages).HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LanguageEntity).WithMany(x => x.PublicationLanguages).HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Publication_Language.PublicationID -> Publication.ID
-        builder.HasOne(x => x.Publication).WithMany(x => x.PublicationLanguages).HasForeignKey(x => x.PublicationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PublicationEntity).WithMany(x => x.PublicationLanguages).HasForeignKey(x => x.PublicationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Publication_Language.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.PublicationLanguages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.PublicationLanguages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

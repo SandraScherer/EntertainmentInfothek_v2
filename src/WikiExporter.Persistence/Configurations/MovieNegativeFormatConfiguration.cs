@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Movie_NegativeFormat</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class MovieNegativeFormatConfiguration : IEntityTypeConfiguration<MovieNegativeFormat>
+public sealed class MovieNegativeFormatConfiguration : IEntityTypeConfiguration<MovieNegativeFormatEntity>
 {
-    public void Configure(EntityTypeBuilder<MovieNegativeFormat> builder)
+    public void Configure(EntityTypeBuilder<MovieNegativeFormatEntity> builder)
     {
         builder.ToTable("Movie_NegativeFormat");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class MovieNegativeFormatConfiguration : IEntityTypeConfiguration<
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Movie_NegativeFormat.FilmFormatID -> FilmFormat.ID
-        builder.HasOne(x => x.FilmFormat).WithMany(x => x.MovieNegativeFormats).HasForeignKey(x => x.FilmFormatId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.FilmFormatEntity).WithMany(x => x.MovieNegativeFormats).HasForeignKey(x => x.FilmFormatId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_NegativeFormat.MovieID -> Movie.ID
-        builder.HasOne(x => x.Movie).WithMany(x => x.MovieNegativeFormats).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MovieEntity).WithMany(x => x.MovieNegativeFormats).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_NegativeFormat.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.MovieNegativeFormats).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MovieNegativeFormats).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

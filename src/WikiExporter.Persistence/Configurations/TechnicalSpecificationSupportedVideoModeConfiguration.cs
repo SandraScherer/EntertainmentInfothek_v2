@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification_SupportedVideoMode</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class TechnicalSpecificationSupportedVideoModeConfiguration : IEntityTypeConfiguration<TechnicalSpecificationSupportedVideoMode>
+public sealed class TechnicalSpecificationSupportedVideoModeConfiguration : IEntityTypeConfiguration<TechnicalSpecificationSupportedVideoModeEntity>
 {
-    public void Configure(EntityTypeBuilder<TechnicalSpecificationSupportedVideoMode> builder)
+    public void Configure(EntityTypeBuilder<TechnicalSpecificationSupportedVideoModeEntity> builder)
     {
         builder.ToTable("TechnicalSpecification_SupportedVideoMode");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class TechnicalSpecificationSupportedVideoModeConfiguration : IEnt
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: TechnicalSpecification_SupportedVideoMode.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.TechnicalSpecificationSupportedVideoModes).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TechnicalSpecificationSupportedVideoModes).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedVideoMode.TechnicalSpecificationID -> TechnicalSpecification.ID
-        builder.HasOne(x => x.TechnicalSpecification).WithMany(x => x.TechnicalSpecificationSupportedVideoModes).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany(x => x.TechnicalSpecificationSupportedVideoModes).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedVideoMode.VideoModeID -> VideoMode.ID
-        builder.HasOne(x => x.VideoMode).WithMany(x => x.TechnicalSpecificationSupportedVideoModes).HasForeignKey(x => x.VideoModeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VideoModeEntity).WithMany(x => x.TechnicalSpecificationSupportedVideoModes).HasForeignKey(x => x.VideoModeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

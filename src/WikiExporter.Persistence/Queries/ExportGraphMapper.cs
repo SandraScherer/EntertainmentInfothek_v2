@@ -6,8 +6,8 @@ namespace WikiExporter.Persistence.Queries;
 internal static class ExportGraphMapper
 {
     internal static IReadOnlyList<ExportRowData> Rows(ExportGraph graph, string rootTable, string rootId) =>
-        graph.Entities.Where(x => x.Key.Type.GetTableName() != null && (x.Key.Id == rootId || IsRelevant(x.Key.Type.GetTableName()!, rootTable)))
-            .Select(x => ExportGraphLoader.ToRow(x.Key.Type, x.Value))
+        graph.Entities.Where(x => x.Key.TypeEntity.GetTableName() != null && (x.Key.Id == rootId || IsRelevant(x.Key.TypeEntity.GetTableName()!, rootTable)))
+            .Select(x => ExportGraphLoader.ToRow(x.Key.TypeEntity, x.Value))
             .OrderBy(x => x.Table, StringComparer.Ordinal).ThenBy(x => x.Order, StringComparer.Ordinal).ThenBy(x => x.Id, StringComparer.Ordinal)
             .ToArray();
 

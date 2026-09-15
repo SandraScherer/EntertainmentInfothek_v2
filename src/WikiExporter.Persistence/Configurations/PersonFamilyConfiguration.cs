@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Person_Family</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class PersonFamilyConfiguration : IEntityTypeConfiguration<PersonFamily>
+public sealed class PersonFamilyConfiguration : IEntityTypeConfiguration<PersonFamilyEntity>
 {
-    public void Configure(EntityTypeBuilder<PersonFamily> builder)
+    public void Configure(EntityTypeBuilder<PersonFamilyEntity> builder)
     {
         builder.ToTable("Person_Family");
         builder.HasKey(x => x.Id);
@@ -28,12 +28,12 @@ public sealed class PersonFamilyConfiguration : IEntityTypeConfiguration<PersonF
         builder.HasOne(x => x.Family).WithMany(x => x.PersonFamilyFamilys).HasForeignKey(x => x.FamilyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Family.PersonID -> Person.ID
-        builder.HasOne(x => x.Person).WithMany(x => x.PersonFamilyPersons).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PersonEntity).WithMany(x => x.PersonFamilyPersons).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Family.RelationshipID -> Relationship.ID
-        builder.HasOne(x => x.Relationship).WithMany(x => x.PersonFamilys).HasForeignKey(x => x.RelationshipId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.RelationshipEntity).WithMany(x => x.PersonFamilys).HasForeignKey(x => x.RelationshipId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Family.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.PersonFamilys).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.PersonFamilys).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>VideoGame_ReleaseDate</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class VideoGameReleaseDateConfiguration : IEntityTypeConfiguration<VideoGameReleaseDate>
+public sealed class VideoGameReleaseDateConfiguration : IEntityTypeConfiguration<VideoGameReleaseDateEntity>
 {
-    public void Configure(EntityTypeBuilder<VideoGameReleaseDate> builder)
+    public void Configure(EntityTypeBuilder<VideoGameReleaseDateEntity> builder)
     {
         builder.ToTable("VideoGame_ReleaseDate");
         builder.HasKey(x => x.Id);
@@ -24,12 +24,12 @@ public sealed class VideoGameReleaseDateConfiguration : IEntityTypeConfiguration
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: VideoGame_ReleaseDate.PlatformID -> Platform.ID
-        builder.HasOne(x => x.Platform).WithMany(x => x.VideoGameReleaseDates).HasForeignKey(x => x.PlatformId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PlatformEntity).WithMany(x => x.VideoGameReleaseDates).HasForeignKey(x => x.PlatformId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_ReleaseDate.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.VideoGameReleaseDates).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.VideoGameReleaseDates).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_ReleaseDate.VideoGameID -> VideoGame.ID
-        builder.HasOne(x => x.VideoGame).WithMany(x => x.VideoGameReleaseDates).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VideoGameEntity).WithMany(x => x.VideoGameReleaseDates).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

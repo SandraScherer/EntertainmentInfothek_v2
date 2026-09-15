@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification_MultiplayerOption</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class TechnicalSpecificationMultiplayerOptionConfiguration : IEntityTypeConfiguration<TechnicalSpecificationMultiplayerOption>
+public sealed class TechnicalSpecificationMultiplayerOptionConfiguration : IEntityTypeConfiguration<TechnicalSpecificationMultiplayerOptionEntity>
 {
-    public void Configure(EntityTypeBuilder<TechnicalSpecificationMultiplayerOption> builder)
+    public void Configure(EntityTypeBuilder<TechnicalSpecificationMultiplayerOptionEntity> builder)
     {
         builder.ToTable("TechnicalSpecification_MultiplayerOption");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class TechnicalSpecificationMultiplayerOptionConfiguration : IEnti
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: TechnicalSpecification_MultiplayerOption.MultiplayerOptionID -> MultiplayerOption.ID
-        builder.HasOne(x => x.MultiplayerOption).WithMany(x => x.TechnicalSpecificationMultiplayerOptions).HasForeignKey(x => x.MultiplayerOptionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MultiplayerOptionEntity).WithMany(x => x.TechnicalSpecificationMultiplayerOptions).HasForeignKey(x => x.MultiplayerOptionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_MultiplayerOption.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.TechnicalSpecificationMultiplayerOptions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TechnicalSpecificationMultiplayerOptions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_MultiplayerOption.TechnicalSpecificationID -> TechnicalSpecification.ID
-        builder.HasOne(x => x.TechnicalSpecification).WithMany(x => x.TechnicalSpecificationMultiplayerOptions).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany(x => x.TechnicalSpecificationMultiplayerOptions).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

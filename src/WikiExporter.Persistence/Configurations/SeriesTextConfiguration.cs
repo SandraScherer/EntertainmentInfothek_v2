@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Series_Text</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class SeriesTextConfiguration : IEntityTypeConfiguration<SeriesText>
+public sealed class SeriesTextConfiguration : IEntityTypeConfiguration<SeriesTextEntity>
 {
-    public void Configure(EntityTypeBuilder<SeriesText> builder)
+    public void Configure(EntityTypeBuilder<SeriesTextEntity> builder)
     {
         builder.ToTable("Series_Text");
         builder.HasKey(x => x.Id);
@@ -22,15 +22,15 @@ public sealed class SeriesTextConfiguration : IEntityTypeConfiguration<SeriesTex
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_Text.SeriesID -> Series.ID
-        builder.HasOne(x => x.Series).WithMany(x => x.SeriesTexts).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesTexts).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_Text.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.SeriesTexts).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesTexts).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_Text.TextID -> Text.ID
-        builder.HasOne(x => x.Text).WithMany(x => x.SeriesTexts).HasForeignKey(x => x.TextId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TextEntity).WithMany(x => x.SeriesTexts).HasForeignKey(x => x.TextId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_Text.TypeID -> TextType.ID
-        builder.HasOne(x => x.Type).WithMany(x => x.SeriesTexts).HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TypeEntity).WithMany(x => x.SeriesTexts).HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

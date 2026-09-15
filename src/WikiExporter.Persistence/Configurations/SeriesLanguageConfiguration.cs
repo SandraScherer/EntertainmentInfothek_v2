@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Series_Language</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class SeriesLanguageConfiguration : IEntityTypeConfiguration<SeriesLanguage>
+public sealed class SeriesLanguageConfiguration : IEntityTypeConfiguration<SeriesLanguageEntity>
 {
-    public void Configure(EntityTypeBuilder<SeriesLanguage> builder)
+    public void Configure(EntityTypeBuilder<SeriesLanguageEntity> builder)
     {
         builder.ToTable("Series_Language");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class SeriesLanguageConfiguration : IEntityTypeConfiguration<Serie
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_Language.LanguageID -> Language.ID
-        builder.HasOne(x => x.Language).WithMany(x => x.SeriesLanguages).HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LanguageEntity).WithMany(x => x.SeriesLanguages).HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_Language.SeriesID -> Series.ID
-        builder.HasOne(x => x.Series).WithMany(x => x.SeriesLanguages).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesLanguages).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_Language.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.SeriesLanguages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesLanguages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

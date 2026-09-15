@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Gender</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class GenderConfiguration : IEntityTypeConfiguration<Gender>
+public sealed class GenderConfiguration : IEntityTypeConfiguration<GenderEntity>
 {
-    public void Configure(EntityTypeBuilder<Gender> builder)
+    public void Configure(EntityTypeBuilder<GenderEntity> builder)
     {
         builder.ToTable("Gender");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class GenderConfiguration : IEntityTypeConfiguration<Gender>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Gender.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Genders).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Genders).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

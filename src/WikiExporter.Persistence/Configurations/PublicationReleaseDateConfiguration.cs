@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Publication_ReleaseDate</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class PublicationReleaseDateConfiguration : IEntityTypeConfiguration<PublicationReleaseDate>
+public sealed class PublicationReleaseDateConfiguration : IEntityTypeConfiguration<PublicationReleaseDateEntity>
 {
-    public void Configure(EntityTypeBuilder<PublicationReleaseDate> builder)
+    public void Configure(EntityTypeBuilder<PublicationReleaseDateEntity> builder)
     {
         builder.ToTable("Publication_ReleaseDate");
         builder.HasKey(x => x.Id);
@@ -23,9 +23,9 @@ public sealed class PublicationReleaseDateConfiguration : IEntityTypeConfigurati
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Publication_ReleaseDate.PublicationID -> Publication.ID
-        builder.HasOne(x => x.Publication).WithMany(x => x.PublicationReleaseDates).HasForeignKey(x => x.PublicationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PublicationEntity).WithMany(x => x.PublicationReleaseDates).HasForeignKey(x => x.PublicationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Publication_ReleaseDate.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.PublicationReleaseDates).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.PublicationReleaseDates).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

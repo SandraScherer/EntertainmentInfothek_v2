@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>CopyProtection</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class CopyProtectionConfiguration : IEntityTypeConfiguration<CopyProtection>
+public sealed class CopyProtectionConfiguration : IEntityTypeConfiguration<CopyProtectionEntity>
 {
-    public void Configure(EntityTypeBuilder<CopyProtection> builder)
+    public void Configure(EntityTypeBuilder<CopyProtectionEntity> builder)
     {
         builder.ToTable("CopyProtection");
         builder.HasKey(x => x.Id);
@@ -19,6 +19,6 @@ public sealed class CopyProtectionConfiguration : IEntityTypeConfiguration<CopyP
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: CopyProtection.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.CopyProtections).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.CopyProtections).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

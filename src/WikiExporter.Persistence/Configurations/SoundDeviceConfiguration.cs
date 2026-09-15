@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>SoundDevice</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class SoundDeviceConfiguration : IEntityTypeConfiguration<SoundDevice>
+public sealed class SoundDeviceConfiguration : IEntityTypeConfiguration<SoundDeviceEntity>
 {
-    public void Configure(EntityTypeBuilder<SoundDevice> builder)
+    public void Configure(EntityTypeBuilder<SoundDeviceEntity> builder)
     {
         builder.ToTable("SoundDevice");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class SoundDeviceConfiguration : IEntityTypeConfiguration<SoundDev
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: SoundDevice.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.SoundDevices).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SoundDevices).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

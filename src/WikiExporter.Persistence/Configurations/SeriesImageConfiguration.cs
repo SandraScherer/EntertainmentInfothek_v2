@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Series_Image</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class SeriesImageConfiguration : IEntityTypeConfiguration<SeriesImage>
+public sealed class SeriesImageConfiguration : IEntityTypeConfiguration<SeriesImageEntity>
 {
-    public void Configure(EntityTypeBuilder<SeriesImage> builder)
+    public void Configure(EntityTypeBuilder<SeriesImageEntity> builder)
     {
         builder.ToTable("Series_Image");
         builder.HasKey(x => x.Id);
@@ -22,12 +22,12 @@ public sealed class SeriesImageConfiguration : IEntityTypeConfiguration<SeriesIm
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_Image.ImageID -> Image.ID
-        builder.HasOne(x => x.Image).WithMany(x => x.SeriesImages).HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.ImageEntity).WithMany(x => x.SeriesImages).HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_Image.SeriesID -> Series.ID
-        builder.HasOne(x => x.Series).WithMany(x => x.SeriesImages).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesImages).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_Image.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.SeriesImages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesImages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

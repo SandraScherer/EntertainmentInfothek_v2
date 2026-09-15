@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>VideoGame_Certification</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class VideoGameCertificationConfiguration : IEntityTypeConfiguration<VideoGameCertification>
+public sealed class VideoGameCertificationConfiguration : IEntityTypeConfiguration<VideoGameCertificationEntity>
 {
-    public void Configure(EntityTypeBuilder<VideoGameCertification> builder)
+    public void Configure(EntityTypeBuilder<VideoGameCertificationEntity> builder)
     {
         builder.ToTable("VideoGame_Certification");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class VideoGameCertificationConfiguration : IEntityTypeConfigurati
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: VideoGame_Certification.CertificationID -> Certification.ID
-        builder.HasOne(x => x.Certification).WithMany(x => x.VideoGameCertifications).HasForeignKey(x => x.CertificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CertificationEntity).WithMany(x => x.VideoGameCertifications).HasForeignKey(x => x.CertificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Certification.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.VideoGameCertifications).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.VideoGameCertifications).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Certification.VideoGameID -> VideoGame.ID
-        builder.HasOne(x => x.VideoGame).WithMany(x => x.VideoGameCertifications).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VideoGameEntity).WithMany(x => x.VideoGameCertifications).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

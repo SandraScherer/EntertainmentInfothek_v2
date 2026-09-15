@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>OperatingSystem</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class OperatingSystemConfiguration : IEntityTypeConfiguration<OperatingSystem>
+public sealed class OperatingSystemConfiguration : IEntityTypeConfiguration<OperatingSystemEntity>
 {
-    public void Configure(EntityTypeBuilder<OperatingSystem> builder)
+    public void Configure(EntityTypeBuilder<OperatingSystemEntity> builder)
     {
         builder.ToTable("OperatingSystem");
         builder.HasKey(x => x.Id);
@@ -19,6 +19,6 @@ public sealed class OperatingSystemConfiguration : IEntityTypeConfiguration<Oper
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: OperatingSystem.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.OperatingSystems).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.OperatingSystems).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

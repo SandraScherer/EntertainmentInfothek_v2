@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification_CopyProtection</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class TechnicalSpecificationCopyProtectionConfiguration : IEntityTypeConfiguration<TechnicalSpecificationCopyProtection>
+public sealed class TechnicalSpecificationCopyProtectionConfiguration : IEntityTypeConfiguration<TechnicalSpecificationCopyProtectionEntity>
 {
-    public void Configure(EntityTypeBuilder<TechnicalSpecificationCopyProtection> builder)
+    public void Configure(EntityTypeBuilder<TechnicalSpecificationCopyProtectionEntity> builder)
     {
         builder.ToTable("TechnicalSpecification_CopyProtection");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class TechnicalSpecificationCopyProtectionConfiguration : IEntityT
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: TechnicalSpecification_CopyProtection.CopyProtectionID -> CopyProtection.ID
-        builder.HasOne(x => x.CopyProtection).WithMany(x => x.TechnicalSpecificationCopyProtections).HasForeignKey(x => x.CopyProtectionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CopyProtectionEntity).WithMany(x => x.TechnicalSpecificationCopyProtections).HasForeignKey(x => x.CopyProtectionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_CopyProtection.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.TechnicalSpecificationCopyProtections).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TechnicalSpecificationCopyProtections).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_CopyProtection.TechnicalSpecificationID -> TechnicalSpecification.ID
-        builder.HasOne(x => x.TechnicalSpecification).WithMany(x => x.TechnicalSpecificationCopyProtections).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany(x => x.TechnicalSpecificationCopyProtections).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

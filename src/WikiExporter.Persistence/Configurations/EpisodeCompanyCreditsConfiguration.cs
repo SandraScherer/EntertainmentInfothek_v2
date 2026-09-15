@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Episode_CompanyCredits</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class EpisodeCompanyCreditsConfiguration : IEntityTypeConfiguration<EpisodeCompanyCredits>
+public sealed class EpisodeCompanyCreditsConfiguration : IEntityTypeConfiguration<EpisodeCompanyCreditsEntity>
 {
-    public void Configure(EntityTypeBuilder<EpisodeCompanyCredits> builder)
+    public void Configure(EntityTypeBuilder<EpisodeCompanyCreditsEntity> builder)
     {
         builder.ToTable("Episode_CompanyCredits");
         builder.HasKey(x => x.Id);
@@ -25,18 +25,18 @@ public sealed class EpisodeCompanyCreditsConfiguration : IEntityTypeConfiguratio
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Episode_CompanyCredits.CompanyID -> Company.ID
-        builder.HasOne(x => x.Company).WithMany(x => x.EpisodeCompanyCreditss).HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CompanyEntity).WithMany(x => x.EpisodeCompanyCreditss).HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_CompanyCredits.CountryID -> Country.ID
-        builder.HasOne(x => x.Country).WithMany(x => x.EpisodeCompanyCreditss).HasForeignKey(x => x.CountryId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CountryEntity).WithMany(x => x.EpisodeCompanyCreditss).HasForeignKey(x => x.CountryId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_CompanyCredits.DepartmentID -> Department.ID
-        builder.HasOne(x => x.Department).WithMany(x => x.EpisodeCompanyCreditss).HasForeignKey(x => x.DepartmentId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.DepartmentEntity).WithMany(x => x.EpisodeCompanyCreditss).HasForeignKey(x => x.DepartmentId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_CompanyCredits.EpisodeID -> Episode.ID
-        builder.HasOne(x => x.Episode).WithMany(x => x.EpisodeCompanyCreditss).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.EpisodeEntity).WithMany(x => x.EpisodeCompanyCreditss).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_CompanyCredits.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.EpisodeCompanyCreditss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.EpisodeCompanyCreditss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

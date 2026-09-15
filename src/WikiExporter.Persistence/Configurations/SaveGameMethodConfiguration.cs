@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>SaveGameMethod</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class SaveGameMethodConfiguration : IEntityTypeConfiguration<SaveGameMethod>
+public sealed class SaveGameMethodConfiguration : IEntityTypeConfiguration<SaveGameMethodEntity>
 {
-    public void Configure(EntityTypeBuilder<SaveGameMethod> builder)
+    public void Configure(EntityTypeBuilder<SaveGameMethodEntity> builder)
     {
         builder.ToTable("SaveGameMethod");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class SaveGameMethodConfiguration : IEntityTypeConfiguration<SaveG
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: SaveGameMethod.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.SaveGameMethods).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SaveGameMethods).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

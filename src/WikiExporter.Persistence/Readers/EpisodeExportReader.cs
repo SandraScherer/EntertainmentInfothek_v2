@@ -14,7 +14,7 @@ internal sealed class EpisodeExportReader : ExportReaderBase, IEpisodeExportRead
     public async Task<EpisodeExportData?> GetAsync(string id, CancellationToken ct = default)
     {
         await using var db = await Factory.CreateDbContextAsync(ct);
-        var entity = await db.Episode.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id, ct);
+        var entity = await db.EpisodeEntity.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id, ct);
         if (entity is null) return null;
         return await LoadAndMapAsync(db, new[] { id }, ct).ContinueWith(t => t.Result.SingleOrDefault(), ct);
     }
@@ -25,7 +25,7 @@ internal sealed class EpisodeExportReader : ExportReaderBase, IEpisodeExportRead
         string? after = null;
         while (true)
         {
-            var ids = await db.Episode.AsNoTracking().Where(x => after == null || string.Compare(x.Id, after) > 0).OrderBy(x => x.Id).Select(x => x.Id).Take(Size(options)).ToListAsync(ct);
+            var ids = await db.EpisodeEntity.AsNoTracking().Where(x => after == null || string.Compare(x.Id, after) > 0).OrderBy(x => x.Id).Select(x => x.Id).Take(Size(options)).ToListAsync(ct);
             if (ids.Count == 0) yield break;
             foreach (var item in await LoadAndMapAsync(db, ids, ct)) yield return item;
             after = ids[^1];
@@ -35,13 +35,13 @@ internal sealed class EpisodeExportReader : ExportReaderBase, IEpisodeExportRead
     private static async Task<List<EpisodeExportData>> LoadAndMapAsync(EntertainmentInfothekDbContext db, IReadOnlyCollection<string> ids, CancellationToken ct)
     {
         var loader = new ExportGraphLoader(db);
-        var rootType = db.Model.FindEntityType(typeof(Episode))!;
-        var graph = await loader.LoadAsync(rootType, ids, RootGraphPlans.Episode, ct);
+        var rootType = db.Model.FindEntityType(typeof(EpisodeEntity))!;
+        var graph = await loader.LoadAsync(rootType, ids, RootGraphPlans.EpisodeEntity, ct);
         var result = new List<EpisodeExportData>(ids.Count);
         foreach (var id in ids)
         {
             if (!graph.Entities.TryGetValue((rootType,id), out var obj)) continue;
-            var t = rootType; var e = (Episode)obj;
+            var t = rootType; var e = (EpisodeEntity)obj;
             var rows = ExportGraphMapper.Rows(graph, "Episode", id);
             result.Add(new EpisodeExportData(e.Id, ExportGraphMapper.Title(t,e), ExportGraphMapper.Get(t,e,"SeriesId"), ExportGraphMapper.Get(t,e,"SeasonNo"), ExportGraphMapper.Get(t,e,"EpisodeNo"), ExportGraphMapper.Get(t,e,"Details"), rows));
         }

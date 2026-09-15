@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>FilmFormat</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class FilmFormatConfiguration : IEntityTypeConfiguration<FilmFormat>
+public sealed class FilmFormatConfiguration : IEntityTypeConfiguration<FilmFormatEntity>
 {
-    public void Configure(EntityTypeBuilder<FilmFormat> builder)
+    public void Configure(EntityTypeBuilder<FilmFormatEntity> builder)
     {
         builder.ToTable("FilmFormat");
         builder.HasKey(x => x.Id);
@@ -19,6 +19,6 @@ public sealed class FilmFormatConfiguration : IEntityTypeConfiguration<FilmForma
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: FilmFormat.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.FilmFormats).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.FilmFormats).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

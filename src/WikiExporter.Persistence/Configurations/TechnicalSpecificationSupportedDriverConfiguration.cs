@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification_SupportedDriver</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class TechnicalSpecificationSupportedDriverConfiguration : IEntityTypeConfiguration<TechnicalSpecificationSupportedDriver>
+public sealed class TechnicalSpecificationSupportedDriverConfiguration : IEntityTypeConfiguration<TechnicalSpecificationSupportedDriverEntity>
 {
-    public void Configure(EntityTypeBuilder<TechnicalSpecificationSupportedDriver> builder)
+    public void Configure(EntityTypeBuilder<TechnicalSpecificationSupportedDriverEntity> builder)
     {
         builder.ToTable("TechnicalSpecification_SupportedDriver");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class TechnicalSpecificationSupportedDriverConfiguration : IEntity
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: TechnicalSpecification_SupportedDriver.DriverID -> Driver.ID
-        builder.HasOne(x => x.Driver).WithMany(x => x.TechnicalSpecificationSupportedDrivers).HasForeignKey(x => x.DriverId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.DriverEntity).WithMany(x => x.TechnicalSpecificationSupportedDrivers).HasForeignKey(x => x.DriverId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedDriver.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.TechnicalSpecificationSupportedDrivers).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TechnicalSpecificationSupportedDrivers).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedDriver.TechnicalSpecificationID -> TechnicalSpecification.ID
-        builder.HasOne(x => x.TechnicalSpecification).WithMany(x => x.TechnicalSpecificationSupportedDrivers).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany(x => x.TechnicalSpecificationSupportedDrivers).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

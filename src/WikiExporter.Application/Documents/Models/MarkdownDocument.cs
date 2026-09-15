@@ -8,11 +8,11 @@ public sealed record MarkdownDocument(
     IReadOnlyList<MarkdownBlock> Blocks);
 
 public abstract record MarkdownBlock;
-public sealed record HeadingBlock(int Level, string Text) : MarkdownBlock;
-public sealed record ParagraphBlock(string Text) : MarkdownBlock;
+public sealed record HeadingBlock(int Level, string TextEntity) : MarkdownBlock;
+public sealed record ParagraphBlock(string TextEntity) : MarkdownBlock;
 public sealed record TableBlock(IReadOnlyList<string> Headers, IReadOnlyList<IReadOnlyList<string>> Rows) : MarkdownBlock;
 public sealed record ListBlock(IReadOnlyList<string> Items, bool Ordered = false) : MarkdownBlock;
-public sealed record LinkBlock(string Text, string TargetType, string TargetId) : MarkdownBlock;
+public sealed record LinkBlock(string TextEntity, string TargetType, string TargetId) : MarkdownBlock;
 public sealed record ImageBlock(string? FileName, string? Description, string? TargetId = null) : MarkdownBlock;
-public sealed record CodeBlock(string Content, string? Language = null) : MarkdownBlock;
+public sealed record CodeBlock(string Content, string? LanguageEntity = null) : MarkdownBlock;
 public sealed record HorizontalRuleBlock() : MarkdownBlock;

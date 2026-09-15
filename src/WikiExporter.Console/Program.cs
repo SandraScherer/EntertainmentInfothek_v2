@@ -28,8 +28,8 @@ public static class Program
             var interaction = scope.ServiceProvider.GetRequiredService<IConsoleInteraction>();
 
             var entityType = commandLine.EntityType ?? interaction.SelectEntityType();
-            var language = commandLine.Language ?? ParseDefaultLanguage(settings.DefaultLanguage);
-            if (commandLine.Language is null && Console.IsInputRedirected == false)
+            var language = commandLine.LanguageEntity ?? ParseDefaultLanguage(settings.DefaultLanguage);
+            if (commandLine.LanguageEntity is null && Console.IsInputRedirected == false)
                 language = interaction.SelectLanguage(language);
 
             var format = commandLine.Format ?? ParseDefaultFormat(settings.DefaultFormat);

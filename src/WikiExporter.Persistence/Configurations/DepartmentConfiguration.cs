@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Department</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class DepartmentConfiguration : IEntityTypeConfiguration<Department>
+public sealed class DepartmentConfiguration : IEntityTypeConfiguration<DepartmentEntity>
 {
-    public void Configure(EntityTypeBuilder<Department> builder)
+    public void Configure(EntityTypeBuilder<DepartmentEntity> builder)
     {
         builder.ToTable("Department");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class DepartmentConfiguration : IEntityTypeConfiguration<Departmen
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Department.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Departments).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Departments).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

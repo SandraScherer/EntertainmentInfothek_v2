@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Platform</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class PlatformConfiguration : IEntityTypeConfiguration<Platform>
+public sealed class PlatformConfiguration : IEntityTypeConfiguration<PlatformEntity>
 {
-    public void Configure(EntityTypeBuilder<Platform> builder)
+    public void Configure(EntityTypeBuilder<PlatformEntity> builder)
     {
         builder.ToTable("Platform");
         builder.HasKey(x => x.Id);
@@ -19,6 +19,6 @@ public sealed class PlatformConfiguration : IEntityTypeConfiguration<Platform>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Platform.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Platforms).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Platforms).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

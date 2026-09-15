@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>VideoGame_Text</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class VideoGameTextConfiguration : IEntityTypeConfiguration<VideoGameText>
+public sealed class VideoGameTextConfiguration : IEntityTypeConfiguration<VideoGameTextEntity>
 {
-    public void Configure(EntityTypeBuilder<VideoGameText> builder)
+    public void Configure(EntityTypeBuilder<VideoGameTextEntity> builder)
     {
         builder.ToTable("VideoGame_Text");
         builder.HasKey(x => x.Id);
@@ -22,15 +22,15 @@ public sealed class VideoGameTextConfiguration : IEntityTypeConfiguration<VideoG
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: VideoGame_Text.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.VideoGameTexts).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.VideoGameTexts).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Text.TextID -> Text.ID
-        builder.HasOne(x => x.Text).WithMany(x => x.VideoGameTexts).HasForeignKey(x => x.TextId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TextEntity).WithMany(x => x.VideoGameTexts).HasForeignKey(x => x.TextId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Text.TypeID -> TextType.ID
-        builder.HasOne(x => x.Type).WithMany(x => x.VideoGameTexts).HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TypeEntity).WithMany(x => x.VideoGameTexts).HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Text.VideoGameID -> VideoGame.ID
-        builder.HasOne(x => x.VideoGame).WithMany(x => x.VideoGameTexts).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VideoGameEntity).WithMany(x => x.VideoGameTexts).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

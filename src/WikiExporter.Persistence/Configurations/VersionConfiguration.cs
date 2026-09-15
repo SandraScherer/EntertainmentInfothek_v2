@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Version</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class VersionConfiguration : IEntityTypeConfiguration<Version>
+public sealed class VersionConfiguration : IEntityTypeConfiguration<VersionEntity>
 {
-    public void Configure(EntityTypeBuilder<Version> builder)
+    public void Configure(EntityTypeBuilder<VersionEntity> builder)
     {
         builder.ToTable("Version");
         builder.HasKey(x => x.Id);
@@ -22,12 +22,12 @@ public sealed class VersionConfiguration : IEntityTypeConfiguration<Version>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Version.PlatformID -> Platform.ID
-        builder.HasOne(x => x.Platform).WithMany(x => x.Versions).HasForeignKey(x => x.PlatformId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PlatformEntity).WithMany(x => x.Versions).HasForeignKey(x => x.PlatformId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Version.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Versions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Versions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Version.TypeID -> Type.ID
-        builder.HasOne(x => x.Type).WithMany(x => x.Versions).HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TypeEntity).WithMany(x => x.Versions).HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

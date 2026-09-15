@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Series_NegativeFormat</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class SeriesNegativeFormatConfiguration : IEntityTypeConfiguration<SeriesNegativeFormat>
+public sealed class SeriesNegativeFormatConfiguration : IEntityTypeConfiguration<SeriesNegativeFormatEntity>
 {
-    public void Configure(EntityTypeBuilder<SeriesNegativeFormat> builder)
+    public void Configure(EntityTypeBuilder<SeriesNegativeFormatEntity> builder)
     {
         builder.ToTable("Series_NegativeFormat");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class SeriesNegativeFormatConfiguration : IEntityTypeConfiguration
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_NegativeFormat.FilmFormatID -> FilmFormat.ID
-        builder.HasOne(x => x.FilmFormat).WithMany(x => x.SeriesNegativeFormats).HasForeignKey(x => x.FilmFormatId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.FilmFormatEntity).WithMany(x => x.SeriesNegativeFormats).HasForeignKey(x => x.FilmFormatId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_NegativeFormat.SeriesID -> Series.ID
-        builder.HasOne(x => x.Series).WithMany(x => x.SeriesNegativeFormats).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesNegativeFormats).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_NegativeFormat.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.SeriesNegativeFormats).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesNegativeFormats).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

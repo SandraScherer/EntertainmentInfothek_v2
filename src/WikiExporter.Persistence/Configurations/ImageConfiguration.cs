@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Image</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class ImageConfiguration : IEntityTypeConfiguration<Image>
+public sealed class ImageConfiguration : IEntityTypeConfiguration<ImageEntity>
 {
-    public void Configure(EntityTypeBuilder<Image> builder)
+    public void Configure(EntityTypeBuilder<ImageEntity> builder)
     {
         builder.ToTable("Image");
         builder.HasKey(x => x.Id);
@@ -21,6 +21,6 @@ public sealed class ImageConfiguration : IEntityTypeConfiguration<Image>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Image.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Images).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Images).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

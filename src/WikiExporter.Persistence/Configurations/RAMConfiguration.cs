@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>RAM</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class RAMConfiguration : IEntityTypeConfiguration<RAM>
+public sealed class RAMConfiguration : IEntityTypeConfiguration<RAMEntity>
 {
-    public void Configure(EntityTypeBuilder<RAM> builder)
+    public void Configure(EntityTypeBuilder<RAMEntity> builder)
     {
         builder.ToTable("RAM");
         builder.HasKey(x => x.Id);
@@ -19,6 +19,6 @@ public sealed class RAMConfiguration : IEntityTypeConfiguration<RAM>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: RAM.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.RAMs).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.RAMs).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

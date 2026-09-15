@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Laboratory</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class LaboratoryConfiguration : IEntityTypeConfiguration<Laboratory>
+public sealed class LaboratoryConfiguration : IEntityTypeConfiguration<LaboratoryEntity>
 {
-    public void Configure(EntityTypeBuilder<Laboratory> builder)
+    public void Configure(EntityTypeBuilder<LaboratoryEntity> builder)
     {
         builder.ToTable("Laboratory");
         builder.HasKey(x => x.Id);
@@ -20,9 +20,9 @@ public sealed class LaboratoryConfiguration : IEntityTypeConfiguration<Laborator
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Laboratory.LocationID -> Location.ID
-        builder.HasOne(x => x.Location).WithMany(x => x.Laboratorys).HasForeignKey(x => x.LocationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LocationEntity).WithMany(x => x.Laboratorys).HasForeignKey(x => x.LocationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Laboratory.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Laboratorys).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Laboratorys).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>VideoGame_Version</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class VideoGameVersionConfiguration : IEntityTypeConfiguration<VideoGameVersion>
+public sealed class VideoGameVersionConfiguration : IEntityTypeConfiguration<VideoGameVersionEntity>
 {
-    public void Configure(EntityTypeBuilder<VideoGameVersion> builder)
+    public void Configure(EntityTypeBuilder<VideoGameVersionEntity> builder)
     {
         builder.ToTable("VideoGame_Version");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class VideoGameVersionConfiguration : IEntityTypeConfiguration<Vid
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: VideoGame_Version.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.VideoGameVersions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.VideoGameVersions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Version.VersionID -> Version.ID
-        builder.HasOne(x => x.Version).WithMany(x => x.VideoGameVersions).HasForeignKey(x => x.VersionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VersionEntity).WithMany(x => x.VideoGameVersions).HasForeignKey(x => x.VersionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Version.VideoGameID -> VideoGame.ID
-        builder.HasOne(x => x.VideoGame).WithMany(x => x.VideoGameVersions).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VideoGameEntity).WithMany(x => x.VideoGameVersions).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

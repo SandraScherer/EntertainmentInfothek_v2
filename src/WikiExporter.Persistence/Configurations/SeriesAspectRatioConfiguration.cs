@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Series_AspectRatio</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class SeriesAspectRatioConfiguration : IEntityTypeConfiguration<SeriesAspectRatio>
+public sealed class SeriesAspectRatioConfiguration : IEntityTypeConfiguration<SeriesAspectRatioEntity>
 {
-    public void Configure(EntityTypeBuilder<SeriesAspectRatio> builder)
+    public void Configure(EntityTypeBuilder<SeriesAspectRatioEntity> builder)
     {
         builder.ToTable("Series_AspectRatio");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class SeriesAspectRatioConfiguration : IEntityTypeConfiguration<Se
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_AspectRatio.AspectRatioID -> AspectRatio.ID
-        builder.HasOne(x => x.AspectRatio).WithMany(x => x.SeriesAspectRatios).HasForeignKey(x => x.AspectRatioId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.AspectRatioEntity).WithMany(x => x.SeriesAspectRatios).HasForeignKey(x => x.AspectRatioId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_AspectRatio.SeriesID -> Series.ID
-        builder.HasOne(x => x.Series).WithMany(x => x.SeriesAspectRatios).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesAspectRatios).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_AspectRatio.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.SeriesAspectRatios).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesAspectRatios).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

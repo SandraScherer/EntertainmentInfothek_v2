@@ -6,7 +6,7 @@ public sealed record LocalizedValue(string? Original, string? English, string? G
 /// <summary>Stable reference to another exported entity.</summary>
 public sealed record EntityReference(string Id, string? DisplayName = null);
 public sealed record EpisodeReference(string Id, LocalizedValue Title, string? SeasonNo, string? EpisodeNo);
-public sealed record WorkReference(string Type, string Id, LocalizedValue Title);
+public sealed record WorkReference(string TypeEntity, string Id, LocalizedValue Title);
 
 /// <summary>One persisted row retained by the export read model. This prevents data loss for schema areas not yet given a specialized domain type.</summary>
 public sealed record ExportRowData(

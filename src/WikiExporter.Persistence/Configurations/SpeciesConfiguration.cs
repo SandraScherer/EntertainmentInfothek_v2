@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Species</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class SpeciesConfiguration : IEntityTypeConfiguration<Species>
+public sealed class SpeciesConfiguration : IEntityTypeConfiguration<SpeciesEntity>
 {
-    public void Configure(EntityTypeBuilder<Species> builder)
+    public void Configure(EntityTypeBuilder<SpeciesEntity> builder)
     {
         builder.ToTable("Species");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class SpeciesConfiguration : IEntityTypeConfiguration<Species>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Species.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Speciess).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Speciess).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

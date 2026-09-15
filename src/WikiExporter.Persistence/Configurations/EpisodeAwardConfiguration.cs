@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Episode_Award</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class EpisodeAwardConfiguration : IEntityTypeConfiguration<EpisodeAward>
+public sealed class EpisodeAwardConfiguration : IEntityTypeConfiguration<EpisodeAwardEntity>
 {
-    public void Configure(EntityTypeBuilder<EpisodeAward> builder)
+    public void Configure(EntityTypeBuilder<EpisodeAwardEntity> builder)
     {
         builder.ToTable("Episode_Award");
         builder.HasKey(x => x.Id);
@@ -24,12 +24,12 @@ public sealed class EpisodeAwardConfiguration : IEntityTypeConfiguration<Episode
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Episode_Award.AwardID -> Award.ID
-        builder.HasOne(x => x.Award).WithMany(x => x.EpisodeAwards).HasForeignKey(x => x.AwardId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.AwardEntity).WithMany(x => x.EpisodeAwards).HasForeignKey(x => x.AwardId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_Award.EpisodeID -> Episode.ID
-        builder.HasOne(x => x.Episode).WithMany(x => x.EpisodeAwards).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.EpisodeEntity).WithMany(x => x.EpisodeAwards).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_Award.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.EpisodeAwards).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.EpisodeAwards).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

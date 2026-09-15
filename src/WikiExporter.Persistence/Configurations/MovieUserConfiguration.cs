@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Movie_User</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class MovieUserConfiguration : IEntityTypeConfiguration<MovieUser>
+public sealed class MovieUserConfiguration : IEntityTypeConfiguration<MovieUserEntity>
 {
-    public void Configure(EntityTypeBuilder<MovieUser> builder)
+    public void Configure(EntityTypeBuilder<MovieUserEntity> builder)
     {
         builder.ToTable("Movie_User");
         builder.HasKey(x => x.Id);
@@ -26,19 +26,19 @@ public sealed class MovieUserConfiguration : IEntityTypeConfiguration<MovieUser>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Movie_User.EditionID -> Edition.ID
-        builder.HasOne(x => x.Edition).WithMany(x => x.MovieUsers).HasForeignKey(x => x.EditionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.EditionEntity).WithMany(x => x.MovieUsers).HasForeignKey(x => x.EditionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_User.MovieID -> Movie.ID
-        builder.HasOne(x => x.Movie).WithMany(x => x.MovieUsers).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MovieEntity).WithMany(x => x.MovieUsers).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_User.PriorityID -> Priority.ID
-        builder.HasOne(x => x.Priority).WithMany(x => x.MovieUsers).HasForeignKey(x => x.PriorityId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PriorityEntity).WithMany(x => x.MovieUsers).HasForeignKey(x => x.PriorityId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_User.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.MovieUserStatuss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MovieUserStatuss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_User.UserID -> User.ID
-        builder.HasOne(x => x.User).WithMany(x => x.MovieUsers).HasForeignKey(x => x.UserId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.UserEntity).WithMany(x => x.MovieUsers).HasForeignKey(x => x.UserId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_User.UserStatusID -> Status.ID
         builder.HasOne(x => x.UserStatus).WithMany(x => x.MovieUserUserStatuss).HasForeignKey(x => x.UserStatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);

@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Movie_Crew</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class MovieCrewConfiguration : IEntityTypeConfiguration<MovieCrew>
+public sealed class MovieCrewConfiguration : IEntityTypeConfiguration<MovieCrewEntity>
 {
-    public void Configure(EntityTypeBuilder<MovieCrew> builder)
+    public void Configure(EntityTypeBuilder<MovieCrewEntity> builder)
     {
         builder.ToTable("Movie_Crew");
         builder.HasKey(x => x.Id);
@@ -24,15 +24,15 @@ public sealed class MovieCrewConfiguration : IEntityTypeConfiguration<MovieCrew>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Movie_Crew.DepartmentID -> Department.ID
-        builder.HasOne(x => x.Department).WithMany(x => x.MovieCrews).HasForeignKey(x => x.DepartmentId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.DepartmentEntity).WithMany(x => x.MovieCrews).HasForeignKey(x => x.DepartmentId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Crew.MovieID -> Movie.ID
-        builder.HasOne(x => x.Movie).WithMany(x => x.MovieCrews).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MovieEntity).WithMany(x => x.MovieCrews).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Crew.PersonID -> Person.ID
-        builder.HasOne(x => x.Person).WithMany(x => x.MovieCrews).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PersonEntity).WithMany(x => x.MovieCrews).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Crew.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.MovieCrews).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MovieCrews).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

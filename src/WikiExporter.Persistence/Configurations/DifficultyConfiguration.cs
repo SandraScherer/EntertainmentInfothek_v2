@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Difficulty</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class DifficultyConfiguration : IEntityTypeConfiguration<Difficulty>
+public sealed class DifficultyConfiguration : IEntityTypeConfiguration<DifficultyEntity>
 {
-    public void Configure(EntityTypeBuilder<Difficulty> builder)
+    public void Configure(EntityTypeBuilder<DifficultyEntity> builder)
     {
         builder.ToTable("Difficulty");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class DifficultyConfiguration : IEntityTypeConfiguration<Difficult
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Difficulty.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Difficultys).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Difficultys).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

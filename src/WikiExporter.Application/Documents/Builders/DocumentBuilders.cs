@@ -378,7 +378,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
     {
         var id = Field(row, field);
         if (string.IsNullOrWhiteSpace(id)) return null;
-        blocks.Add(new LinkBlock($"{label}: {ReferenceName(rows, "Person", id, language)}", "Person", id));
+        blocks.Add(new LinkBlock($"{label}: {ReferenceName(rows, "PersonEntity", id, language)}", "Person", id));
         return id;
     }
 
@@ -434,7 +434,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
 
 public sealed class MovieDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
-    public ExportEntityType EntityType => ExportEntityType.Movie;
+    public ExportEntityType EntityType => ExportEntityType.MovieEntity;
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (MovieExportData)data; var title = Title(d.Title, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };
@@ -449,7 +449,7 @@ public sealed class MovieDocumentBuilder(ILocalizedValueSelector s) : DocumentBu
 
 public sealed class SeriesDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
-    public ExportEntityType EntityType => ExportEntityType.Series;
+    public ExportEntityType EntityType => ExportEntityType.SeriesEntity;
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (SeriesExportData)data; var title = Title(d.Title, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };
@@ -470,7 +470,7 @@ public sealed class SeriesDocumentBuilder(ILocalizedValueSelector s) : DocumentB
 
 public sealed class EpisodeDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
-    public ExportEntityType EntityType => ExportEntityType.Episode;
+    public ExportEntityType EntityType => ExportEntityType.EpisodeEntity;
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (EpisodeExportData)data; var title = Title(d.Title, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };
@@ -485,7 +485,7 @@ public sealed class EpisodeDocumentBuilder(ILocalizedValueSelector s) : Document
 
 public sealed class BookDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
-    public ExportEntityType EntityType => ExportEntityType.Book;
+    public ExportEntityType EntityType => ExportEntityType.BookEntity;
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (BookExportData)data; var title = Title(d.Title, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };
@@ -501,7 +501,7 @@ public sealed class BookDocumentBuilder(ILocalizedValueSelector s) : DocumentBui
 
 public sealed class VideoGameDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
-    public ExportEntityType EntityType => ExportEntityType.VideoGame;
+    public ExportEntityType EntityType => ExportEntityType.VideoGameEntity;
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (VideoGameExportData)data; var title = Title(d.Title, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };
@@ -517,7 +517,7 @@ public sealed class VideoGameDocumentBuilder(ILocalizedValueSelector s) : Docume
 
 public sealed class PersonDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
-    public ExportEntityType EntityType => ExportEntityType.Person;
+    public ExportEntityType EntityType => ExportEntityType.PersonEntity;
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (PersonExportData)data; var title = Title(d.Name, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };
@@ -559,7 +559,7 @@ public sealed class PersonDocumentBuilder(ILocalizedValueSelector s) : DocumentB
 
 public sealed class ConnectionDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
-    public ExportEntityType EntityType => ExportEntityType.Connection;
+    public ExportEntityType EntityType => ExportEntityType.ConnectionEntity;
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (ConnectionExportData)data; var title = Title(d.Name, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };
@@ -569,10 +569,10 @@ public sealed class ConnectionDocumentBuilder(ILocalizedValueSelector s) : Docum
             blocks.Add(new HeadingBlock(2, "Child Connections"));
             foreach (var child in d.Children.OrderBy(x => x.DisplayName ?? x.Id, StringComparer.Ordinal).ThenBy(x => x.Id, StringComparer.Ordinal)) blocks.Add(new LinkBlock(child.DisplayName ?? child.Id, "Connection", child.Id));
         }
-        foreach (var group in d.Works.GroupBy(x => x.Type, StringComparer.Ordinal).OrderBy(g => g.Key, StringComparer.Ordinal))
+        foreach (var group in d.Works.GroupBy(x => x.TypeEntity, StringComparer.Ordinal).OrderBy(g => g.Key, StringComparer.Ordinal))
         {
             blocks.Add(new HeadingBlock(2, group.Key));
-            foreach (var work in group.OrderBy(x => Title(x.Title, language), StringComparer.Ordinal).ThenBy(x => x.Id, StringComparer.Ordinal)) blocks.Add(new LinkBlock(Title(work.Title, language), work.Type, work.Id));
+            foreach (var work in group.OrderBy(x => Title(x.Title, language), StringComparer.Ordinal).ThenBy(x => x.Id, StringComparer.Ordinal)) blocks.Add(new LinkBlock(Title(work.Title, language), work.TypeEntity, work.Id));
         }
         AddDetails(blocks, d.Details);
         return new("Connection", d.Id, Metadata("Connection", d.Id, title), blocks);

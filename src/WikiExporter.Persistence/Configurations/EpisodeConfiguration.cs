@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Episode</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class EpisodeConfiguration : IEntityTypeConfiguration<Episode>
+public sealed class EpisodeConfiguration : IEntityTypeConfiguration<EpisodeEntity>
 {
-    public void Configure(EntityTypeBuilder<Episode> builder)
+    public void Configure(EntityTypeBuilder<EpisodeEntity> builder)
     {
         builder.ToTable("Episode");
         builder.HasKey(x => x.Id);
@@ -32,9 +32,9 @@ public sealed class EpisodeConfiguration : IEntityTypeConfiguration<Episode>
         builder.HasOne(x => x.CrewStatus).WithMany(x => x.EpisodeCrewStatuss).HasForeignKey(x => x.CrewStatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode.SeriesID -> Series.ID
-        builder.HasOne(x => x.Series).WithMany(x => x.Episodes).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.Episodes).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.EpisodeStatuss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.EpisodeStatuss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

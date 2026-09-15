@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification_SupportedAdditionalHardware</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class TechnicalSpecificationSupportedAdditionalHardwareConfiguration : IEntityTypeConfiguration<TechnicalSpecificationSupportedAdditionalHardware>
+public sealed class TechnicalSpecificationSupportedAdditionalHardwareConfiguration : IEntityTypeConfiguration<TechnicalSpecificationSupportedAdditionalHardwareEntity>
 {
-    public void Configure(EntityTypeBuilder<TechnicalSpecificationSupportedAdditionalHardware> builder)
+    public void Configure(EntityTypeBuilder<TechnicalSpecificationSupportedAdditionalHardwareEntity> builder)
     {
         builder.ToTable("TechnicalSpecification_SupportedAdditionalHardware");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class TechnicalSpecificationSupportedAdditionalHardwareConfigurati
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: TechnicalSpecification_SupportedAdditionalHardware.HardwareID -> Hardware.ID
-        builder.HasOne(x => x.Hardware).WithMany(x => x.TechnicalSpecificationSupportedAdditionalHardwares).HasForeignKey(x => x.HardwareId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.HardwareEntity).WithMany(x => x.TechnicalSpecificationSupportedAdditionalHardwares).HasForeignKey(x => x.HardwareId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedAdditionalHardware.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.TechnicalSpecificationSupportedAdditionalHardwares).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TechnicalSpecificationSupportedAdditionalHardwares).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedAdditionalHardware.TechnicalSpecificationID -> TechnicalSpecification.ID
-        builder.HasOne(x => x.TechnicalSpecification).WithMany(x => x.TechnicalSpecificationSupportedAdditionalHardwares).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany(x => x.TechnicalSpecificationSupportedAdditionalHardwares).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

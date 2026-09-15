@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Publication</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class PublicationConfiguration : IEntityTypeConfiguration<Publication>
+public sealed class PublicationConfiguration : IEntityTypeConfiguration<PublicationEntity>
 {
-    public void Configure(EntityTypeBuilder<Publication> builder)
+    public void Configure(EntityTypeBuilder<PublicationEntity> builder)
     {
         builder.ToTable("Publication");
         builder.HasKey(x => x.Id);
@@ -26,12 +26,12 @@ public sealed class PublicationConfiguration : IEntityTypeConfiguration<Publicat
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Publication.BookID -> Book.ID
-        builder.HasOne(x => x.Book).WithMany(x => x.Publications).HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.BookEntity).WithMany(x => x.Publications).HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Publication.EditionID -> Edition.ID
-        builder.HasOne(x => x.Edition).WithMany(x => x.Publications).HasForeignKey(x => x.EditionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.EditionEntity).WithMany(x => x.Publications).HasForeignKey(x => x.EditionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Publication.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Publications).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Publications).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

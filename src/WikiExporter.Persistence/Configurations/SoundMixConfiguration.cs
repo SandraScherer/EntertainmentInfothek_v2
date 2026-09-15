@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>SoundMix</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class SoundMixConfiguration : IEntityTypeConfiguration<SoundMix>
+public sealed class SoundMixConfiguration : IEntityTypeConfiguration<SoundMixEntity>
 {
-    public void Configure(EntityTypeBuilder<SoundMix> builder)
+    public void Configure(EntityTypeBuilder<SoundMixEntity> builder)
     {
         builder.ToTable("SoundMix");
         builder.HasKey(x => x.Id);
@@ -19,6 +19,6 @@ public sealed class SoundMixConfiguration : IEntityTypeConfiguration<SoundMix>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: SoundMix.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.SoundMixs).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SoundMixs).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

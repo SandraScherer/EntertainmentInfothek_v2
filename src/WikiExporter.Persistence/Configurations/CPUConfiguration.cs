@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>CPU</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class CPUConfiguration : IEntityTypeConfiguration<CPU>
+public sealed class CPUConfiguration : IEntityTypeConfiguration<CPUEntity>
 {
-    public void Configure(EntityTypeBuilder<CPU> builder)
+    public void Configure(EntityTypeBuilder<CPUEntity> builder)
     {
         builder.ToTable("CPU");
         builder.HasKey(x => x.Id);
@@ -19,6 +19,6 @@ public sealed class CPUConfiguration : IEntityTypeConfiguration<CPU>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: CPU.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.CPUs).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.CPUs).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

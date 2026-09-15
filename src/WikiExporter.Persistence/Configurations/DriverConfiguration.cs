@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Driver</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class DriverConfiguration : IEntityTypeConfiguration<Driver>
+public sealed class DriverConfiguration : IEntityTypeConfiguration<DriverEntity>
 {
-    public void Configure(EntityTypeBuilder<Driver> builder)
+    public void Configure(EntityTypeBuilder<DriverEntity> builder)
     {
         builder.ToTable("Driver");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class DriverConfiguration : IEntityTypeConfiguration<Driver>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Driver.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Drivers).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Drivers).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

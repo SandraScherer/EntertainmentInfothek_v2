@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>BusinessModel</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class BusinessModelConfiguration : IEntityTypeConfiguration<BusinessModel>
+public sealed class BusinessModelConfiguration : IEntityTypeConfiguration<BusinessModelEntity>
 {
-    public void Configure(EntityTypeBuilder<BusinessModel> builder)
+    public void Configure(EntityTypeBuilder<BusinessModelEntity> builder)
     {
         builder.ToTable("BusinessModel");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class BusinessModelConfiguration : IEntityTypeConfiguration<Busine
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: BusinessModel.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.BusinessModels).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.BusinessModels).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

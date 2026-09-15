@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Person_Position</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class PersonPositionConfiguration : IEntityTypeConfiguration<PersonPosition>
+public sealed class PersonPositionConfiguration : IEntityTypeConfiguration<PersonPositionEntity>
 {
-    public void Configure(EntityTypeBuilder<PersonPosition> builder)
+    public void Configure(EntityTypeBuilder<PersonPositionEntity> builder)
     {
         builder.ToTable("Person_Position");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class PersonPositionConfiguration : IEntityTypeConfiguration<Perso
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Person_Position.PersonID -> Person.ID
-        builder.HasOne(x => x.Person).WithMany(x => x.PersonPositions).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PersonEntity).WithMany(x => x.PersonPositions).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Position.PositionID -> Position.ID
-        builder.HasOne(x => x.Position).WithMany(x => x.PersonPositions).HasForeignKey(x => x.PositionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PositionEntity).WithMany(x => x.PersonPositions).HasForeignKey(x => x.PositionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Position.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.PersonPositions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.PersonPositions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

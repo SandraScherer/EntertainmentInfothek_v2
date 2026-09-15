@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Color</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class ColorConfiguration : IEntityTypeConfiguration<Color>
+public sealed class ColorConfiguration : IEntityTypeConfiguration<ColorEntity>
 {
-    public void Configure(EntityTypeBuilder<Color> builder)
+    public void Configure(EntityTypeBuilder<ColorEntity> builder)
     {
         builder.ToTable("Color");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class ColorConfiguration : IEntityTypeConfiguration<Color>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Color.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Colors).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Colors).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>MultiplayerOption</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class MultiplayerOptionConfiguration : IEntityTypeConfiguration<MultiplayerOption>
+public sealed class MultiplayerOptionConfiguration : IEntityTypeConfiguration<MultiplayerOptionEntity>
 {
-    public void Configure(EntityTypeBuilder<MultiplayerOption> builder)
+    public void Configure(EntityTypeBuilder<MultiplayerOptionEntity> builder)
     {
         builder.ToTable("MultiplayerOption");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class MultiplayerOptionConfiguration : IEntityTypeConfiguration<Mu
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: MultiplayerOption.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.MultiplayerOptions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MultiplayerOptions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

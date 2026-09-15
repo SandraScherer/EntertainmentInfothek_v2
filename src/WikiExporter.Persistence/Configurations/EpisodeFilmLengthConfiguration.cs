@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Episode_FilmLength</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class EpisodeFilmLengthConfiguration : IEntityTypeConfiguration<EpisodeFilmLength>
+public sealed class EpisodeFilmLengthConfiguration : IEntityTypeConfiguration<EpisodeFilmLengthEntity>
 {
-    public void Configure(EntityTypeBuilder<EpisodeFilmLength> builder)
+    public void Configure(EntityTypeBuilder<EpisodeFilmLengthEntity> builder)
     {
         builder.ToTable("Episode_FilmLength");
         builder.HasKey(x => x.Id);
@@ -21,9 +21,9 @@ public sealed class EpisodeFilmLengthConfiguration : IEntityTypeConfiguration<Ep
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Episode_FilmLength.EpisodeID -> Episode.ID
-        builder.HasOne(x => x.Episode).WithMany(x => x.EpisodeFilmLengths).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.EpisodeEntity).WithMany(x => x.EpisodeFilmLengths).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_FilmLength.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.EpisodeFilmLengths).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.EpisodeFilmLengths).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Book_User</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class BookUserConfiguration : IEntityTypeConfiguration<BookUser>
+public sealed class BookUserConfiguration : IEntityTypeConfiguration<BookUserEntity>
 {
-    public void Configure(EntityTypeBuilder<BookUser> builder)
+    public void Configure(EntityTypeBuilder<BookUserEntity> builder)
     {
         builder.ToTable("Book_User");
         builder.HasKey(x => x.Id);
@@ -26,19 +26,19 @@ public sealed class BookUserConfiguration : IEntityTypeConfiguration<BookUser>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Book_User.BookID -> Book.ID
-        builder.HasOne(x => x.Book).WithMany(x => x.BookUsers).HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.BookEntity).WithMany(x => x.BookUsers).HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_User.PriorityID -> Priority.ID
-        builder.HasOne(x => x.Priority).WithMany(x => x.BookUsers).HasForeignKey(x => x.PriorityId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PriorityEntity).WithMany(x => x.BookUsers).HasForeignKey(x => x.PriorityId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_User.PublicationID -> Publication.ID
-        builder.HasOne(x => x.Publication).WithMany(x => x.BookUsers).HasForeignKey(x => x.PublicationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PublicationEntity).WithMany(x => x.BookUsers).HasForeignKey(x => x.PublicationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_User.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.BookUserStatuss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.BookUserStatuss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_User.UserID -> User.ID
-        builder.HasOne(x => x.User).WithMany(x => x.BookUsers).HasForeignKey(x => x.UserId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.UserEntity).WithMany(x => x.BookUsers).HasForeignKey(x => x.UserId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_User.UserStatusID -> Status.ID
         builder.HasOne(x => x.UserStatus).WithMany(x => x.BookUserUserStatuss).HasForeignKey(x => x.UserStatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);

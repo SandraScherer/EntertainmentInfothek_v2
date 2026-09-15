@@ -1,4 +1,4 @@
-using System.Text;
+using System.TextEntity;
 using WikiExporter.Export.Markdown;
 
 namespace WikiExporter.Export.FileSystem;

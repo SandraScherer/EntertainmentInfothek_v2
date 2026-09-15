@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Series_PrintedFilmFormat</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class SeriesPrintedFilmFormatConfiguration : IEntityTypeConfiguration<SeriesPrintedFilmFormat>
+public sealed class SeriesPrintedFilmFormatConfiguration : IEntityTypeConfiguration<SeriesPrintedFilmFormatEntity>
 {
-    public void Configure(EntityTypeBuilder<SeriesPrintedFilmFormat> builder)
+    public void Configure(EntityTypeBuilder<SeriesPrintedFilmFormatEntity> builder)
     {
         builder.ToTable("Series_PrintedFilmFormat");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class SeriesPrintedFilmFormatConfiguration : IEntityTypeConfigurat
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_PrintedFilmFormat.FilmFormatID -> FilmFormat.ID
-        builder.HasOne(x => x.FilmFormat).WithMany(x => x.SeriesPrintedFilmFormats).HasForeignKey(x => x.FilmFormatId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.FilmFormatEntity).WithMany(x => x.SeriesPrintedFilmFormats).HasForeignKey(x => x.FilmFormatId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_PrintedFilmFormat.SeriesID -> Series.ID
-        builder.HasOne(x => x.Series).WithMany(x => x.SeriesPrintedFilmFormats).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesPrintedFilmFormats).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_PrintedFilmFormat.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.SeriesPrintedFilmFormats).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesPrintedFilmFormats).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

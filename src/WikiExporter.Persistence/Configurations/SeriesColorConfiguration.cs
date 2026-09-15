@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Series_Color</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class SeriesColorConfiguration : IEntityTypeConfiguration<SeriesColor>
+public sealed class SeriesColorConfiguration : IEntityTypeConfiguration<SeriesColorEntity>
 {
-    public void Configure(EntityTypeBuilder<SeriesColor> builder)
+    public void Configure(EntityTypeBuilder<SeriesColorEntity> builder)
     {
         builder.ToTable("Series_Color");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class SeriesColorConfiguration : IEntityTypeConfiguration<SeriesCo
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_Color.ColorID -> Color.ID
-        builder.HasOne(x => x.Color).WithMany(x => x.SeriesColors).HasForeignKey(x => x.ColorId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.ColorEntity).WithMany(x => x.SeriesColors).HasForeignKey(x => x.ColorId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_Color.SeriesID -> Series.ID
-        builder.HasOne(x => x.Series).WithMany(x => x.SeriesColors).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesColors).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_Color.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.SeriesColors).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesColors).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

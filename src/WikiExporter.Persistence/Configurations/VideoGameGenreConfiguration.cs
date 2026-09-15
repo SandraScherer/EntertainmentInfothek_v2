@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>VideoGame_Genre</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class VideoGameGenreConfiguration : IEntityTypeConfiguration<VideoGameGenre>
+public sealed class VideoGameGenreConfiguration : IEntityTypeConfiguration<VideoGameGenreEntity>
 {
-    public void Configure(EntityTypeBuilder<VideoGameGenre> builder)
+    public void Configure(EntityTypeBuilder<VideoGameGenreEntity> builder)
     {
         builder.ToTable("VideoGame_Genre");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class VideoGameGenreConfiguration : IEntityTypeConfiguration<Video
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: VideoGame_Genre.GenreID -> Genre.ID
-        builder.HasOne(x => x.Genre).WithMany(x => x.VideoGameGenres).HasForeignKey(x => x.GenreId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.GenreEntity).WithMany(x => x.VideoGameGenres).HasForeignKey(x => x.GenreId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Genre.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.VideoGameGenres).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.VideoGameGenres).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Genre.VideoGameID -> VideoGame.ID
-        builder.HasOne(x => x.VideoGame).WithMany(x => x.VideoGameGenres).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VideoGameEntity).WithMany(x => x.VideoGameGenres).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

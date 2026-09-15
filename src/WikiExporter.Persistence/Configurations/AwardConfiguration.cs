@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Award</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class AwardConfiguration : IEntityTypeConfiguration<Award>
+public sealed class AwardConfiguration : IEntityTypeConfiguration<AwardEntity>
 {
-    public void Configure(EntityTypeBuilder<Award> builder)
+    public void Configure(EntityTypeBuilder<AwardEntity> builder)
     {
         builder.ToTable("Award");
         builder.HasKey(x => x.Id);
@@ -25,6 +25,6 @@ public sealed class AwardConfiguration : IEntityTypeConfiguration<Award>
         builder.HasOne(x => x.Presenter).WithMany(x => x.Awards).HasForeignKey(x => x.PresenterId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Award.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Awards).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Awards).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

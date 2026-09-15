@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>DirectX</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class DirectXConfiguration : IEntityTypeConfiguration<DirectX>
+public sealed class DirectXConfiguration : IEntityTypeConfiguration<DirectXEntity>
 {
-    public void Configure(EntityTypeBuilder<DirectX> builder)
+    public void Configure(EntityTypeBuilder<DirectXEntity> builder)
     {
         builder.ToTable("DirectX");
         builder.HasKey(x => x.Id);
@@ -19,6 +19,6 @@ public sealed class DirectXConfiguration : IEntityTypeConfiguration<DirectX>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: DirectX.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.DirectXs).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.DirectXs).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

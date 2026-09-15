@@ -9,8 +9,8 @@ namespace WikiExporter.Persistence.Queries;
 /// <summary>In-memory representation of a bounded export graph. Only the current root batch is retained.</summary>
 internal sealed class ExportGraph
 {
-    public Dictionary<(IEntityType Type,string Id),object> Entities { get; } = new();
-    public Dictionary<(IEntityType Type,string Id), Dictionary<string,string?>> ForeignKeys { get; } = new();
+    public Dictionary<(IEntityType TypeEntity,string Id),object> Entities { get; } = new();
+    public Dictionary<(IEntityType TypeEntity,string Id), Dictionary<string,string?>> ForeignKeys { get; } = new();
 }
 
 /// <summary>Loads complete root-specific association graphs with set-based IN queries. It never uses Include or one query per row.</summary>
@@ -25,7 +25,7 @@ internal sealed class ExportGraphLoader
     public async Task<ExportGraph> LoadAsync(IEntityType rootType, IReadOnlyCollection<string> rootIds, IReadOnlySet<string> expandableTables, CancellationToken ct)
     {
         var graph = new ExportGraph();
-        var pending = new Queue<(IEntityType Type, IReadOnlyCollection<string> Ids)>();
+        var pending = new Queue<(IEntityType TypeEntity, IReadOnlyCollection<string> Ids)>();
         pending.Enqueue((rootType, rootIds));
         var expanded = new HashSet<string>();
 

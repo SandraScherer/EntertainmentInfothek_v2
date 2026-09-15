@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>MediaType</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class MediaTypeConfiguration : IEntityTypeConfiguration<MediaType>
+public sealed class MediaTypeConfiguration : IEntityTypeConfiguration<MediaTypeEntity>
 {
-    public void Configure(EntityTypeBuilder<MediaType> builder)
+    public void Configure(EntityTypeBuilder<MediaTypeEntity> builder)
     {
         builder.ToTable("MediaType");
         builder.HasKey(x => x.Id);
@@ -19,6 +19,6 @@ public sealed class MediaTypeConfiguration : IEntityTypeConfiguration<MediaType>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: MediaType.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.MediaTypes).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MediaTypes).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

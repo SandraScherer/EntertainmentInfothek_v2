@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Connection</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class ConnectionConfiguration : IEntityTypeConfiguration<Connection>
+public sealed class ConnectionConfiguration : IEntityTypeConfiguration<ConnectionEntity>
 {
-    public void Configure(EntityTypeBuilder<Connection> builder)
+    public void Configure(EntityTypeBuilder<ConnectionEntity> builder)
     {
         builder.ToTable("Connection");
         builder.HasKey(x => x.Id);
@@ -20,9 +20,9 @@ public sealed class ConnectionConfiguration : IEntityTypeConfiguration<Connectio
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Connection.ConnectionID -> Connection.ID
-        builder.HasOne(x => x.Connection).WithMany(x => x.ChildConnections).HasForeignKey(x => x.ConnectionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.ConnectionEntity).WithMany(x => x.ChildConnections).HasForeignKey(x => x.ConnectionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Connection.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Connections).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Connections).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

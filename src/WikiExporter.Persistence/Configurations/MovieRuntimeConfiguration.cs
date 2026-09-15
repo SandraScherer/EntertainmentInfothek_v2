@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Movie_Runtime</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class MovieRuntimeConfiguration : IEntityTypeConfiguration<MovieRuntime>
+public sealed class MovieRuntimeConfiguration : IEntityTypeConfiguration<MovieRuntimeEntity>
 {
-    public void Configure(EntityTypeBuilder<MovieRuntime> builder)
+    public void Configure(EntityTypeBuilder<MovieRuntimeEntity> builder)
     {
         builder.ToTable("Movie_Runtime");
         builder.HasKey(x => x.Id);
@@ -22,12 +22,12 @@ public sealed class MovieRuntimeConfiguration : IEntityTypeConfiguration<MovieRu
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Movie_Runtime.EditionID -> Edition.ID
-        builder.HasOne(x => x.Edition).WithMany(x => x.MovieRuntimes).HasForeignKey(x => x.EditionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.EditionEntity).WithMany(x => x.MovieRuntimes).HasForeignKey(x => x.EditionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Runtime.MovieID -> Movie.ID
-        builder.HasOne(x => x.Movie).WithMany(x => x.MovieRuntimes).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MovieEntity).WithMany(x => x.MovieRuntimes).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Runtime.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.MovieRuntimes).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MovieRuntimes).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

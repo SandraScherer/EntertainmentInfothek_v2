@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Weblink</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class WeblinkConfiguration : IEntityTypeConfiguration<Weblink>
+public sealed class WeblinkConfiguration : IEntityTypeConfiguration<WeblinkEntity>
 {
-    public void Configure(EntityTypeBuilder<Weblink> builder)
+    public void Configure(EntityTypeBuilder<WeblinkEntity> builder)
     {
         builder.ToTable("Weblink");
         builder.HasKey(x => x.Id);
@@ -22,9 +22,9 @@ public sealed class WeblinkConfiguration : IEntityTypeConfiguration<Weblink>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Weblink.LanguageID -> Language.ID
-        builder.HasOne(x => x.Language).WithMany(x => x.Weblinks).HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LanguageEntity).WithMany(x => x.Weblinks).HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Weblink.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Weblinks).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Weblinks).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

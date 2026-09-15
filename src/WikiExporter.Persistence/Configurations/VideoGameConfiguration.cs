@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>VideoGame</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class VideoGameConfiguration : IEntityTypeConfiguration<VideoGame>
+public sealed class VideoGameConfiguration : IEntityTypeConfiguration<VideoGameEntity>
 {
-    public void Configure(EntityTypeBuilder<VideoGame> builder)
+    public void Configure(EntityTypeBuilder<VideoGameEntity> builder)
     {
         builder.ToTable("VideoGame");
         builder.HasKey(x => x.Id);
@@ -34,12 +34,12 @@ public sealed class VideoGameConfiguration : IEntityTypeConfiguration<VideoGame>
         builder.HasOne(x => x.CrewStatus).WithMany(x => x.VideoGameCrewStatuss).HasForeignKey(x => x.CrewStatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame.ConnectionID -> Connection.ID
-        builder.HasOne(x => x.Connection).WithMany(x => x.VideoGames).HasForeignKey(x => x.ConnectionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.ConnectionEntity).WithMany(x => x.VideoGames).HasForeignKey(x => x.ConnectionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.VideoGameStatuss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.VideoGameStatuss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame.TypeID -> Type.ID
-        builder.HasOne(x => x.Type).WithMany(x => x.VideoGames).HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TypeEntity).WithMany(x => x.VideoGames).HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

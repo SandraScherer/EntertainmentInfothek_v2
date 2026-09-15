@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Episode_Certification</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class EpisodeCertificationConfiguration : IEntityTypeConfiguration<EpisodeCertification>
+public sealed class EpisodeCertificationConfiguration : IEntityTypeConfiguration<EpisodeCertificationEntity>
 {
-    public void Configure(EntityTypeBuilder<EpisodeCertification> builder)
+    public void Configure(EntityTypeBuilder<EpisodeCertificationEntity> builder)
     {
         builder.ToTable("Episode_Certification");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class EpisodeCertificationConfiguration : IEntityTypeConfiguration
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Episode_Certification.CertificationID -> Certification.ID
-        builder.HasOne(x => x.Certification).WithMany(x => x.EpisodeCertifications).HasForeignKey(x => x.CertificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CertificationEntity).WithMany(x => x.EpisodeCertifications).HasForeignKey(x => x.CertificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_Certification.EpisodeID -> Episode.ID
-        builder.HasOne(x => x.Episode).WithMany(x => x.EpisodeCertifications).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.EpisodeEntity).WithMany(x => x.EpisodeCertifications).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_Certification.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.EpisodeCertifications).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.EpisodeCertifications).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>VideoResolution</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class VideoResolutionConfiguration : IEntityTypeConfiguration<VideoResolution>
+public sealed class VideoResolutionConfiguration : IEntityTypeConfiguration<VideoResolutionEntity>
 {
-    public void Configure(EntityTypeBuilder<VideoResolution> builder)
+    public void Configure(EntityTypeBuilder<VideoResolutionEntity> builder)
     {
         builder.ToTable("VideoResolution");
         builder.HasKey(x => x.Id);
@@ -19,6 +19,6 @@ public sealed class VideoResolutionConfiguration : IEntityTypeConfiguration<Vide
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: VideoResolution.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.VideoResolutions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.VideoResolutions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Position</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class PositionConfiguration : IEntityTypeConfiguration<Position>
+public sealed class PositionConfiguration : IEntityTypeConfiguration<PositionEntity>
 {
-    public void Configure(EntityTypeBuilder<Position> builder)
+    public void Configure(EntityTypeBuilder<PositionEntity> builder)
     {
         builder.ToTable("Position");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class PositionConfiguration : IEntityTypeConfiguration<Position>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Position.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Positions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Positions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Certification</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class CertificationConfiguration : IEntityTypeConfiguration<Certification>
+public sealed class CertificationConfiguration : IEntityTypeConfiguration<CertificationEntity>
 {
-    public void Configure(EntityTypeBuilder<Certification> builder)
+    public void Configure(EntityTypeBuilder<CertificationEntity> builder)
     {
         builder.ToTable("Certification");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class CertificationConfiguration : IEntityTypeConfiguration<Certif
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Certification.CountryID -> Country.ID
-        builder.HasOne(x => x.Country).WithMany(x => x.Certifications).HasForeignKey(x => x.CountryId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CountryEntity).WithMany(x => x.Certifications).HasForeignKey(x => x.CountryId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Certification.ImageID -> Image.ID
-        builder.HasOne(x => x.Image).WithMany(x => x.Certifications).HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.ImageEntity).WithMany(x => x.Certifications).HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Certification.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Certifications).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Certifications).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

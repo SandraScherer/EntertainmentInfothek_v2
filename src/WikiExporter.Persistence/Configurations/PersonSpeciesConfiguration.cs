@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Person_Species</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class PersonSpeciesConfiguration : IEntityTypeConfiguration<PersonSpecies>
+public sealed class PersonSpeciesConfiguration : IEntityTypeConfiguration<PersonSpeciesEntity>
 {
-    public void Configure(EntityTypeBuilder<PersonSpecies> builder)
+    public void Configure(EntityTypeBuilder<PersonSpeciesEntity> builder)
     {
         builder.ToTable("Person_Species");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class PersonSpeciesConfiguration : IEntityTypeConfiguration<Person
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Person_Species.PersonID -> Person.ID
-        builder.HasOne(x => x.Person).WithMany(x => x.PersonSpeciess).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PersonEntity).WithMany(x => x.PersonSpeciess).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Species.SpeciesID -> Species.ID
-        builder.HasOne(x => x.Species).WithMany(x => x.PersonSpeciess).HasForeignKey(x => x.SpeciesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SpeciesEntity).WithMany(x => x.PersonSpeciess).HasForeignKey(x => x.SpeciesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Species.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.PersonSpeciess).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.PersonSpeciess).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

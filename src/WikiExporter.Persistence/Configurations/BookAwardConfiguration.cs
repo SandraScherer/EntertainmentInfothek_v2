@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Book_Award</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class BookAwardConfiguration : IEntityTypeConfiguration<BookAward>
+public sealed class BookAwardConfiguration : IEntityTypeConfiguration<BookAwardEntity>
 {
-    public void Configure(EntityTypeBuilder<BookAward> builder)
+    public void Configure(EntityTypeBuilder<BookAwardEntity> builder)
     {
         builder.ToTable("Book_Award");
         builder.HasKey(x => x.Id);
@@ -24,12 +24,12 @@ public sealed class BookAwardConfiguration : IEntityTypeConfiguration<BookAward>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Book_Award.AwardID -> Award.ID
-        builder.HasOne(x => x.Award).WithMany(x => x.BookAwards).HasForeignKey(x => x.AwardId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.AwardEntity).WithMany(x => x.BookAwards).HasForeignKey(x => x.AwardId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_Award.BookID -> Book.ID
-        builder.HasOne(x => x.Book).WithMany(x => x.BookAwards).HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.BookEntity).WithMany(x => x.BookAwards).HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_Award.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.BookAwards).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.BookAwards).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

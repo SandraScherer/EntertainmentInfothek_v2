@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>AspectRatio</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class AspectRatioConfiguration : IEntityTypeConfiguration<AspectRatio>
+public sealed class AspectRatioConfiguration : IEntityTypeConfiguration<AspectRatioEntity>
 {
-    public void Configure(EntityTypeBuilder<AspectRatio> builder)
+    public void Configure(EntityTypeBuilder<AspectRatioEntity> builder)
     {
         builder.ToTable("AspectRatio");
         builder.HasKey(x => x.Id);
@@ -19,6 +19,6 @@ public sealed class AspectRatioConfiguration : IEntityTypeConfiguration<AspectRa
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: AspectRatio.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.AspectRatios).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.AspectRatios).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

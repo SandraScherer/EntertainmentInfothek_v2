@@ -18,7 +18,7 @@ public sealed class ExportUseCase(IExportReaderResolver readers, IDocumentBuilde
             requested=1;
             var data=await reader.GetAsync(single.EntityId,ct);
             if(data is null) return new(request.EntityType,1,0,1,docs,new[]{new ExportError(single.EntityId,"The requested entity does not exist.")});
-            try { docs.Add(new(data.Id,request.EntityType,builder.Build(data,request.Language))); logger.LogInformation("Exported {Type} {Id}",request.EntityType,data.Id); }
+            try { docs.Add(new(data.Id,request.EntityType,builder.Build(data,request.LanguageEntity))); logger.LogInformation("Exported {Type} {Id}",request.EntityType,data.Id); }
             catch(Exception ex) { logger.LogError(ex,"Failed to build {Type} {Id}",request.EntityType,data.Id); errors.Add(new(data.Id,ex.Message,ex)); }
         }
         else if(request.Scope is ExportScope.All all)
@@ -26,7 +26,7 @@ public sealed class ExportUseCase(IExportReaderResolver readers, IDocumentBuilde
             await foreach(var data in reader.ReadAllAsync(new BatchOptions(all.BatchSize),ct))
             {
                 requested++;
-                try { docs.Add(new(data.Id,request.EntityType,builder.Build(data,request.Language))); }
+                try { docs.Add(new(data.Id,request.EntityType,builder.Build(data,request.LanguageEntity))); }
                 catch(Exception ex) { logger.LogError(ex,"Failed to build {Type} {Id}",request.EntityType,data.Id); errors.Add(new(data.Id,ex.Message,ex)); }
             }
         }

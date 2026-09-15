@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Movie_FilmingDate</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class MovieFilmingDateConfiguration : IEntityTypeConfiguration<MovieFilmingDate>
+public sealed class MovieFilmingDateConfiguration : IEntityTypeConfiguration<MovieFilmingDateEntity>
 {
-    public void Configure(EntityTypeBuilder<MovieFilmingDate> builder)
+    public void Configure(EntityTypeBuilder<MovieFilmingDateEntity> builder)
     {
         builder.ToTable("Movie_FilmingDate");
         builder.HasKey(x => x.Id);
@@ -22,9 +22,9 @@ public sealed class MovieFilmingDateConfiguration : IEntityTypeConfiguration<Mov
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Movie_FilmingDate.MovieID -> Movie.ID
-        builder.HasOne(x => x.Movie).WithMany(x => x.MovieFilmingDates).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MovieEntity).WithMany(x => x.MovieFilmingDates).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_FilmingDate.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.MovieFilmingDates).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MovieFilmingDates).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

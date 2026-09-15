@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Movie_Camera</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class MovieCameraConfiguration : IEntityTypeConfiguration<MovieCamera>
+public sealed class MovieCameraConfiguration : IEntityTypeConfiguration<MovieCameraEntity>
 {
-    public void Configure(EntityTypeBuilder<MovieCamera> builder)
+    public void Configure(EntityTypeBuilder<MovieCameraEntity> builder)
     {
         builder.ToTable("Movie_Camera");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class MovieCameraConfiguration : IEntityTypeConfiguration<MovieCam
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Movie_Camera.CameraID -> Camera.ID
-        builder.HasOne(x => x.Camera).WithMany(x => x.MovieCameras).HasForeignKey(x => x.CameraId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CameraEntity).WithMany(x => x.MovieCameras).HasForeignKey(x => x.CameraId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Camera.MovieID -> Movie.ID
-        builder.HasOne(x => x.Movie).WithMany(x => x.MovieCameras).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MovieEntity).WithMany(x => x.MovieCameras).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Camera.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.MovieCameras).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MovieCameras).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

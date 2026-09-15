@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>CDROMDriveSpeed</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class CDROMDriveSpeedConfiguration : IEntityTypeConfiguration<CDROMDriveSpeed>
+public sealed class CDROMDriveSpeedConfiguration : IEntityTypeConfiguration<CDROMDriveSpeedEntity>
 {
-    public void Configure(EntityTypeBuilder<CDROMDriveSpeed> builder)
+    public void Configure(EntityTypeBuilder<CDROMDriveSpeedEntity> builder)
     {
         builder.ToTable("CDROMDriveSpeed");
         builder.HasKey(x => x.Id);
@@ -19,6 +19,6 @@ public sealed class CDROMDriveSpeedConfiguration : IEntityTypeConfiguration<CDRO
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: CDROMDriveSpeed.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.CDROMDriveSpeeds).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.CDROMDriveSpeeds).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

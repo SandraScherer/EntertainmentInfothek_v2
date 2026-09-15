@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>VideoGame_User</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class VideoGameUserConfiguration : IEntityTypeConfiguration<VideoGameUser>
+public sealed class VideoGameUserConfiguration : IEntityTypeConfiguration<VideoGameUserEntity>
 {
-    public void Configure(EntityTypeBuilder<VideoGameUser> builder)
+    public void Configure(EntityTypeBuilder<VideoGameUserEntity> builder)
     {
         builder.ToTable("VideoGame_User");
         builder.HasKey(x => x.Id);
@@ -26,21 +26,21 @@ public sealed class VideoGameUserConfiguration : IEntityTypeConfiguration<VideoG
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: VideoGame_User.EditionID -> Edition.ID
-        builder.HasOne(x => x.Edition).WithMany(x => x.VideoGameUsers).HasForeignKey(x => x.EditionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.EditionEntity).WithMany(x => x.VideoGameUsers).HasForeignKey(x => x.EditionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_User.PriorityID -> Priority.ID
-        builder.HasOne(x => x.Priority).WithMany(x => x.VideoGameUsers).HasForeignKey(x => x.PriorityId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PriorityEntity).WithMany(x => x.VideoGameUsers).HasForeignKey(x => x.PriorityId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_User.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.VideoGameUserStatuss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.VideoGameUserStatuss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_User.UserID -> User.ID
-        builder.HasOne(x => x.User).WithMany(x => x.VideoGameUsers).HasForeignKey(x => x.UserId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.UserEntity).WithMany(x => x.VideoGameUsers).HasForeignKey(x => x.UserId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_User.UserStatusID -> Status.ID
         builder.HasOne(x => x.UserStatus).WithMany(x => x.VideoGameUserUserStatuss).HasForeignKey(x => x.UserStatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_User.VideoGameID -> VideoGame.ID
-        builder.HasOne(x => x.VideoGame).WithMany(x => x.VideoGameUsers).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VideoGameEntity).WithMany(x => x.VideoGameUsers).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

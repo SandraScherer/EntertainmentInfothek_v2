@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Movie_FilmingLocation</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class MovieFilmingLocationConfiguration : IEntityTypeConfiguration<MovieFilmingLocation>
+public sealed class MovieFilmingLocationConfiguration : IEntityTypeConfiguration<MovieFilmingLocationEntity>
 {
-    public void Configure(EntityTypeBuilder<MovieFilmingLocation> builder)
+    public void Configure(EntityTypeBuilder<MovieFilmingLocationEntity> builder)
     {
         builder.ToTable("Movie_FilmingLocation");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class MovieFilmingLocationConfiguration : IEntityTypeConfiguration
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Movie_FilmingLocation.LocationID -> Location.ID
-        builder.HasOne(x => x.Location).WithMany(x => x.MovieFilmingLocations).HasForeignKey(x => x.LocationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LocationEntity).WithMany(x => x.MovieFilmingLocations).HasForeignKey(x => x.LocationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_FilmingLocation.MovieID -> Movie.ID
-        builder.HasOne(x => x.Movie).WithMany(x => x.MovieFilmingLocations).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MovieEntity).WithMany(x => x.MovieFilmingLocations).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_FilmingLocation.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.MovieFilmingLocations).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MovieFilmingLocations).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

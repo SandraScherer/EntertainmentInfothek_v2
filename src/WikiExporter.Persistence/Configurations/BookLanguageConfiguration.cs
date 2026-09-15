@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Book_Language</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class BookLanguageConfiguration : IEntityTypeConfiguration<BookLanguage>
+public sealed class BookLanguageConfiguration : IEntityTypeConfiguration<BookLanguageEntity>
 {
-    public void Configure(EntityTypeBuilder<BookLanguage> builder)
+    public void Configure(EntityTypeBuilder<BookLanguageEntity> builder)
     {
         builder.ToTable("Book_Language");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class BookLanguageConfiguration : IEntityTypeConfiguration<BookLan
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Book_Language.BookID -> Book.ID
-        builder.HasOne(x => x.Book).WithMany(x => x.BookLanguages).HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.BookEntity).WithMany(x => x.BookLanguages).HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_Language.LanguageID -> Language.ID
-        builder.HasOne(x => x.Language).WithMany(x => x.BookLanguages).HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LanguageEntity).WithMany(x => x.BookLanguages).HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_Language.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.BookLanguages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.BookLanguages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

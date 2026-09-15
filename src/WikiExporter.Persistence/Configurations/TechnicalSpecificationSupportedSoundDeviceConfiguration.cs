@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification_SupportedSoundDevice</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class TechnicalSpecificationSupportedSoundDeviceConfiguration : IEntityTypeConfiguration<TechnicalSpecificationSupportedSoundDevice>
+public sealed class TechnicalSpecificationSupportedSoundDeviceConfiguration : IEntityTypeConfiguration<TechnicalSpecificationSupportedSoundDeviceEntity>
 {
-    public void Configure(EntityTypeBuilder<TechnicalSpecificationSupportedSoundDevice> builder)
+    public void Configure(EntityTypeBuilder<TechnicalSpecificationSupportedSoundDeviceEntity> builder)
     {
         builder.ToTable("TechnicalSpecification_SupportedSoundDevice");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class TechnicalSpecificationSupportedSoundDeviceConfiguration : IE
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: TechnicalSpecification_SupportedSoundDevice.SoundDeviceID -> SoundDevice.ID
-        builder.HasOne(x => x.SoundDevice).WithMany(x => x.TechnicalSpecificationSupportedSoundDevices).HasForeignKey(x => x.SoundDeviceId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SoundDeviceEntity).WithMany(x => x.TechnicalSpecificationSupportedSoundDevices).HasForeignKey(x => x.SoundDeviceId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedSoundDevice.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.TechnicalSpecificationSupportedSoundDevices).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TechnicalSpecificationSupportedSoundDevices).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedSoundDevice.TechnicalSpecificationID -> TechnicalSpecification.ID
-        builder.HasOne(x => x.TechnicalSpecification).WithMany(x => x.TechnicalSpecificationSupportedSoundDevices).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany(x => x.TechnicalSpecificationSupportedSoundDevices).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

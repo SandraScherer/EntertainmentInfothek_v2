@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Series_SoundMix</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class SeriesSoundMixConfiguration : IEntityTypeConfiguration<SeriesSoundMix>
+public sealed class SeriesSoundMixConfiguration : IEntityTypeConfiguration<SeriesSoundMixEntity>
 {
-    public void Configure(EntityTypeBuilder<SeriesSoundMix> builder)
+    public void Configure(EntityTypeBuilder<SeriesSoundMixEntity> builder)
     {
         builder.ToTable("Series_SoundMix");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class SeriesSoundMixConfiguration : IEntityTypeConfiguration<Serie
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_SoundMix.SeriesID -> Series.ID
-        builder.HasOne(x => x.Series).WithMany(x => x.SeriesSoundMixs).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesSoundMixs).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_SoundMix.SoundMixID -> SoundMix.ID
-        builder.HasOne(x => x.SoundMix).WithMany(x => x.SeriesSoundMixs).HasForeignKey(x => x.SoundMixId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SoundMixEntity).WithMany(x => x.SeriesSoundMixs).HasForeignKey(x => x.SoundMixId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_SoundMix.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.SeriesSoundMixs).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesSoundMixs).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

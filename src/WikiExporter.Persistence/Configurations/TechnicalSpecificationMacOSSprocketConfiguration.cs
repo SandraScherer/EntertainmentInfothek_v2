@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification_MacOSSprocket</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class TechnicalSpecificationMacOSSprocketConfiguration : IEntityTypeConfiguration<TechnicalSpecificationMacOSSprocket>
+public sealed class TechnicalSpecificationMacOSSprocketConfiguration : IEntityTypeConfiguration<TechnicalSpecificationMacOSSprocketEntity>
 {
-    public void Configure(EntityTypeBuilder<TechnicalSpecificationMacOSSprocket> builder)
+    public void Configure(EntityTypeBuilder<TechnicalSpecificationMacOSSprocketEntity> builder)
     {
         builder.ToTable("TechnicalSpecification_MacOSSprocket");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class TechnicalSpecificationMacOSSprocketConfiguration : IEntityTy
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: TechnicalSpecification_MacOSSprocket.MacOSSprocketID -> MacOSSprocket.ID
-        builder.HasOne(x => x.MacOSSprocket).WithMany(x => x.TechnicalSpecificationMacOSSprockets).HasForeignKey(x => x.MacOSSprocketId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MacOSSprocketEntity).WithMany(x => x.TechnicalSpecificationMacOSSprockets).HasForeignKey(x => x.MacOSSprocketId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_MacOSSprocket.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.TechnicalSpecificationMacOSSprockets).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TechnicalSpecificationMacOSSprockets).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_MacOSSprocket.TechnicalSpecificationID -> TechnicalSpecification.ID
-        builder.HasOne(x => x.TechnicalSpecification).WithMany(x => x.TechnicalSpecificationMacOSSprockets).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany(x => x.TechnicalSpecificationMacOSSprockets).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

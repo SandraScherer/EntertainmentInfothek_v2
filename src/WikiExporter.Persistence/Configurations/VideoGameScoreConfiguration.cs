@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>VideoGame_Score</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class VideoGameScoreConfiguration : IEntityTypeConfiguration<VideoGameScore>
+public sealed class VideoGameScoreConfiguration : IEntityTypeConfiguration<VideoGameScoreEntity>
 {
-    public void Configure(EntityTypeBuilder<VideoGameScore> builder)
+    public void Configure(EntityTypeBuilder<VideoGameScoreEntity> builder)
     {
         builder.ToTable("VideoGame_Score");
         builder.HasKey(x => x.Id);
@@ -26,15 +26,15 @@ public sealed class VideoGameScoreConfiguration : IEntityTypeConfiguration<Video
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: VideoGame_Score.CompanyID -> Company.ID
-        builder.HasOne(x => x.Company).WithMany(x => x.VideoGameScores).HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CompanyEntity).WithMany(x => x.VideoGameScores).HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Score.PlatformID -> Platform.ID
-        builder.HasOne(x => x.Platform).WithMany(x => x.VideoGameScores).HasForeignKey(x => x.PlatformId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PlatformEntity).WithMany(x => x.VideoGameScores).HasForeignKey(x => x.PlatformId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Score.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.VideoGameScores).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.VideoGameScores).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Score.VideoGameID -> VideoGame.ID
-        builder.HasOne(x => x.VideoGame).WithMany(x => x.VideoGameScores).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VideoGameEntity).WithMany(x => x.VideoGameScores).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

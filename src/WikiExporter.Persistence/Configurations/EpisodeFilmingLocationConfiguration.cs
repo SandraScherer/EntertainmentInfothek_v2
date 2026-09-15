@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Episode_FilmingLocation</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class EpisodeFilmingLocationConfiguration : IEntityTypeConfiguration<EpisodeFilmingLocation>
+public sealed class EpisodeFilmingLocationConfiguration : IEntityTypeConfiguration<EpisodeFilmingLocationEntity>
 {
-    public void Configure(EntityTypeBuilder<EpisodeFilmingLocation> builder)
+    public void Configure(EntityTypeBuilder<EpisodeFilmingLocationEntity> builder)
     {
         builder.ToTable("Episode_FilmingLocation");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class EpisodeFilmingLocationConfiguration : IEntityTypeConfigurati
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Episode_FilmingLocation.EpisodeID -> Episode.ID
-        builder.HasOne(x => x.Episode).WithMany(x => x.EpisodeFilmingLocations).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.EpisodeEntity).WithMany(x => x.EpisodeFilmingLocations).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_FilmingLocation.LocationID -> Location.ID
-        builder.HasOne(x => x.Location).WithMany(x => x.EpisodeFilmingLocations).HasForeignKey(x => x.LocationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LocationEntity).WithMany(x => x.EpisodeFilmingLocations).HasForeignKey(x => x.LocationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_FilmingLocation.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.EpisodeFilmingLocations).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.EpisodeFilmingLocations).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

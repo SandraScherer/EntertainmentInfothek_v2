@@ -9,7 +9,7 @@ public sealed record CommandLineOptions(
     ExportEntityType? EntityType,
     string? EntityId,
     bool All,
-    ExportLanguage? Language,
+    ExportLanguage? LanguageEntity,
     ExportFormat? Format,
     int? BatchSize,
     bool Help);

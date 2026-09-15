@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Person</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class PersonConfiguration : IEntityTypeConfiguration<Person>
+public sealed class PersonConfiguration : IEntityTypeConfiguration<PersonEntity>
 {
-    public void Configure(EntityTypeBuilder<Person> builder)
+    public void Configure(EntityTypeBuilder<PersonEntity> builder)
     {
         builder.ToTable("Person");
         builder.HasKey(x => x.Id);
@@ -31,7 +31,7 @@ public sealed class PersonConfiguration : IEntityTypeConfiguration<Person>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Person.GenderID -> Gender.ID
-        builder.HasOne(x => x.Gender).WithMany(x => x.Persons).HasForeignKey(x => x.GenderId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.GenderEntity).WithMany(x => x.Persons).HasForeignKey(x => x.GenderId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person.LocationOfBirthID -> Location.ID
         builder.HasOne(x => x.LocationOfBirth).WithMany(x => x.PersonLocationOfBirths).HasForeignKey(x => x.LocationOfBirthId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
@@ -40,9 +40,9 @@ public sealed class PersonConfiguration : IEntityTypeConfiguration<Person>
         builder.HasOne(x => x.LocationOfDeath).WithMany(x => x.PersonLocationOfDeaths).HasForeignKey(x => x.LocationOfDeathId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Persons).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Persons).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person.TypeID -> Type.ID
-        builder.HasOne(x => x.Type).WithMany(x => x.Persons).HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TypeEntity).WithMany(x => x.Persons).HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

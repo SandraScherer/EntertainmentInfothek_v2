@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>MacOSSprocket</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class MacOSSprocketConfiguration : IEntityTypeConfiguration<MacOSSprocket>
+public sealed class MacOSSprocketConfiguration : IEntityTypeConfiguration<MacOSSprocketEntity>
 {
-    public void Configure(EntityTypeBuilder<MacOSSprocket> builder)
+    public void Configure(EntityTypeBuilder<MacOSSprocketEntity> builder)
     {
         builder.ToTable("MacOSSprocket");
         builder.HasKey(x => x.Id);
@@ -19,6 +19,6 @@ public sealed class MacOSSprocketConfiguration : IEntityTypeConfiguration<MacOSS
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: MacOSSprocket.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.MacOSSprockets).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MacOSSprockets).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

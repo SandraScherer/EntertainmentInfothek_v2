@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification_SupportedInputDeviceFeature</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class TechnicalSpecificationSupportedInputDeviceFeatureConfiguration : IEntityTypeConfiguration<TechnicalSpecificationSupportedInputDeviceFeature>
+public sealed class TechnicalSpecificationSupportedInputDeviceFeatureConfiguration : IEntityTypeConfiguration<TechnicalSpecificationSupportedInputDeviceFeatureEntity>
 {
-    public void Configure(EntityTypeBuilder<TechnicalSpecificationSupportedInputDeviceFeature> builder)
+    public void Configure(EntityTypeBuilder<TechnicalSpecificationSupportedInputDeviceFeatureEntity> builder)
     {
         builder.ToTable("TechnicalSpecification_SupportedInputDeviceFeature");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class TechnicalSpecificationSupportedInputDeviceFeatureConfigurati
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: TechnicalSpecification_SupportedInputDeviceFeature.InputDeviceFeatureID -> InputDeviceFeature.ID
-        builder.HasOne(x => x.InputDeviceFeature).WithMany(x => x.TechnicalSpecificationSupportedInputDeviceFeatures).HasForeignKey(x => x.InputDeviceFeatureId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.InputDeviceFeatureEntity).WithMany(x => x.TechnicalSpecificationSupportedInputDeviceFeatures).HasForeignKey(x => x.InputDeviceFeatureId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedInputDeviceFeature.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.TechnicalSpecificationSupportedInputDeviceFeatures).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TechnicalSpecificationSupportedInputDeviceFeatures).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedInputDeviceFeature.TechnicalSpecificationID -> TechnicalSpecification.ID
-        builder.HasOne(x => x.TechnicalSpecification).WithMany(x => x.TechnicalSpecificationSupportedInputDeviceFeatures).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany(x => x.TechnicalSpecificationSupportedInputDeviceFeatures).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

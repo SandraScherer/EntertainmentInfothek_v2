@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
-using System.Text;
-using System.Text.RegularExpressions;
+using System.TextEntity;
+using System.TextEntity.RegularExpressions;
 using WikiExporter.Application.Documents.Models;
 
 namespace WikiExporter.Export.FileNames;

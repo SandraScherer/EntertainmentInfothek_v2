@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Person_Profession</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class PersonProfessionConfiguration : IEntityTypeConfiguration<PersonProfession>
+public sealed class PersonProfessionConfiguration : IEntityTypeConfiguration<PersonProfessionEntity>
 {
-    public void Configure(EntityTypeBuilder<PersonProfession> builder)
+    public void Configure(EntityTypeBuilder<PersonProfessionEntity> builder)
     {
         builder.ToTable("Person_Profession");
         builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ public sealed class PersonProfessionConfiguration : IEntityTypeConfiguration<Per
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Person_Profession.PersonID -> Person.ID
-        builder.HasOne(x => x.Person).WithMany(x => x.PersonProfessions).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PersonEntity).WithMany(x => x.PersonProfessions).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Profession.ProfessionID -> Profession.ID
-        builder.HasOne(x => x.Profession).WithMany(x => x.PersonProfessions).HasForeignKey(x => x.ProfessionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.ProfessionEntity).WithMany(x => x.PersonProfessions).HasForeignKey(x => x.ProfessionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Profession.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.PersonProfessions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.PersonProfessions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

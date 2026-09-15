@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Profession</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class ProfessionConfiguration : IEntityTypeConfiguration<Profession>
+public sealed class ProfessionConfiguration : IEntityTypeConfiguration<ProfessionEntity>
 {
-    public void Configure(EntityTypeBuilder<Profession> builder)
+    public void Configure(EntityTypeBuilder<ProfessionEntity> builder)
     {
         builder.ToTable("Profession");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class ProfessionConfiguration : IEntityTypeConfiguration<Professio
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Profession.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Professions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Professions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

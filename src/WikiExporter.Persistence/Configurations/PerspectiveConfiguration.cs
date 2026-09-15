@@ -5,9 +5,9 @@ using WikiExporter.Persistence.Entities;
 namespace WikiExporter.Persistence.Configurations;
 
 /// <summary>Explicit EF Core mapping for <c>Perspective</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class PerspectiveConfiguration : IEntityTypeConfiguration<Perspective>
+public sealed class PerspectiveConfiguration : IEntityTypeConfiguration<PerspectiveEntity>
 {
-    public void Configure(EntityTypeBuilder<Perspective> builder)
+    public void Configure(EntityTypeBuilder<PerspectiveEntity> builder)
     {
         builder.ToTable("Perspective");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class PerspectiveConfiguration : IEntityTypeConfiguration<Perspect
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Perspective.StatusID -> Status.ID
-        builder.HasOne(x => x.Status).WithMany(x => x.Perspectives).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Perspectives).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }
