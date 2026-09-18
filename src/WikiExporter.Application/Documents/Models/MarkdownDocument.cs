@@ -14,5 +14,5 @@ public sealed record TableBlock(IReadOnlyList<string> Headers, IReadOnlyList<IRe
 public sealed record ListBlock(IReadOnlyList<string> Items, bool Ordered = false) : MarkdownBlock;
 public sealed record LinkBlock(string TextEntity, string TargetType, string TargetId) : MarkdownBlock;
 public sealed record ImageBlock(string? FileName, string? Description, string? TargetId = null) : MarkdownBlock;
-public sealed record CodeBlock(string Content, string? LanguageEntity = null) : MarkdownBlock;
+public sealed record CodeBlock(string Content, string? Language = null) : MarkdownBlock;
 public sealed record HorizontalRuleBlock() : MarkdownBlock;

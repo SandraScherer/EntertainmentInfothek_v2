@@ -12,10 +12,10 @@ public sealed class ExportReaderResolver : IExportReaderResolver
     {
         _readers = new Dictionary<ExportEntityType,IExportReaderAdapter>
         {
-            [ExportEntityType.MovieEntity] = new MovieReaderAdapter(movie), [ExportEntityType.SeriesEntity] = new SeriesReaderAdapter(series),
-            [ExportEntityType.EpisodeEntity] = new EpisodeReaderAdapter(episode), [ExportEntityType.BookEntity] = new BookReaderAdapter(book),
-            [ExportEntityType.VideoGameEntity] = new VideoGameReaderAdapter(game), [ExportEntityType.PersonEntity] = new PersonReaderAdapter(person),
-            [ExportEntityType.ConnectionEntity] = new ConnectionReaderAdapter(connection)
+            [ExportEntityType.Movie] = new MovieReaderAdapter(movie), [ExportEntityType.Series] = new SeriesReaderAdapter(series),
+            [ExportEntityType.Episode] = new EpisodeReaderAdapter(episode), [ExportEntityType.Book] = new BookReaderAdapter(book),
+            [ExportEntityType.VideoGame] = new VideoGameReaderAdapter(game), [ExportEntityType.Person] = new PersonReaderAdapter(person),
+            [ExportEntityType.Connection] = new ConnectionReaderAdapter(connection)
         };
     }
     public IExportReaderAdapter Resolve(ExportEntityType type) => _readers.TryGetValue(type, out var reader) ? reader : throw new ArgumentOutOfRangeException(nameof(type), type, "No export reader registered.");

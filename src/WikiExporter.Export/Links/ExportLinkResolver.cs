@@ -35,7 +35,7 @@ public sealed class ExportLinkResolver(IExportPathResolver paths) : IExportLinkR
 
     private static string StableIdFileName(string type, string id)
     {
-        var bytes = System.Security.Cryptography.SHA256.HashData(System.TextEntity.Encoding.UTF8.GetBytes(id));
+        var bytes = System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(id));
         return $"{type}-{Convert.ToHexString(bytes).ToLowerInvariant()[..8]}.md";
     }
 

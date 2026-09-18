@@ -1,4 +1,4 @@
-using System.TextEntity;
+using System.Text;
 using WikiExporter.Application.Documents.Models;
 using WikiExporter.Application.Export.Requests;
 
