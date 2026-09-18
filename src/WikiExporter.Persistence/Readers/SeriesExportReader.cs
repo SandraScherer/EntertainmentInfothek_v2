@@ -43,7 +43,7 @@ internal sealed class SeriesExportReader : ExportReaderBase, ISeriesExportReader
             if (!graph.Entities.TryGetValue((rootType,id), out var obj)) continue;
             var t = rootType; var e = (SeriesEntity)obj;
             var rows = ExportGraphMapper.Rows(graph, "Series", id);
-            result.Add(new SeriesExportData(e.Id, ExportGraphMapper.Title(t,e), ExportGraphMapper.Get(t,e,"TypeId"), ExportGraphMapper.Get(t,e,"NoOfSeasons"), ExportGraphMapper.Get(t,e,"NoOfEpisodes"), ExportGraphMapper.Get(t,e,"ConnectionId"), ExportGraphMapper.Get(t,e,"Details"), Episodes(g), rows));
+            result.Add(new SeriesExportData(e.Id, ExportGraphMapper.Title(t,e), ExportGraphMapper.Get(t,e,"TypeId"), ExportGraphMapper.Get(t,e,"NoOfSeasons"), ExportGraphMapper.Get(t,e,"NoOfEpisodes"), ExportGraphMapper.Get(t,e,"ConnectionId"), ExportGraphMapper.Get(t,e,"Details"), Episodes(graph), rows));
         }
         return result;
     }

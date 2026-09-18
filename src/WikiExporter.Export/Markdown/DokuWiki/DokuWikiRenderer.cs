@@ -21,7 +21,7 @@ public sealed class DokuWikiRenderer(IExportPathResolver paths, IExportLinkResol
                 case TableBlock t: RenderTable(sb, t); break;
                 case ListBlock l: foreach (var item in l.Items) sb.AppendLine((l.Ordered ? "  - " : "  * ") + MarkdownEscaper.Text(item)); sb.AppendLine(); break;
                 case LinkBlock l: sb.AppendLine($"[[{links.Resolve(document, l.TargetType, l.TargetId, Format)}|{MarkdownEscaper.Text(l.Text)}]]"); sb.AppendLine(); break;
-                case ImageBlock i: if (!string.IsNullOrWhiteSpace(i.FileName)) sb.AppendLine($"{{{{{i.FileName}|{MarkdownEscaper.Text(i.Description)}}}}"); sb.AppendLine(); break;
+                case ImageBlock i: if (!string.IsNullOrWhiteSpace(i.FileName)) sb.AppendLine("{{" + i.FileName + "|" + MarkdownEscaper.Text(i.Description) + "}}"); sb.AppendLine(); break;
                 case CodeBlock c: sb.AppendLine($"<code {c.Language ?? ""}>".TrimEnd() + "\n" + MarkdownEscaper.Text(c.Content) + "\n</code>"); sb.AppendLine(); break;
                 case HorizontalRuleBlock: sb.AppendLine("----"); sb.AppendLine(); break;
             }

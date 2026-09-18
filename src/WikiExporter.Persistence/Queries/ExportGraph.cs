@@ -91,11 +91,21 @@ internal sealed class ExportGraphLoader
         return graph;
     }
 
+    private IQueryable GetNoTrackingSet(Type clrType)
+    {
+        var setMethod = typeof(DbContext).GetMethods(BindingFlags.Public | BindingFlags.Instance)
+            .Single(m => m.Name == nameof(DbContext.Set) && m.IsGenericMethodDefinition && m.GetParameters().Length == 0);
+        var query = (IQueryable)setMethod.MakeGenericMethod(clrType).Invoke(_db, null)!;
+        var asNoTracking = typeof(EntityFrameworkQueryableExtensions).GetMethods(BindingFlags.Public | BindingFlags.Static)
+            .Single(m => m.Name == nameof(EntityFrameworkQueryableExtensions.AsNoTracking) && m.IsGenericMethodDefinition && m.GetParameters().Length == 1);
+        return (IQueryable)asNoTracking.MakeGenericMethod(clrType).Invoke(null, [query])!;
+    }
+
     private async Task<List<object>> QueryByIdsAsync(IEntityType type, IReadOnlyCollection<string> ids, CancellationToken ct)
     {
         var key = type.FindPrimaryKey()?.Properties.SingleOrDefault();
         if (key?.PropertyInfo is null) return [];
-        var set = _db.Set(type.ClrType).AsNoTracking();
+        var set = GetNoTrackingSet(type.ClrType);
         var p = Expression.Parameter(type.ClrType, "e");
         var value = Expression.Call(typeof(EF), nameof(EF.Property), [typeof(string)], p, Expression.Constant(key.Name));
         var contains = Expression.Call(typeof(Enumerable), nameof(Enumerable.Contains), [typeof(string)], Expression.Constant(ids.ToArray()), value);
@@ -111,7 +121,7 @@ internal sealed class ExportGraphLoader
     {
         var key = dependent.FindPrimaryKey()?.Properties.SingleOrDefault();
         if (key?.PropertyInfo is null) return [];
-        var set = _db.Set(dependent.ClrType).AsNoTracking();
+        var set = GetNoTrackingSet(dependent.ClrType);
         var p = Expression.Parameter(dependent.ClrType, "e");
         Expression? body = null;
         foreach (var fk in fks.Where(f => f.Properties.Count == 1))
