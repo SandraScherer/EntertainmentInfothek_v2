@@ -21,12 +21,12 @@ public sealed class MoviePrintedFilmFormatConfiguration : IEntityTypeConfigurati
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Movie_PrintedFilmFormat.FilmFormatID -> FilmFormat.ID
-        builder.HasOne(x => x.FilmFormatEntity).WithMany(x => x.MoviePrintedFilmFormats).HasForeignKey(x => x.FilmFormatId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.FilmFormatEntity).WithMany().HasForeignKey(x => x.FilmFormatId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_PrintedFilmFormat.MovieID -> Movie.ID
-        builder.HasOne(x => x.MovieEntity).WithMany(x => x.MoviePrintedFilmFormats).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MovieEntity).WithMany().HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_PrintedFilmFormat.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MoviePrintedFilmFormats).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

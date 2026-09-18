@@ -22,9 +22,9 @@ public sealed class EpisodeFilmingDateConfiguration : IEntityTypeConfiguration<E
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Episode_FilmingDate.EpisodeID -> Episode.ID
-        builder.HasOne(x => x.EpisodeEntity).WithMany(x => x.EpisodeFilmingDates).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.EpisodeEntity).WithMany().HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_FilmingDate.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.EpisodeFilmingDates).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

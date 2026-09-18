@@ -21,12 +21,12 @@ public sealed class SeriesCertificationConfiguration : IEntityTypeConfiguration<
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_Certification.CertificationID -> Certification.ID
-        builder.HasOne(x => x.CertificationEntity).WithMany(x => x.SeriesCertifications).HasForeignKey(x => x.CertificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CertificationEntity).WithMany().HasForeignKey(x => x.CertificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_Certification.SeriesID -> Series.ID
-        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesCertifications).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany().HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_Certification.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesCertifications).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

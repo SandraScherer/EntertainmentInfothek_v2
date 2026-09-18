@@ -21,12 +21,12 @@ public sealed class MovieLanguageConfiguration : IEntityTypeConfiguration<MovieL
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Movie_Language.LanguageID -> Language.ID
-        builder.HasOne(x => x.LanguageEntity).WithMany(x => x.MovieLanguages).HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LanguageEntity).WithMany().HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Language.MovieID -> Movie.ID
-        builder.HasOne(x => x.MovieEntity).WithMany(x => x.MovieLanguages).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MovieEntity).WithMany().HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Language.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MovieLanguages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

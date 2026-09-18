@@ -21,12 +21,12 @@ public sealed class SeriesFilmingLocationConfiguration : IEntityTypeConfiguratio
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_FilmingLocation.LocationID -> Location.ID
-        builder.HasOne(x => x.LocationEntity).WithMany(x => x.SeriesFilmingLocations).HasForeignKey(x => x.LocationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LocationEntity).WithMany().HasForeignKey(x => x.LocationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_FilmingLocation.SeriesID -> Series.ID
-        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesFilmingLocations).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany().HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_FilmingLocation.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesFilmingLocations).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

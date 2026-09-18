@@ -24,15 +24,15 @@ public sealed class VideoGameCrewConfiguration : IEntityTypeConfiguration<VideoG
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: VideoGame_Crew.DepartmentID -> Department.ID
-        builder.HasOne(x => x.DepartmentEntity).WithMany(x => x.VideoGameCrews).HasForeignKey(x => x.DepartmentId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.DepartmentEntity).WithMany().HasForeignKey(x => x.DepartmentId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Crew.PersonID -> Person.ID
-        builder.HasOne(x => x.PersonEntity).WithMany(x => x.VideoGameCrews).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PersonEntity).WithMany().HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Crew.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.VideoGameCrews).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Crew.VideoGameID -> VideoGame.ID
-        builder.HasOne(x => x.VideoGameEntity).WithMany(x => x.VideoGameCrews).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VideoGameEntity).WithMany().HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

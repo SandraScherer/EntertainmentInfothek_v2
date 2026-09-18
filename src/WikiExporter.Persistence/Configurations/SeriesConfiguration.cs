@@ -30,18 +30,18 @@ public sealed class SeriesConfiguration : IEntityTypeConfiguration<SeriesEntity>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series.CastStatusID -> Status.ID
-        builder.HasOne(x => x.CastStatus).WithMany(x => x.SeriesCastStatuss).HasForeignKey(x => x.CastStatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CastStatus).WithMany().HasForeignKey(x => x.CastStatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series.ConnectionID -> Connection.ID
-        builder.HasOne(x => x.ConnectionEntity).WithMany(x => x.Seriess).HasForeignKey(x => x.ConnectionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.ConnectionEntity).WithMany().HasForeignKey(x => x.ConnectionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series.CrewStatusID -> Status.ID
-        builder.HasOne(x => x.CrewStatus).WithMany(x => x.SeriesCrewStatuss).HasForeignKey(x => x.CrewStatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CrewStatus).WithMany().HasForeignKey(x => x.CrewStatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesStatuss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series.TypeID -> Type.ID
-        builder.HasOne(x => x.TypeEntity).WithMany(x => x.Seriess).HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TypeEntity).WithMany().HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -22,12 +22,12 @@ public sealed class VideoGameImageConfiguration : IEntityTypeConfiguration<Video
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: VideoGame_Image.ImageID -> Image.ID
-        builder.HasOne(x => x.ImageEntity).WithMany(x => x.VideoGameImages).HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.ImageEntity).WithMany().HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Image.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.VideoGameImages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Image.VideoGameID -> VideoGame.ID
-        builder.HasOne(x => x.VideoGameEntity).WithMany(x => x.VideoGameImages).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VideoGameEntity).WithMany().HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

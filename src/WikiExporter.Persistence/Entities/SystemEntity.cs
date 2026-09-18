@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace WikiExporter.Persistence.Entities;
 
 /// <summary>EF representation of the SQLite table <c>System</c>. The entity is persistence-only.</summary>
-public sealed class System
+public sealed class SystemEntity
 {
     /// <summary>Maps to <c>ID</c>.</summary>
     public string Id { get; set; }

@@ -22,15 +22,15 @@ public sealed class VideoGameCompletionConfiguration : IEntityTypeConfiguration<
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: VideoGame_Completion.CompletionStatusID -> Status.ID
-        builder.HasOne(x => x.CompletionStatus).WithMany(x => x.VideoGameCompletionCompletionStatuss).HasForeignKey(x => x.CompletionStatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CompletionStatus).WithMany().HasForeignKey(x => x.CompletionStatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Completion.PlatformID -> Platform.ID
-        builder.HasOne(x => x.PlatformEntity).WithMany(x => x.VideoGameCompletions).HasForeignKey(x => x.PlatformId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PlatformEntity).WithMany().HasForeignKey(x => x.PlatformId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Completion.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.VideoGameCompletionStatuss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Completion.VideoGameID -> VideoGame.ID
-        builder.HasOne(x => x.VideoGameEntity).WithMany(x => x.VideoGameCompletions).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VideoGameEntity).WithMany().HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

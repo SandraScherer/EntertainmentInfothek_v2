@@ -23,9 +23,9 @@ public sealed class MovieReleaseDateConfiguration : IEntityTypeConfiguration<Mov
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Movie_ReleaseDate.MovieID -> Movie.ID
-        builder.HasOne(x => x.MovieEntity).WithMany(x => x.MovieReleaseDates).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MovieEntity).WithMany().HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_ReleaseDate.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MovieReleaseDates).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

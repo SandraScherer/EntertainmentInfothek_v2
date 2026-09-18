@@ -22,12 +22,12 @@ public sealed class EpisodeImageConfiguration : IEntityTypeConfiguration<Episode
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Episode_Image.EpisodeID -> Episode.ID
-        builder.HasOne(x => x.EpisodeEntity).WithMany(x => x.EpisodeImages).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.EpisodeEntity).WithMany().HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_Image.ImageID -> Image.ID
-        builder.HasOne(x => x.ImageEntity).WithMany(x => x.EpisodeImages).HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.ImageEntity).WithMany().HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_Image.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.EpisodeImages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

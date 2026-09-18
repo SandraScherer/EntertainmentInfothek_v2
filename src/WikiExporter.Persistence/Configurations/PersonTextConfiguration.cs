@@ -22,15 +22,15 @@ public sealed class PersonTextConfiguration : IEntityTypeConfiguration<PersonTex
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Person_Text.PersonID -> Person.ID
-        builder.HasOne(x => x.PersonEntity).WithMany(x => x.PersonTexts).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PersonEntity).WithMany().HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Text.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.PersonTexts).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Text.TextID -> Text.ID
-        builder.HasOne(x => x.TextEntity).WithMany(x => x.PersonTexts).HasForeignKey(x => x.TextId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TextEntity).WithMany().HasForeignKey(x => x.TextId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Text.TypeID -> TextType.ID
-        builder.HasOne(x => x.TypeEntity).WithMany(x => x.PersonTexts).HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TypeEntity).WithMany().HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

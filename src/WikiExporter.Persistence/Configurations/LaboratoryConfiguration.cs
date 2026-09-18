@@ -20,9 +20,9 @@ public sealed class LaboratoryConfiguration : IEntityTypeConfiguration<Laborator
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Laboratory.LocationID -> Location.ID
-        builder.HasOne(x => x.LocationEntity).WithMany(x => x.Laboratorys).HasForeignKey(x => x.LocationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LocationEntity).WithMany().HasForeignKey(x => x.LocationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Laboratory.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Laboratorys).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -23,9 +23,9 @@ public sealed class SeriesReleaseDateFirstEpisodeConfiguration : IEntityTypeConf
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_ReleaseDateFirstEpisode.SeriesID -> Series.ID
-        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesReleaseDateFirstEpisodes).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany().HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_ReleaseDateFirstEpisode.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesReleaseDateFirstEpisodes).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

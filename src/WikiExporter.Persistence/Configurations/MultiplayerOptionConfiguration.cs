@@ -20,6 +20,6 @@ public sealed class MultiplayerOptionConfiguration : IEntityTypeConfiguration<Mu
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: MultiplayerOption.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MultiplayerOptions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -21,6 +21,6 @@ public sealed class ImageConfiguration : IEntityTypeConfiguration<ImageEntity>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Image.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Images).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

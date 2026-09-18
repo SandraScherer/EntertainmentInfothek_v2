@@ -21,12 +21,12 @@ public sealed class TechnicalSpecificationSupportedInputDeviceConfiguration : IE
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: TechnicalSpecification_SupportedInputDevice.InputDeviceID -> InputDevice.ID
-        builder.HasOne(x => x.InputDeviceEntity).WithMany(x => x.TechnicalSpecificationSupportedInputDevices).HasForeignKey(x => x.InputDeviceId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.InputDeviceEntity).WithMany().HasForeignKey(x => x.InputDeviceId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedInputDevice.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TechnicalSpecificationSupportedInputDevices).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedInputDevice.TechnicalSpecificationID -> TechnicalSpecification.ID
-        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany(x => x.TechnicalSpecificationSupportedInputDevices).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany().HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

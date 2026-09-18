@@ -21,12 +21,12 @@ public sealed class SeriesCountryConfiguration : IEntityTypeConfiguration<Series
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_Country.CountryID -> Country.ID
-        builder.HasOne(x => x.CountryEntity).WithMany(x => x.SeriesCountrys).HasForeignKey(x => x.CountryId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CountryEntity).WithMany().HasForeignKey(x => x.CountryId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_Country.SeriesID -> Series.ID
-        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesCountrys).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany().HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_Country.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesCountrys).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

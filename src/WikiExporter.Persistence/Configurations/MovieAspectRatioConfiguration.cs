@@ -21,12 +21,12 @@ public sealed class MovieAspectRatioConfiguration : IEntityTypeConfiguration<Mov
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Movie_AspectRatio.AspectRatioID -> AspectRatio.ID
-        builder.HasOne(x => x.AspectRatioEntity).WithMany(x => x.MovieAspectRatios).HasForeignKey(x => x.AspectRatioId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.AspectRatioEntity).WithMany().HasForeignKey(x => x.AspectRatioId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_AspectRatio.MovieID -> Movie.ID
-        builder.HasOne(x => x.MovieEntity).WithMany(x => x.MovieAspectRatios).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MovieEntity).WithMany().HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_AspectRatio.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MovieAspectRatios).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

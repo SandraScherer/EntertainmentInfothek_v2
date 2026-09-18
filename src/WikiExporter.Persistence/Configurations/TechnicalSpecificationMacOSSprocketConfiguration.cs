@@ -21,12 +21,12 @@ public sealed class TechnicalSpecificationMacOSSprocketConfiguration : IEntityTy
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: TechnicalSpecification_MacOSSprocket.MacOSSprocketID -> MacOSSprocket.ID
-        builder.HasOne(x => x.MacOSSprocketEntity).WithMany(x => x.TechnicalSpecificationMacOSSprockets).HasForeignKey(x => x.MacOSSprocketId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MacOSSprocketEntity).WithMany().HasForeignKey(x => x.MacOSSprocketId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_MacOSSprocket.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TechnicalSpecificationMacOSSprockets).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_MacOSSprocket.TechnicalSpecificationID -> TechnicalSpecification.ID
-        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany(x => x.TechnicalSpecificationMacOSSprockets).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany().HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

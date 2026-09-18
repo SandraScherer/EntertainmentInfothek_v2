@@ -22,15 +22,15 @@ public sealed class MovieTextConfiguration : IEntityTypeConfiguration<MovieTextE
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Movie_Text.MovieID -> Movie.ID
-        builder.HasOne(x => x.MovieEntity).WithMany(x => x.MovieTexts).HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MovieEntity).WithMany().HasForeignKey(x => x.MovieId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Text.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MovieTexts).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Text.TextID -> Text.ID
-        builder.HasOne(x => x.TextEntity).WithMany(x => x.MovieTexts).HasForeignKey(x => x.TextId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TextEntity).WithMany().HasForeignKey(x => x.TextId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Text.TypeID -> TextType.ID
-        builder.HasOne(x => x.TypeEntity).WithMany(x => x.MovieTexts).HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TypeEntity).WithMany().HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

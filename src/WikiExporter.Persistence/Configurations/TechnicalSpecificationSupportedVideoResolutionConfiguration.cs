@@ -21,12 +21,12 @@ public sealed class TechnicalSpecificationSupportedVideoResolutionConfiguration 
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: TechnicalSpecification_SupportedVideoResolution.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TechnicalSpecificationSupportedVideoResolutions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedVideoResolution.TechnicalSpecificationID -> TechnicalSpecification.ID
-        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany(x => x.TechnicalSpecificationSupportedVideoResolutions).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany().HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedVideoResolution.VideoResolutionID -> VideoResolution.ID
-        builder.HasOne(x => x.VideoResolutionEntity).WithMany(x => x.TechnicalSpecificationSupportedVideoResolutions).HasForeignKey(x => x.VideoResolutionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VideoResolutionEntity).WithMany().HasForeignKey(x => x.VideoResolutionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

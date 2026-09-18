@@ -26,21 +26,21 @@ public sealed class VideoGameCompanyCreditsConfiguration : IEntityTypeConfigurat
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: VideoGame_CompanyCredits.CompanyID -> Company.ID
-        builder.HasOne(x => x.CompanyEntity).WithMany(x => x.VideoGameCompanyCreditss).HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CompanyEntity).WithMany().HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_CompanyCredits.CountryID -> Country.ID
-        builder.HasOne(x => x.CountryEntity).WithMany(x => x.VideoGameCompanyCreditss).HasForeignKey(x => x.CountryId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CountryEntity).WithMany().HasForeignKey(x => x.CountryId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_CompanyCredits.DepartmentID -> Department.ID
-        builder.HasOne(x => x.DepartmentEntity).WithMany(x => x.VideoGameCompanyCreditss).HasForeignKey(x => x.DepartmentId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.DepartmentEntity).WithMany().HasForeignKey(x => x.DepartmentId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_CompanyCredits.PlatformID -> Platform.ID
-        builder.HasOne(x => x.PlatformEntity).WithMany(x => x.VideoGameCompanyCreditss).HasForeignKey(x => x.PlatformId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PlatformEntity).WithMany().HasForeignKey(x => x.PlatformId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_CompanyCredits.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.VideoGameCompanyCreditss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_CompanyCredits.VideoGameID -> VideoGame.ID
-        builder.HasOne(x => x.VideoGameEntity).WithMany(x => x.VideoGameCompanyCreditss).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VideoGameEntity).WithMany().HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

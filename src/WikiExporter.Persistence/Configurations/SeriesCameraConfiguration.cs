@@ -21,12 +21,12 @@ public sealed class SeriesCameraConfiguration : IEntityTypeConfiguration<SeriesC
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_Camera.CameraID -> Camera.ID
-        builder.HasOne(x => x.CameraEntity).WithMany(x => x.SeriesCameras).HasForeignKey(x => x.CameraId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CameraEntity).WithMany().HasForeignKey(x => x.CameraId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_Camera.SeriesID -> Series.ID
-        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesCameras).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany().HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_Camera.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesCameras).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -19,6 +19,6 @@ public sealed class OperatingSystemConfiguration : IEntityTypeConfiguration<Oper
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: OperatingSystem.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.OperatingSystems).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

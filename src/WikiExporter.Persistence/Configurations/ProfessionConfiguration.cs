@@ -20,6 +20,6 @@ public sealed class ProfessionConfiguration : IEntityTypeConfiguration<Professio
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Profession.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Professions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

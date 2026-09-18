@@ -21,12 +21,12 @@ public sealed class VideoGameWeblinkConfiguration : IEntityTypeConfiguration<Vid
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: VideoGame_Weblink.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.VideoGameWeblinks).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Weblink.VideoGameID -> VideoGame.ID
-        builder.HasOne(x => x.VideoGameEntity).WithMany(x => x.VideoGameWeblinks).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VideoGameEntity).WithMany().HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: VideoGame_Weblink.WeblinkID -> Weblink.ID
-        builder.HasOne(x => x.WeblinkEntity).WithMany(x => x.VideoGameWeblinks).HasForeignKey(x => x.WeblinkId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.WeblinkEntity).WithMany().HasForeignKey(x => x.WeblinkId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

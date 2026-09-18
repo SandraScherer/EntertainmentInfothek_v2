@@ -22,12 +22,12 @@ public sealed class LocationConfiguration : IEntityTypeConfiguration<LocationEnt
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Location.CountryID -> Country.ID
-        builder.HasOne(x => x.CountryEntity).WithMany(x => x.Locations).HasForeignKey(x => x.CountryId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CountryEntity).WithMany().HasForeignKey(x => x.CountryId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Location.LocationID -> Location.ID
-        builder.HasOne(x => x.LocationEntity).WithMany(x => x.Locations).HasForeignKey(x => x.LocationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LocationEntity).WithMany().HasForeignKey(x => x.LocationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Location.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Locations).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

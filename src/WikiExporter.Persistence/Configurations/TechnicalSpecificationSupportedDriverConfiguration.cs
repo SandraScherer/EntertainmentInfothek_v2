@@ -21,12 +21,12 @@ public sealed class TechnicalSpecificationSupportedDriverConfiguration : IEntity
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: TechnicalSpecification_SupportedDriver.DriverID -> Driver.ID
-        builder.HasOne(x => x.DriverEntity).WithMany(x => x.TechnicalSpecificationSupportedDrivers).HasForeignKey(x => x.DriverId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.DriverEntity).WithMany().HasForeignKey(x => x.DriverId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedDriver.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TechnicalSpecificationSupportedDrivers).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification_SupportedDriver.TechnicalSpecificationID -> TechnicalSpecification.ID
-        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany(x => x.TechnicalSpecificationSupportedDrivers).HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TechnicalSpecificationEntity).WithMany().HasForeignKey(x => x.TechnicalSpecificationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

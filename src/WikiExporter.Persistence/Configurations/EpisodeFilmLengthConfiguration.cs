@@ -21,9 +21,9 @@ public sealed class EpisodeFilmLengthConfiguration : IEntityTypeConfiguration<Ep
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Episode_FilmLength.EpisodeID -> Episode.ID
-        builder.HasOne(x => x.EpisodeEntity).WithMany(x => x.EpisodeFilmLengths).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.EpisodeEntity).WithMany().HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_FilmLength.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.EpisodeFilmLengths).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

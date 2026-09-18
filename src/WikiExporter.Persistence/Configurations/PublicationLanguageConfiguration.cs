@@ -21,12 +21,12 @@ public sealed class PublicationLanguageConfiguration : IEntityTypeConfiguration<
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Publication_Language.LanguageID -> Language.ID
-        builder.HasOne(x => x.LanguageEntity).WithMany(x => x.PublicationLanguages).HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LanguageEntity).WithMany().HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Publication_Language.PublicationID -> Publication.ID
-        builder.HasOne(x => x.PublicationEntity).WithMany(x => x.PublicationLanguages).HasForeignKey(x => x.PublicationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PublicationEntity).WithMany().HasForeignKey(x => x.PublicationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Publication_Language.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.PublicationLanguages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

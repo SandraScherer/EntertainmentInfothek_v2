@@ -20,6 +20,6 @@ public sealed class InputDeviceFeatureConfiguration : IEntityTypeConfiguration<I
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: InputDeviceFeature.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.InputDeviceFeatures).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

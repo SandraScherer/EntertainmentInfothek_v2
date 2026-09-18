@@ -25,18 +25,18 @@ public sealed class EpisodeCompanyCreditsConfiguration : IEntityTypeConfiguratio
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Episode_CompanyCredits.CompanyID -> Company.ID
-        builder.HasOne(x => x.CompanyEntity).WithMany(x => x.EpisodeCompanyCreditss).HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CompanyEntity).WithMany().HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_CompanyCredits.CountryID -> Country.ID
-        builder.HasOne(x => x.CountryEntity).WithMany(x => x.EpisodeCompanyCreditss).HasForeignKey(x => x.CountryId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CountryEntity).WithMany().HasForeignKey(x => x.CountryId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_CompanyCredits.DepartmentID -> Department.ID
-        builder.HasOne(x => x.DepartmentEntity).WithMany(x => x.EpisodeCompanyCreditss).HasForeignKey(x => x.DepartmentId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.DepartmentEntity).WithMany().HasForeignKey(x => x.DepartmentId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_CompanyCredits.EpisodeID -> Episode.ID
-        builder.HasOne(x => x.EpisodeEntity).WithMany(x => x.EpisodeCompanyCreditss).HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.EpisodeEntity).WithMany().HasForeignKey(x => x.EpisodeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode_CompanyCredits.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.EpisodeCompanyCreditss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

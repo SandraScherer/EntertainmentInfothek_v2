@@ -26,15 +26,15 @@ public sealed class EpisodeConfiguration : IEntityTypeConfiguration<EpisodeEntit
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Episode.CastStatusID -> Status.ID
-        builder.HasOne(x => x.CastStatus).WithMany(x => x.EpisodeCastStatuss).HasForeignKey(x => x.CastStatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CastStatus).WithMany().HasForeignKey(x => x.CastStatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode.CrewStatusID -> Status.ID
-        builder.HasOne(x => x.CrewStatus).WithMany(x => x.EpisodeCrewStatuss).HasForeignKey(x => x.CrewStatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CrewStatus).WithMany().HasForeignKey(x => x.CrewStatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode.SeriesID -> Series.ID
-        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.Episodes).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany().HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Episode.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.EpisodeStatuss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

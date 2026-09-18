@@ -20,9 +20,9 @@ public sealed class ConnectionConfiguration : IEntityTypeConfiguration<Connectio
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Connection.ConnectionID -> Connection.ID
-        builder.HasOne(x => x.ConnectionEntity).WithMany(x => x.ChildConnections).HasForeignKey(x => x.ConnectionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.ConnectionEntity).WithMany().HasForeignKey(x => x.ConnectionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Connection.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Connections).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

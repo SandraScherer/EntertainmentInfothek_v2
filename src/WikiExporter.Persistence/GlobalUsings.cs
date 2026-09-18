@@ -1,5 +1,5 @@
 // Persistence-wide usings. EF Core types and the application's persistence contracts are infrastructure concerns.
-global using System;
+global using SystemEntity;
 global using System.Collections.Generic;
 global using System.Linq;
 global using System.Linq.Expressions;

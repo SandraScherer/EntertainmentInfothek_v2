@@ -24,12 +24,12 @@ public sealed class BookAwardConfiguration : IEntityTypeConfiguration<BookAwardE
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Book_Award.AwardID -> Award.ID
-        builder.HasOne(x => x.AwardEntity).WithMany(x => x.BookAwards).HasForeignKey(x => x.AwardId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.AwardEntity).WithMany().HasForeignKey(x => x.AwardId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_Award.BookID -> Book.ID
-        builder.HasOne(x => x.BookEntity).WithMany(x => x.BookAwards).HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.BookEntity).WithMany().HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_Award.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.BookAwards).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

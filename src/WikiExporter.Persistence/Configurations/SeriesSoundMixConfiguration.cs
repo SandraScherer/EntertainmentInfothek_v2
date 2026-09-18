@@ -21,12 +21,12 @@ public sealed class SeriesSoundMixConfiguration : IEntityTypeConfiguration<Serie
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_SoundMix.SeriesID -> Series.ID
-        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesSoundMixs).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany().HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_SoundMix.SoundMixID -> SoundMix.ID
-        builder.HasOne(x => x.SoundMixEntity).WithMany(x => x.SeriesSoundMixs).HasForeignKey(x => x.SoundMixId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SoundMixEntity).WithMany().HasForeignKey(x => x.SoundMixId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_SoundMix.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesSoundMixs).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

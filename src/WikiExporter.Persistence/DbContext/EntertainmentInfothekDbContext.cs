@@ -155,7 +155,7 @@ public sealed class EntertainmentInfothekDbContext : Microsoft.EntityFrameworkCo
     public DbSet<SoundModeEntity> SoundModeEntity => Set<SoundModeEntity>();
     public DbSet<SpeciesEntity> SpeciesEntity => Set<SpeciesEntity>();
     public DbSet<StatusEntity> StatusEntity => Set<StatusEntity>();
-    public DbSet<System> System => Set<System>();
+    public DbSet<SystemEntity> SystemEntity => Set<SystemEntity>();
     public DbSet<TechnicalSpecificationEntity> TechnicalSpecificationEntity => Set<TechnicalSpecificationEntity>();
     public DbSet<TechnicalSpecificationCopyProtectionEntity> TechnicalSpecificationCopyProtectionEntity => Set<TechnicalSpecificationCopyProtectionEntity>();
     public DbSet<TechnicalSpecificationMacOSSprocketEntity> TechnicalSpecificationMacOSSprocketEntity => Set<TechnicalSpecificationMacOSSprocketEntity>();

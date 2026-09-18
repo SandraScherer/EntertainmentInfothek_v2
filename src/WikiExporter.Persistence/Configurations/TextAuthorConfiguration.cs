@@ -23,12 +23,12 @@ public sealed class TextAuthorConfiguration : IEntityTypeConfiguration<TextAutho
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Text_Author.PersonID -> Person.ID
-        builder.HasOne(x => x.PersonEntity).WithMany(x => x.TextAuthors).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PersonEntity).WithMany().HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Text_Author.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TextAuthors).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Text_Author.TextID -> Text.ID
-        builder.HasOne(x => x.TextEntity).WithMany(x => x.TextAuthors).HasForeignKey(x => x.TextId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TextEntity).WithMany().HasForeignKey(x => x.TextId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

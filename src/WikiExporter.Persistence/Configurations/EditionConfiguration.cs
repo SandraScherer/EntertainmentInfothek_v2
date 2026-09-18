@@ -20,6 +20,6 @@ public sealed class EditionConfiguration : IEntityTypeConfiguration<EditionEntit
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Edition.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Editions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

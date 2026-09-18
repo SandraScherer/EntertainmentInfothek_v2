@@ -22,9 +22,9 @@ public sealed class AwardConfiguration : IEntityTypeConfiguration<AwardEntity>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Award.PresenterID -> Company.ID
-        builder.HasOne(x => x.Presenter).WithMany(x => x.Awards).HasForeignKey(x => x.PresenterId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.Presenter).WithMany().HasForeignKey(x => x.PresenterId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Award.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Awards).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -23,9 +23,9 @@ public sealed class PublicationReleaseDateConfiguration : IEntityTypeConfigurati
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Publication_ReleaseDate.PublicationID -> Publication.ID
-        builder.HasOne(x => x.PublicationEntity).WithMany(x => x.PublicationReleaseDates).HasForeignKey(x => x.PublicationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PublicationEntity).WithMany().HasForeignKey(x => x.PublicationId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Publication_ReleaseDate.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.PublicationReleaseDates).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

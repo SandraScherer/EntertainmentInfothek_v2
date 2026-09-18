@@ -23,12 +23,12 @@ public sealed class MovieAwardPersonConfiguration : IEntityTypeConfiguration<Mov
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Movie_Award_Person.Movie_AwardID -> Movie_Award.ID
-        builder.HasOne(x => x.Movie_Award).WithMany(x => x.MovieAwardPersons).HasForeignKey(x => x.Movie_AwardId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.Movie_Award).WithMany().HasForeignKey(x => x.Movie_AwardId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Award_Person.PersonID -> Person.ID
-        builder.HasOne(x => x.PersonEntity).WithMany(x => x.MovieAwardPersons).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PersonEntity).WithMany().HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Movie_Award_Person.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.MovieAwardPersons).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

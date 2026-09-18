@@ -21,12 +21,12 @@ public sealed class PersonPositionConfiguration : IEntityTypeConfiguration<Perso
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Person_Position.PersonID -> Person.ID
-        builder.HasOne(x => x.PersonEntity).WithMany(x => x.PersonPositions).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PersonEntity).WithMany().HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Position.PositionID -> Position.ID
-        builder.HasOne(x => x.PositionEntity).WithMany(x => x.PersonPositions).HasForeignKey(x => x.PositionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PositionEntity).WithMany().HasForeignKey(x => x.PositionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Position.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.PersonPositions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

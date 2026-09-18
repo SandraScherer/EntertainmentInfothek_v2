@@ -21,12 +21,12 @@ public sealed class BookGenreConfiguration : IEntityTypeConfiguration<BookGenreE
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Book_Genre.BookID -> Book.ID
-        builder.HasOne(x => x.BookEntity).WithMany(x => x.BookGenres).HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.BookEntity).WithMany().HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_Genre.GenreID -> Genre.ID
-        builder.HasOne(x => x.GenreEntity).WithMany(x => x.BookGenres).HasForeignKey(x => x.GenreId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.GenreEntity).WithMany().HasForeignKey(x => x.GenreId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_Genre.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.BookGenres).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

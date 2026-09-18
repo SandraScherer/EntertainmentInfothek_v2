@@ -21,12 +21,12 @@ public sealed class SeriesAspectRatioConfiguration : IEntityTypeConfiguration<Se
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_AspectRatio.AspectRatioID -> AspectRatio.ID
-        builder.HasOne(x => x.AspectRatioEntity).WithMany(x => x.SeriesAspectRatios).HasForeignKey(x => x.AspectRatioId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.AspectRatioEntity).WithMany().HasForeignKey(x => x.AspectRatioId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_AspectRatio.SeriesID -> Series.ID
-        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesAspectRatios).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany().HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_AspectRatio.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesAspectRatios).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

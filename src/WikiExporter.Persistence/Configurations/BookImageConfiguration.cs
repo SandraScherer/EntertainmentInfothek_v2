@@ -22,12 +22,12 @@ public sealed class BookImageConfiguration : IEntityTypeConfiguration<BookImageE
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Book_Image.BookID -> Book.ID
-        builder.HasOne(x => x.BookEntity).WithMany(x => x.BookImages).HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.BookEntity).WithMany().HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_Image.ImageID -> Image.ID
-        builder.HasOne(x => x.ImageEntity).WithMany(x => x.BookImages).HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.ImageEntity).WithMany().HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Book_Image.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.BookImages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

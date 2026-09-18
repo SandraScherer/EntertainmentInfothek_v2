@@ -21,12 +21,12 @@ public sealed class PersonWeblinkConfiguration : IEntityTypeConfiguration<Person
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Person_Weblink.PersonID -> Person.ID
-        builder.HasOne(x => x.PersonEntity).WithMany(x => x.PersonWeblinks).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PersonEntity).WithMany().HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Weblink.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.PersonWeblinks).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Weblink.WeblinkID -> Weblink.ID
-        builder.HasOne(x => x.WeblinkEntity).WithMany(x => x.PersonWeblinks).HasForeignKey(x => x.WeblinkId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.WeblinkEntity).WithMany().HasForeignKey(x => x.WeblinkId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

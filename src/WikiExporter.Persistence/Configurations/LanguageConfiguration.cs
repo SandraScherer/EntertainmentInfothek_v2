@@ -21,6 +21,6 @@ public sealed class LanguageConfiguration : IEntityTypeConfiguration<LanguageEnt
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Language.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Languages).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -19,6 +19,6 @@ public sealed class PlatformConfiguration : IEntityTypeConfiguration<PlatformEnt
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Platform.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Platforms).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

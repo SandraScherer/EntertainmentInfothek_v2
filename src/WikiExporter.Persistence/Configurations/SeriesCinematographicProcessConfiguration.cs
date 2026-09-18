@@ -21,12 +21,12 @@ public sealed class SeriesCinematographicProcessConfiguration : IEntityTypeConfi
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Series_CinematographicProcess.CinematographicProcessID -> CinematographicProcess.ID
-        builder.HasOne(x => x.CinematographicProcessEntity).WithMany(x => x.SeriesCinematographicProcesss).HasForeignKey(x => x.CinematographicProcessId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CinematographicProcessEntity).WithMany().HasForeignKey(x => x.CinematographicProcessId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_CinematographicProcess.SeriesID -> Series.ID
-        builder.HasOne(x => x.SeriesEntity).WithMany(x => x.SeriesCinematographicProcesss).HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.SeriesEntity).WithMany().HasForeignKey(x => x.SeriesId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Series_CinematographicProcess.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.SeriesCinematographicProcesss).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

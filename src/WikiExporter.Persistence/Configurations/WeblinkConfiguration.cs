@@ -22,9 +22,9 @@ public sealed class WeblinkConfiguration : IEntityTypeConfiguration<WeblinkEntit
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Weblink.LanguageID -> Language.ID
-        builder.HasOne(x => x.LanguageEntity).WithMany(x => x.Weblinks).HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LanguageEntity).WithMany().HasForeignKey(x => x.LanguageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Weblink.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Weblinks).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

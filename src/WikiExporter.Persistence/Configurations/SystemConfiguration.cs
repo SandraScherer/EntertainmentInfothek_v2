@@ -4,10 +4,10 @@ using WikiExporter.Persistence.Entities;
 
 namespace WikiExporter.Persistence.Configurations;
 
-/// <summary>Explicit EF Core mapping for <c>System</c>. No conventions are relied upon for columns/FKs.</summary>
-public sealed class SystemConfiguration : IEntityTypeConfiguration<System>
+/// <summary>Explicit EF Core mapping for <c>SystemEntity</c>. No conventions are relied upon for columns/FKs.</summary>
+public sealed class SystemConfiguration : IEntityTypeConfiguration<SystemEntity>
 {
-    public void Configure(EntityTypeBuilder<System> builder)
+    public void Configure(EntityTypeBuilder<SystemEntity> builder)
     {
         builder.ToTable("System");
         builder.HasKey(x => x.Id);
@@ -20,6 +20,6 @@ public sealed class SystemConfiguration : IEntityTypeConfiguration<System>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: System.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Systems).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

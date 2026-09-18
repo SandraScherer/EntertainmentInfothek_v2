@@ -21,9 +21,9 @@ public sealed class EmployerConfiguration : IEntityTypeConfiguration<EmployerEnt
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Employer.CompanyID -> Company.ID
-        builder.HasOne(x => x.CompanyEntity).WithMany(x => x.Employers).HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CompanyEntity).WithMany().HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Employer.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Employers).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

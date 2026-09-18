@@ -26,12 +26,12 @@ public sealed class PublicationConfiguration : IEntityTypeConfiguration<Publicat
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Publication.BookID -> Book.ID
-        builder.HasOne(x => x.BookEntity).WithMany(x => x.Publications).HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.BookEntity).WithMany().HasForeignKey(x => x.BookId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Publication.EditionID -> Edition.ID
-        builder.HasOne(x => x.EditionEntity).WithMany(x => x.Publications).HasForeignKey(x => x.EditionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.EditionEntity).WithMany().HasForeignKey(x => x.EditionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Publication.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Publications).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

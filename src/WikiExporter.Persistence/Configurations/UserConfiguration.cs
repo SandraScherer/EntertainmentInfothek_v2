@@ -21,9 +21,9 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<UserEntity>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: User.PersonID -> Person.ID
-        builder.HasOne(x => x.PersonEntity).WithMany(x => x.Users).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PersonEntity).WithMany().HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: User.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Users).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

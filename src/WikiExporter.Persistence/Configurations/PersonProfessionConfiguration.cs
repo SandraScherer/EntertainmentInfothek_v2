@@ -21,12 +21,12 @@ public sealed class PersonProfessionConfiguration : IEntityTypeConfiguration<Per
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Person_Profession.PersonID -> Person.ID
-        builder.HasOne(x => x.PersonEntity).WithMany(x => x.PersonProfessions).HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PersonEntity).WithMany().HasForeignKey(x => x.PersonId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Profession.ProfessionID -> Profession.ID
-        builder.HasOne(x => x.ProfessionEntity).WithMany(x => x.PersonProfessions).HasForeignKey(x => x.ProfessionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.ProfessionEntity).WithMany().HasForeignKey(x => x.ProfessionId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person_Profession.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.PersonProfessions).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

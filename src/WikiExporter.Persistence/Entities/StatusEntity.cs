@@ -504,7 +504,7 @@ public sealed class StatusEntity
     public ICollection<StatusEntity> Statuss { get; set; } = new List<StatusEntity>();
 
     /// <summary>Dependent rows referencing this Status.</summary>
-    public ICollection<System> Systems { get; set; } = new List<System>();
+    public ICollection<SystemEntity> Systems { get; set; } = new List<SystemEntity>();
 
     /// <summary>Dependent rows referencing this Status.</summary>
     public ICollection<TechnicalSpecificationEntity> TechnicalSpecifications { get; set; } = new List<TechnicalSpecificationEntity>();

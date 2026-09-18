@@ -31,18 +31,18 @@ public sealed class PersonConfiguration : IEntityTypeConfiguration<PersonEntity>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Person.GenderID -> Gender.ID
-        builder.HasOne(x => x.GenderEntity).WithMany(x => x.Persons).HasForeignKey(x => x.GenderId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.GenderEntity).WithMany().HasForeignKey(x => x.GenderId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person.LocationOfBirthID -> Location.ID
-        builder.HasOne(x => x.LocationOfBirth).WithMany(x => x.PersonLocationOfBirths).HasForeignKey(x => x.LocationOfBirthId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LocationOfBirth).WithMany().HasForeignKey(x => x.LocationOfBirthId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person.LocationOfDeathID -> Location.ID
-        builder.HasOne(x => x.LocationOfDeath).WithMany(x => x.PersonLocationOfDeaths).HasForeignKey(x => x.LocationOfDeathId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.LocationOfDeath).WithMany().HasForeignKey(x => x.LocationOfDeathId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Persons).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Person.TypeID -> Type.ID
-        builder.HasOne(x => x.TypeEntity).WithMany(x => x.Persons).HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.TypeEntity).WithMany().HasForeignKey(x => x.TypeId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

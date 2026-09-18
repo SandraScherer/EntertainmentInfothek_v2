@@ -20,6 +20,6 @@ public sealed class CameraConfiguration : IEntityTypeConfiguration<CameraEntity>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Camera.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Cameras).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -23,12 +23,12 @@ public sealed class ImageSourceConfiguration : IEntityTypeConfiguration<ImageSou
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Image_Source.CompanyID -> Company.ID
-        builder.HasOne(x => x.CompanyEntity).WithMany(x => x.ImageSources).HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.CompanyEntity).WithMany().HasForeignKey(x => x.CompanyId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Image_Source.ImageID -> Image.ID
-        builder.HasOne(x => x.ImageEntity).WithMany(x => x.ImageSources).HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.ImageEntity).WithMany().HasForeignKey(x => x.ImageId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: Image_Source.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.ImageSources).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

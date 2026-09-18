@@ -20,6 +20,6 @@ public sealed class TypeConfiguration : IEntityTypeConfiguration<TypeEntity>
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: Type.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.Types).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -33,33 +33,33 @@ public sealed class TechnicalSpecificationConfiguration : IEntityTypeConfigurati
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: TechnicalSpecification.BusinessModelID -> BusinessModel.ID
-        builder.HasOne(x => x.BusinessModelEntity).WithMany(x => x.TechnicalSpecifications).HasForeignKey(x => x.BusinessModelId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.BusinessModelEntity).WithMany().HasForeignKey(x => x.BusinessModelId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification.MinimumCDRomDriveSpeedID -> CDROMDriveSpeed.ID
-        builder.HasOne(x => x.MinimumCDRomDriveSpeed).WithMany(x => x.TechnicalSpecifications).HasForeignKey(x => x.MinimumCDRomDriveSpeedId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MinimumCDRomDriveSpeed).WithMany().HasForeignKey(x => x.MinimumCDRomDriveSpeedId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification.MinimumCPUClassID -> CPU.ID
-        builder.HasOne(x => x.MinimumCPUClass).WithMany(x => x.TechnicalSpecifications).HasForeignKey(x => x.MinimumCPUClassId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MinimumCPUClass).WithMany().HasForeignKey(x => x.MinimumCPUClassId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification.MinimumDirectXID -> DirectX.ID
-        builder.HasOne(x => x.MinimumDirectX).WithMany(x => x.TechnicalSpecifications).HasForeignKey(x => x.MinimumDirectXId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MinimumDirectX).WithMany().HasForeignKey(x => x.MinimumDirectXId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification.MinimumOSClassID -> OperatingSystem.ID
-        builder.HasOne(x => x.MinimumOSClass).WithMany(x => x.TechnicalSpecifications).HasForeignKey(x => x.MinimumOSClassId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MinimumOSClass).WithMany().HasForeignKey(x => x.MinimumOSClassId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification.MinimumRAMID -> RAM.ID
-        builder.HasOne(x => x.MinimumRAM).WithMany(x => x.TechnicalSpecificationMinimumRAMs).HasForeignKey(x => x.MinimumRAMId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MinimumRAM).WithMany().HasForeignKey(x => x.MinimumRAMId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification.MinimumVideoRAMID -> RAM.ID
-        builder.HasOne(x => x.MinimumVideoRAM).WithMany(x => x.TechnicalSpecificationMinimumVideoRAMs).HasForeignKey(x => x.MinimumVideoRAMId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MinimumVideoRAM).WithMany().HasForeignKey(x => x.MinimumVideoRAMId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification.PlatformID -> Platform.ID
-        builder.HasOne(x => x.PlatformEntity).WithMany(x => x.TechnicalSpecifications).HasForeignKey(x => x.PlatformId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.PlatformEntity).WithMany().HasForeignKey(x => x.PlatformId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.TechnicalSpecifications).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification.VideoGameID -> VideoGame.ID
-        builder.HasOne(x => x.VideoGameEntity).WithMany(x => x.TechnicalSpecifications).HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.VideoGameEntity).WithMany().HasForeignKey(x => x.VideoGameId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -19,6 +19,6 @@ public sealed class CDROMDriveSpeedConfiguration : IEntityTypeConfiguration<CDRO
         builder.Property(x => x.LastUpdated).HasColumnName("LastUpdated");
 
         // FK: CDROMDriveSpeed.StatusID -> Status.ID
-        builder.HasOne(x => x.StatusEntity).WithMany(x => x.CDROMDriveSpeeds).HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.StatusEntity).WithMany().HasForeignKey(x => x.StatusId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
     }
 }
