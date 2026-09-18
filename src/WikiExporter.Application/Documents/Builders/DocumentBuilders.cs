@@ -297,7 +297,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         foreach (var spec in specs)
         {
             blocks.Add(new HeadingBlock(3, "Specification"));
-            blocks.Add(new TableBlock(new[] { "Field", "Value" }, NonEmptyRows(
+            var specificationRows = NonEmptyRows(
                 ("Platform", Field(spec, "PlatformID")),
                 ("Business model", Field(spec, "BusinessModelID")),
                 ("Minimum CPU", Field(spec, "MinimumCPUClassID")),
@@ -311,7 +311,8 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
                 ("Players online", Field(spec, "NoOfPlayersOnline")),
                 ("Annotation", LocalizedField(spec, language, "EnglishAnnotation", "GermanAnnotation")),
                 ("Miscellaneous", Field(spec, "MiscAttributes")),
-                ("Details", Field(spec, "Details")))));
+                ("Details", Field(spec, "Details")));
+            blocks.Add(new TableBlock(new[] { "Field", "Value" }, specificationRows));
 
             foreach (var child in rows.Where(r => r.Table.StartsWith("TechnicalSpecification_", StringComparison.Ordinal)
                                                && string.Equals(Field(r, "TechnicalSpecificationID"), spec.Id, StringComparison.Ordinal))

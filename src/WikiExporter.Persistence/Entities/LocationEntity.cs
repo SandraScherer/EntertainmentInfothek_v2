@@ -28,7 +28,7 @@ public sealed class LocationEntity
     public CountryEntity? CountryEntity { get; set; }
 
     /// <summary>Navigation for FK <c>LocationID</c> to <c>Location</c>.</summary>
-    public LocationEntity? LocationEntity { get; set; }
+    public LocationEntity? ParentLocation { get; set; }
 
     /// <summary>Navigation for FK <c>StatusID</c> to <c>Status</c>.</summary>
     public StatusEntity? StatusEntity { get; set; }

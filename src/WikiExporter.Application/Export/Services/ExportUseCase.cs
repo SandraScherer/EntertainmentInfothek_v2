@@ -11,6 +11,7 @@ public sealed class ExportUseCase(IExportReaderResolver readers, IDocumentBuilde
     public async Task<ExportResult> ExecuteAsync(ExportRequest request, CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(request);
+        _ = localization;
         var reader=readers.Resolve(request.EntityType); var builder=builders.Resolve(request.EntityType);
         var docs=new List<ExportedDocument>(); var errors=new List<ExportError>(); var requested=0;
         if(request.Scope is ExportScope.Single single)

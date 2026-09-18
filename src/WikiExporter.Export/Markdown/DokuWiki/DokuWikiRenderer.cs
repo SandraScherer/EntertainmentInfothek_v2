@@ -16,13 +16,13 @@ public sealed class DokuWikiRenderer(IExportPathResolver paths, IExportLinkResol
         {
             switch (block)
             {
-                case HeadingBlock h: sb.AppendLine(new string('=', Math.Clamp(7 - h.Level, 1, 6)) + " " + MarkdownEscaper.TextEntity(h.TextEntity) + " " + new string('=', Math.Clamp(7 - h.Level, 1, 6))); sb.AppendLine(); break;
-                case ParagraphBlock p: sb.AppendLine(MarkdownEscaper.TextEntity(p.TextEntity)); sb.AppendLine(); break;
+                case HeadingBlock h: sb.AppendLine(new string('=', Math.Clamp(7 - h.Level, 1, 6)) + " " + MarkdownEscaper.Text(h.Text) + " " + new string('=', Math.Clamp(7 - h.Level, 1, 6))); sb.AppendLine(); break;
+                case ParagraphBlock p: sb.AppendLine(MarkdownEscaper.Text(p.Text)); sb.AppendLine(); break;
                 case TableBlock t: RenderTable(sb, t); break;
-                case ListBlock l: foreach (var item in l.Items) sb.AppendLine((l.Ordered ? "  - " : "  * ") + MarkdownEscaper.TextEntity(item)); sb.AppendLine(); break;
+                case ListBlock l: foreach (var item in l.Items) sb.AppendLine((l.Ordered ? "  - " : "  * ") + MarkdownEscaper.Text(item)); sb.AppendLine(); break;
                 case LinkBlock l: sb.AppendLine($"[[{links.Resolve(document, l.TargetType, l.TargetId, Format)}|{MarkdownEscaper.Text(l.Text)}]]"); sb.AppendLine(); break;
                 case ImageBlock i: if (!string.IsNullOrWhiteSpace(i.FileName)) sb.AppendLine($"{{{{{i.FileName}|{MarkdownEscaper.Text(i.Description)}}}}"); sb.AppendLine(); break;
-                case CodeBlock c: sb.AppendLine($"<code {c.Language ?? ""}>".TrimEnd() + "\n" + MarkdownEscaper.TextEntity(c.Content) + "\n</code>"); sb.AppendLine(); break;
+                case CodeBlock c: sb.AppendLine($"<code {c.Language ?? ""}>".TrimEnd() + "\n" + MarkdownEscaper.Text(c.Content) + "\n</code>"); sb.AppendLine(); break;
                 case HorizontalRuleBlock: sb.AppendLine("----"); sb.AppendLine(); break;
             }
         }

@@ -21,7 +21,7 @@ public sealed class StatusEntity
     public string? LastUpdated { get; set; }
 
     /// <summary>Navigation for FK <c>StatusID</c> to <c>Status</c>.</summary>
-    public StatusEntity? StatusEntity { get; set; }
+    public StatusEntity? ParentStatus { get; set; }
 
     /// <summary>Dependent rows referencing this Status.</summary>
     public ICollection<AspectRatioEntity> AspectRatios { get; set; } = new List<AspectRatioEntity>();

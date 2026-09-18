@@ -21,13 +21,13 @@ public sealed class ObsidianRenderer(IExportPathResolver paths, IExportLinkResol
         {
             switch (block)
             {
-                case HeadingBlock h: sb.AppendLine(new string('#', Math.Clamp(h.Level, 1, 6)) + " " + MarkdownEscaper.TextEntity(h.TextEntity)); sb.AppendLine(); break;
-                case ParagraphBlock p: sb.AppendLine(MarkdownEscaper.TextEntity(p.TextEntity)); sb.AppendLine(); break;
+                case HeadingBlock h: sb.AppendLine(new string('#', Math.Clamp(h.Level, 1, 6)) + " " + MarkdownEscaper.Text(h.Text)); sb.AppendLine(); break;
+                case ParagraphBlock p: sb.AppendLine(MarkdownEscaper.Text(p.Text)); sb.AppendLine(); break;
                 case TableBlock t: RenderTable(sb, t); break;
-                case ListBlock l: for (var i = 0; i < l.Items.Count; i++) sb.AppendLine((l.Ordered ? $"{i + 1}. " : "- ") + MarkdownEscaper.TextEntity(l.Items[i])); sb.AppendLine(); break;
+                case ListBlock l: for (var i = 0; i < l.Items.Count; i++) sb.AppendLine((l.Ordered ? $"{i + 1}. " : "- ") + MarkdownEscaper.Text(l.Items[i])); sb.AppendLine(); break;
                 case LinkBlock l: sb.AppendLine($"[[{links.Resolve(document, l.TargetType, l.TargetId, Format)}|{MarkdownEscaper.Text(l.Text)}]]"); sb.AppendLine(); break;
                 case ImageBlock i: if (!string.IsNullOrWhiteSpace(i.FileName)) sb.AppendLine($"![{MarkdownEscaper.Text(i.Description)}]({i.FileName})"); sb.AppendLine(); break;
-                case CodeBlock c: sb.AppendLine("```" + (c.LanguageEntity ?? "")); sb.AppendLine(MarkdownEscaper.TextEntity(c.Content)); sb.AppendLine("```"); sb.AppendLine(); break;
+                case CodeBlock c: sb.AppendLine("```" + (c.Language ?? "")); sb.AppendLine(MarkdownEscaper.Text(c.Content)); sb.AppendLine("```"); sb.AppendLine(); break;
                 case HorizontalRuleBlock: sb.AppendLine("---"); sb.AppendLine(); break;
             }
         }

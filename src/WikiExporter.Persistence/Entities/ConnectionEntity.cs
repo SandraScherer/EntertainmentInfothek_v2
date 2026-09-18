@@ -21,7 +21,7 @@ public sealed class ConnectionEntity
     public string? LastUpdated { get; set; }
 
     /// <summary>Navigation for FK <c>ConnectionID</c> to <c>Connection</c>.</summary>
-    public ConnectionEntity? ConnectionEntity { get; set; }
+    public ConnectionEntity? ParentConnection { get; set; }
 
     /// <summary>Navigation for FK <c>StatusID</c> to <c>Status</c>.</summary>
     public StatusEntity? StatusEntity { get; set; }

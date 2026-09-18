@@ -10,7 +10,7 @@ namespace WikiExporter.Application.Tests;
 
 public sealed class DocumentBuilderTests
 {
-    private static ExportRowData Row(string table, string id, IDictionary<string,string?>? fields = null, IDictionary<string,string?>? fks = null, string? order = null)
+    private static ExportRowData Row(string table, string id, IReadOnlyDictionary<string,string?>? fields = null, IReadOnlyDictionary<string,string?>? fks = null, string? order = null)
         => new(table, id, fields ?? new Dictionary<string,string?>(), fks ?? new Dictionary<string,string?>(), order);
 
     [Fact]
