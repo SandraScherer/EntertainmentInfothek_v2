@@ -93,8 +93,8 @@ internal sealed class ExportGraphLoader
 
     private IQueryable GetNoTrackingSet(Type clrType)
     {
-        var setMethod = typeof(DbContext).GetMethods(BindingFlags.Public | BindingFlags.Instance)
-            .Single(m => m.Name == nameof(DbContext.Set) && m.IsGenericMethodDefinition && m.GetParameters().Length == 0);
+        var setMethod = typeof(Microsoft.EntityFrameworkCore.DbContext).GetMethods(BindingFlags.Public | BindingFlags.Instance)
+            .Single(m => m.Name == nameof(Microsoft.EntityFrameworkCore.DbContext.Set) && m.IsGenericMethodDefinition && m.GetParameters().Length == 0);
         var query = (IQueryable)setMethod.MakeGenericMethod(clrType).Invoke(_db, null)!;
         var asNoTracking = typeof(EntityFrameworkQueryableExtensions).GetMethods(BindingFlags.Public | BindingFlags.Static)
             .Single(m => m.Name == nameof(EntityFrameworkQueryableExtensions.AsNoTracking) && m.IsGenericMethodDefinition && m.GetParameters().Length == 1);

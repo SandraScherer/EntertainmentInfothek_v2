@@ -1,5 +1,6 @@
 using WikiExporter.Application.Documents.Models;
 using WikiExporter.Application.Export.Requests;
+using WikiExporter.Export.Markdown;
 
 namespace WikiExporter.Export.Paths;
 

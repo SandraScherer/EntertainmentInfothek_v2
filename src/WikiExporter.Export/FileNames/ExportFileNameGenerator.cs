@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using WikiExporter.Application.Documents.Models;
+using WikiExporter.Export.Markdown;
 
 namespace WikiExporter.Export.FileNames;
 
