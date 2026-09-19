@@ -36,7 +36,7 @@ public sealed class EfModelAndReaderTests
         await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
         {
             await db.Database.EnsureCreatedAsync();
-            db.Movie.Add(new Persistence.Entities.Movie { Id = "m1", OriginalTitle = "Original", EnglishTitle = "English", GermanTitle = "Deutsch", Details = "Details" });
+            db.MovieEntity.Add(new Persistence.Entities.MovieEntity { Id = "m1", OriginalTitle = "Original", EnglishTitle = "English", GermanTitle = "Deutsch", Details = "Details" });
             await db.SaveChangesAsync();
         }
 
@@ -63,8 +63,8 @@ public sealed class RelationshipReaderTests
         await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
         {
             await db.Database.EnsureCreatedAsync();
-            db.Series.Add(new Persistence.Entities.Series { Id = "s1", OriginalTitle = "Series" });
-            db.Episode.Add(new Persistence.Entities.Episode { Id = "e1", SeriesId = "s1", OriginalTitle = "Pilot", SeasonNo = "1", EpisodeNo = "1" });
+            db.SeriesEntity.Add(new Persistence.Entities.SeriesEntity { Id = "s1", OriginalTitle = "Series" });
+            db.EpisodeEntity.Add(new Persistence.Entities.EpisodeEntity { Id = "e1", SeriesId = "s1", OriginalTitle = "Pilot", SeasonNo = "1", EpisodeNo = "1" });
             await db.SaveChangesAsync();
         }
 
