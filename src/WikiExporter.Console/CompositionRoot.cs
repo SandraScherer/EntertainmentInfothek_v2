@@ -38,8 +38,8 @@ public static class CompositionRoot
                 services.AddWikiExporterPersistence(connectionString);
                 services.AddWikiExporterExport();
 
-                services.AddSingleton<Interaction.IConsoleInteraction, Interaction.ConsoleInteraction>();
-                services.AddSingleton<Presentation.ConsolePresenter>();
+                services.AddSingleton<global::WikiExporter.Console.Interaction.IConsoleInteraction, global::WikiExporter.Console.Interaction.ConsoleInteraction>();
+                services.AddSingleton<global::WikiExporter.Console.Presentation.ConsolePresenter>();
             })
             .Build();
     }
