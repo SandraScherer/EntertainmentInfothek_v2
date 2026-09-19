@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using WikiExporter.Application.Export.Requests;
 using WikiExporter.Console.Configuration;
 using WikiExporter.ConsoleApp;

@@ -29,11 +29,11 @@ public static class Program
 
             var entityType = commandLine.EntityType ?? interaction.SelectEntityType();
             var language = commandLine.LanguageEntity ?? ParseDefaultLanguage(settings.DefaultLanguage);
-            if (commandLine.LanguageEntity is null && global::System.Console.IsInputRedirected == false)
+            if (commandLine.LanguageEntity is null && Console.IsInputRedirected == false)
                 language = interaction.SelectLanguage(language);
 
             var format = commandLine.Format ?? ParseDefaultFormat(settings.DefaultFormat);
-            if (commandLine.Format is null && global::System.Console.IsInputRedirected == false)
+            if (commandLine.Format is null && Console.IsInputRedirected == false)
                 format = interaction.SelectFormat(format);
 
             ExportScope scopeSelection;
