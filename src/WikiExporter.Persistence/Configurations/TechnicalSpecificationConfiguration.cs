@@ -48,10 +48,10 @@ public sealed class TechnicalSpecificationConfiguration : IEntityTypeConfigurati
         builder.HasOne(x => x.MinimumOSClass).WithMany().HasForeignKey(x => x.MinimumOSClassId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification.MinimumRAMID -> RAM.ID
-        builder.HasOne(x => x.MinimumRAM).WithMany().HasForeignKey(x => x.MinimumRAMId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MinimumRAM).WithMany(x => x.TechnicalSpecificationMinimumRAMs).HasForeignKey(x => x.MinimumRAMId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification.MinimumVideoRAMID -> RAM.ID
-        builder.HasOne(x => x.MinimumVideoRAM).WithMany().HasForeignKey(x => x.MinimumVideoRAMId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(x => x.MinimumVideoRAM).WithMany(x => x.TechnicalSpecificationMinimumVideoRAMs).HasForeignKey(x => x.MinimumVideoRAMId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
 
         // FK: TechnicalSpecification.PlatformID -> Platform.ID
         builder.HasOne(x => x.PlatformEntity).WithMany().HasForeignKey(x => x.PlatformId).HasPrincipalKey(x => x.Id).OnDelete(DeleteBehavior.Restrict);
