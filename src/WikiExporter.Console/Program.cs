@@ -28,12 +28,12 @@ public static class Program
             var interaction = scope.ServiceProvider.GetRequiredService<IConsoleInteraction>();
 
             var entityType = commandLine.EntityType ?? interaction.SelectEntityType();
-            var language = commandLine.LanguageEntity ?? ParseDefaultLanguage(settings.DefaultLanguage);
-            if (commandLine.LanguageEntity is null && Console.IsInputRedirected == false)
+            var language = commandLine.Language ?? ParseDefaultLanguage(settings.DefaultLanguage);
+            if (commandLine.Language is null && System.Console.IsInputRedirected == false)
                 language = interaction.SelectLanguage(language);
 
             var format = commandLine.Format ?? ParseDefaultFormat(settings.DefaultFormat);
-            if (commandLine.Format is null && Console.IsInputRedirected == false)
+            if (commandLine.Format is null && System.Console.IsInputRedirected == false)
                 format = interaction.SelectFormat(format);
 
             ExportScope scopeSelection;
