@@ -52,6 +52,6 @@ public sealed class ExportLinkResolver(IExportPathResolver paths) : IExportLinkR
         return string.Join('/', parts);
     }
 
-    private static string DokuWikiTarget(string target) => ":" + target.Replace('/', ':').Replace(".md", "", StringComparison.OrdinalIgnoreCase);
+    private static string DokuWikiTarget(string target) => target.Replace('/', ':').Replace(".md", "", StringComparison.OrdinalIgnoreCase);
     private static string ObsidianTarget(string relative) => relative.EndsWith(".md", StringComparison.OrdinalIgnoreCase) ? relative[..^3] : relative;
 }
