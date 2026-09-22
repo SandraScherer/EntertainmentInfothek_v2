@@ -219,10 +219,10 @@ public sealed class EntertainmentInfothekDbContext : Microsoft.EntityFrameworkCo
         // configuration; all other collection properties are ignored by EF.
         var configuredCollectionNavigations = new HashSet<string>(StringComparer.Ordinal)
         {
-            $"{nameof(RAMEntity)}.{nameof(RAMEntity.TechnicalSpecificationMinimumRAMs)}",
-            $"{nameof(RAMEntity)}.{nameof(RAMEntity.TechnicalSpecificationMinimumVideoRAMs)}",
-            $"{nameof(LocationEntity)}.{nameof(LocationEntity.PersonLocationOfBirths)}",
-            $"{nameof(LocationEntity)}.{nameof(LocationEntity.PersonLocationOfDeaths)}"
+            $"{nameof(RAMEntity)}.{nameof(Entities.RAMEntity.TechnicalSpecificationMinimumRAMs)}",
+            $"{nameof(RAMEntity)}.{nameof(Entities.RAMEntity.TechnicalSpecificationMinimumVideoRAMs)}",
+            $"{nameof(LocationEntity)}.{nameof(Entities.LocationEntity.PersonLocationOfBirths)}",
+            $"{nameof(LocationEntity)}.{nameof(Entities.LocationEntity.PersonLocationOfDeaths)}"
         };
 
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
