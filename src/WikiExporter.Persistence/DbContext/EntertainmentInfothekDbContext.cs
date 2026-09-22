@@ -209,6 +209,39 @@ public sealed class EntertainmentInfothekDbContext : Microsoft.EntityFrameworkCo
     {
         // Every one of the 196 tables has an explicit configuration class.
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(EntertainmentInfothekDbContext).Assembly);
+
+        // The generated EF entities contain collection properties for every schema FK.
+        // Most of those collections are convenience properties only; the actual FK
+        // relationships are configured from the dependent side. If EF is allowed to
+        // discover these collections by convention, it creates a second relationship
+        // for many FKs (and therefore more relationships than exist in the schema).
+        // Keep only the collection navigations that are explicitly paired in the
+        // configuration; all other collection properties are ignored by EF.
+        var configuredCollectionNavigations = new HashSet<string>(StringComparer.Ordinal)
+        {
+            $"{nameof(RAMEntity)}.{nameof(RAMEntity.TechnicalSpecificationMinimumRAMs)}",
+            $"{nameof(RAMEntity)}.{nameof(RAMEntity.TechnicalSpecificationMinimumVideoRAMs)}",
+            $"{nameof(LocationEntity)}.{nameof(LocationEntity.PersonLocationOfBirths)}",
+            $"{nameof(LocationEntity)}.{nameof(LocationEntity.PersonLocationOfDeaths)}"
+        };
+
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            var collectionProperties = entityType.ClrType
+                .GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public)
+                .Where(property =>
+                    property.PropertyType.IsGenericType &&
+                    property.PropertyType.GetGenericTypeDefinition() == typeof(ICollection<>))
+                .ToList();
+
+            foreach (var property in collectionProperties)
+            {
+                var key = $"{entityType.ClrType.Name}.{property.Name}";
+                if (!configuredCollectionNavigations.Contains(key))
+                    modelBuilder.Entity(entityType.ClrType).Ignore(property.Name);
+            }
+        }
+
         base.OnModelCreating(modelBuilder);
     }
 }
