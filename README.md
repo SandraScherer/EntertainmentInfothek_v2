@@ -5,7 +5,7 @@ Application for a dababase with all sorts of entertainment.
 
 ## General info
 
-The database shall one day include movies, series, computer- and videogames, books, music and table games.
+The database shall one day include movies, series (with episodes), computer- and videogames, books, music and table games.
 The project's main purpose is to learn C#, XAML, SQL and practice unit testing.
 
 
@@ -14,7 +14,7 @@ The project's main purpose is to learn C#, XAML, SQL and practice unit testing.
 * Clone the sources: `git clone https://github.com/SandraScherer/EntertainmentInfothek_v2.git`
 * Create a new SQLite database in 'db' named EntertainmentInfothek.db
 * Execute the given *.sql in the indicated order to create the tables and populate with test data.
-* Open [???.sln] in Visual Studio.
+* Open [WikiExporter.slnx] in Visual Studio.
 
 
 ## Status
