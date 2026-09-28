@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="src/WikiExporter.Application/WikiExporter.Application.csproj" Id="25dc8481-5652-4cfa-9382-afd54122e4a7" />
+  <Project Path="src/WikiExporter.Console/WikiExporter.Console.csproj" />
+  <Project Path="src/WikiExporter.Persistence/WikiExporter.Persistence.csproj" Id="3d06f4b5-021d-4bf1-89c5-fd9fa9dcd909" />
+  <Project Path="tests/WikiExporter.Application.Test/WikiExporter.Application.Test.csproj" Id="1ac97374-b0af-4b2f-8e1a-0b7f288ce1d2" />
+  <Project Path="tests/WikiExporter.Console.Test/WikiExporter.Console.Test.csproj" Id="c536c70f-8ea1-414f-ab84-cb95fe11e471" />
+  <Project Path="tests/WikiExporter.Persistence.Test/WikiExporter.Persistence.Test.csproj" Id="23d03379-3b31-4a89-88af-bf4a7f179b91" />
+</Solution>
