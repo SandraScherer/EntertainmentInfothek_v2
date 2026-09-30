@@ -311,6 +311,17 @@ CREATE TABLE IF NOT EXISTS "Connection" (
 	FOREIGN KEY("ConnectionID") REFERENCES "Connection"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
 );
+CREATE TABLE IF NOT EXISTS "ContentDescriptor" (
+	"ID"	TEXT NOT NULL,
+	"EnglishName"	TEXT,
+	"GermanName"	TEXT,
+	"Details"	TEXT,
+	"Notes"	TEXT,
+	"StatusID"	TEXT,
+	"LastUpdated"	TEXT,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
+);
 CREATE TABLE IF NOT EXISTS "CopyProtection" (
 	"ID"	TEXT NOT NULL,
 	"OriginalName"	TEXT,
@@ -490,6 +501,20 @@ CREATE TABLE IF NOT EXISTS "Episode_Certification" (
 	PRIMARY KEY("ID"),
 	FOREIGN KEY("CertificationID") REFERENCES "Certification"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("EpisodeID") REFERENCES "Episode"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
+);
+CREATE TABLE IF NOT EXISTS "Episode_Certification_Content" (
+	"ID"	TEXT NOT NULL,
+	"EpisodeCertificationID"	TEXT,
+	"ContentDescriptorID"	TEXT,
+	"Order"	TEXT,
+	"Details"	TEXT,
+	"Notes"	TEXT,
+	"StatusID"	TEXT,
+	"LastUpdated"	TEXT,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("ContentDescriptorID") REFERENCES "ContentDescriptor"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("EpisodeCertificationID") REFERENCES "Episode_Certification"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
 );
 CREATE TABLE IF NOT EXISTS "Episode_CompanyCredits" (
@@ -928,6 +953,20 @@ CREATE TABLE IF NOT EXISTS "Movie_Certification" (
 	PRIMARY KEY("ID"),
 	FOREIGN KEY("CertificationID") REFERENCES "Certification"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("MovieID") REFERENCES "Movie"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
+);
+CREATE TABLE IF NOT EXISTS "Movie_Certification_Content" (
+	"ID"	TEXT NOT NULL,
+	"MovieCertificationID"	TEXT,
+	"ContentDescriptorID"	TEXT,
+	"Order"	TEXT,
+	"Details"	TEXT,
+	"Notes"	TEXT,
+	"StatusID"	TEXT,
+	"LastUpdated"	TEXT,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("ContentDescriptorID") REFERENCES "ContentDescriptor"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("MovieCertificationID") REFERENCES "Movie_Certification"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
 );
 CREATE TABLE IF NOT EXISTS "Movie_CinematographicProcess" (
@@ -1515,6 +1554,20 @@ CREATE TABLE IF NOT EXISTS "Publication_Certification" (
 	FOREIGN KEY("PublicationID") REFERENCES "Publication"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
 );
+CREATE TABLE IF NOT EXISTS "Publication_Certification_Content" (
+	"ID"	TEXT NOT NULL,
+	"PublicationCertificationID"	TEXT,
+	"ContentDescriptorID"	TEXT,
+	"Order"	TEXT,
+	"Details"	TEXT,
+	"Notes"	TEXT,
+	"StatusID"	TEXT,
+	"LastUpdated"	TEXT,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("ContentDescriptorID") REFERENCES "ContentDescriptor"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("PublicationCertificationID") REFERENCES "Publication_Certification"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
+);
 CREATE TABLE IF NOT EXISTS "Publication_CompanyCredits" (
 	"ID"	TEXT NOT NULL,
 	"PublicationID"	TEXT,
@@ -1734,6 +1787,20 @@ CREATE TABLE IF NOT EXISTS "Series_Certification" (
 	PRIMARY KEY("ID"),
 	FOREIGN KEY("CertificationID") REFERENCES "Certification"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("SeriesID") REFERENCES "Series"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
+);
+CREATE TABLE IF NOT EXISTS "Series_Certification_Content" (
+	"ID"	TEXT NOT NULL,
+	"SeriesCertificationID"	TEXT,
+	"ContentDescriptorID"	TEXT,
+	"Order"	TEXT,
+	"Details"	TEXT,
+	"Notes"	TEXT,
+	"StatusID"	TEXT,
+	"LastUpdated"	TEXT,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("ContentDescriptorID") REFERENCES "ContentDescriptor"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("SeriesCertificationID") REFERENCES "Series_Certification"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
 );
 CREATE TABLE IF NOT EXISTS "Series_CinematographicProcess" (
@@ -2589,6 +2656,20 @@ CREATE TABLE IF NOT EXISTS "VideoGame_Certification" (
 	FOREIGN KEY("CertificationID") REFERENCES "Certification"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY("VideoGameID") REFERENCES "VideoGame"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
+);
+CREATE TABLE IF NOT EXISTS "VideoGame_Certification_Content" (
+	"ID"	TEXT NOT NULL,
+	"VideoGameCertificationID"	TEXT,
+	"ContentDescriptorID"	TEXT,
+	"Order"	TEXT,
+	"Details"	TEXT,
+	"Notes"	TEXT,
+	"StatusID"	TEXT,
+	"LastUpdated"	TEXT,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("ContentDescriptorID") REFERENCES "ContentDescriptor"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("StatusID") REFERENCES "Status"("ID") ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY("VideoGameCertificationID") REFERENCES "VideoGame_Certification"("ID") ON UPDATE CASCADE ON DELETE RESTRICT
 );
 CREATE TABLE IF NOT EXISTS "VideoGame_CompanyCredits" (
 	"ID"	TEXT NOT NULL,
