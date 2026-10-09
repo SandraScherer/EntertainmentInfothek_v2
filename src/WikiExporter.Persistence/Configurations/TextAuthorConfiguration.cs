@@ -1,0 +1,82 @@
+﻿// WikiExporter.Persistence.dll: Provides access to the EntertainmentInfothek.db
+// Copyright (C) 2026 Sandra Scherer
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using WikiExporter.Persistence.Entities;
+
+namespace WikiExporter.Persistence.Configurations
+{
+    /// <summary>
+    /// Explicit EF Core mapping for <c>Text_Author</c>.
+    /// No conventions are relied upon for columns/FKs.
+    /// </summary>
+    public class TextAuthorConfiguration
+        : IEntityTypeConfiguration<TextAuthorEntity>
+    {
+        // --- Methods ---
+
+        public void Configure(
+            EntityTypeBuilder<TextAuthorEntity> builder)
+        {
+            builder.ToTable("Text_Author");
+
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Id)
+                .HasColumnName("ID")
+                .IsRequired();
+
+            builder.Property(x => x.TextId)
+                .HasColumnName("TextID");
+
+            builder.Property(x => x.PersonId)
+                .HasColumnName("PersonID");
+
+            builder.Property(x => x.EnglishRole)
+                .HasColumnName("EnglishRole");
+
+            builder.Property(x => x.GermanRole)
+                .HasColumnName("GermanRole");
+
+            builder.Property(x => x.Order)
+                .HasColumnName("Order");
+
+            builder.Property(x => x.Details)
+                .HasColumnName("Details");
+
+            builder.Property(x => x.Notes)
+                .HasColumnName("Notes");
+
+            builder.Property(x => x.StatusId)
+                .HasColumnName("StatusID");
+
+            builder.Property(x => x.LastUpdated)
+                .HasColumnName("LastUpdated");
+
+            // FK: Text_Author.TextID -> Text.ID
+            builder.HasOne(x => x.TextEntity)
+                .WithMany()
+                .HasForeignKey(x => x.TextId)
+                .HasPrincipalKey(x => x.Id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // FK: Text_Author.PersonID -> Person.ID
+            builder.HasOne(x => x.PersonEntity)
+                .WithMany()
+                .HasForeignKey(x => x.PersonId)
+                .HasPrincipalKey(x => x.Id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // FK: Text_Author.StatusID -> Status.ID
+            builder.HasOne(x => x.StatusEntity)
+                .WithMany()
+                .HasForeignKey(x => x.StatusId)
+                .HasPrincipalKey(x => x.Id)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+    }
+}
