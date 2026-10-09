@@ -1,0 +1,270 @@
+﻿// WikiExporter.Persistence.dll: Provides access to the EntertainmentInfothek.db
+// Copyright (C) 2026 Sandra Scherer
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.EntityFrameworkCore;
+using WikiExporter.Persistence.Entities;
+
+namespace WikiExporter.Persistence.DbContext
+{
+    /// <summary>
+    /// Read-only EF Core DbContext for the EntertainmentInfothek SQLite database.
+    /// </summary>
+    public class EntertainmentInfothekDbContext
+        : Microsoft.EntityFrameworkCore.DbContext
+    {
+        // --- Fields ---
+
+        public DbSet<AspectRatioEntity> AspectRatioEntity => Set<AspectRatioEntity>();
+        public DbSet<AwardEntity> AwardEntity => Set<AwardEntity>();
+        //public DbSet<BookEntity> BookEntity => Set<BookEntity>();
+        //public DbSet<BookAwardEntity> BookAwardEntity => Set<BookAwardEntity>();
+        //public DbSet<BookCastEntity> BookCastEntity => Set<BookCastEntity>();
+        //public DbSet<BookCrewEntity> BookCrewEntity => Set<BookCrewEntity>();
+        //public DbSet<BookGenreEntity> BookGenreEntity => Set<BookGenreEntity>();
+        //public DbSet<BookImageEntity> BookImageEntity => Set<BookImageEntity>();
+        //public DbSet<BookLanguageEntity> BookLanguageEntity => Set<BookLanguageEntity>();
+        //public DbSet<BookScoreEntity> BookScoreEntity => Set<BookScoreEntity>();
+        //public DbSet<BookTextEntity> BookTextEntity => Set<BookTextEntity>();
+        //public DbSet<BookUserEntity> BookUserEntity => Set<BookUserEntity>();
+        //public DbSet<BookWeblinkEntity> BookWeblinkEntity => Set<BookWeblinkEntity>();
+        //public DbSet<BusinessModelEntity> BusinessModelEntity => Set<BusinessModelEntity>();
+        //public DbSet<CDROMDriveSpeedEntity> CDROMDriveSpeedEntity => Set<CDROMDriveSpeedEntity>();
+        //public DbSet<CPUEntity> CPUEntity => Set<CPUEntity>();
+        public DbSet<CameraEntity> CameraEntity => Set<CameraEntity>();
+        public DbSet<CertificationEntity> CertificationEntity => Set<CertificationEntity>();
+        public DbSet<CinematographicProcessEntity> CinematographicProcessEntity => Set<CinematographicProcessEntity>();
+        public DbSet<ColorEntity> ColorEntity => Set<ColorEntity>();
+        public DbSet<CompanyEntity> CompanyEntity => Set<CompanyEntity>();
+        public DbSet<ConnectionEntity> ConnectionEntity => Set<ConnectionEntity>();
+        //public DbSet<CopyProtectionEntity> CopyProtectionEntity => Set<CopyProtectionEntity>();
+        public DbSet<CountryEntity> CountryEntity => Set<CountryEntity>();
+        public DbSet<DepartmentEntity> DepartmentEntity => Set<DepartmentEntity>();
+        //public DbSet<DifficultyEntity> DifficultyEntity => Set<DifficultyEntity>();
+        //public DbSet<DirectXEntity> DirectXEntity => Set<DirectXEntity>();
+        //public DbSet<DriverEntity> DriverEntity => Set<DriverEntity>();
+        public DbSet<EditionEntity> EditionEntity => Set<EditionEntity>();
+        //public DbSet<EmployerEntity> EmployerEntity => Set<EmployerEntity>();
+        //public DbSet<EpisodeEntity> EpisodeEntity => Set<EpisodeEntity>();
+        //public DbSet<EpisodeAwardEntity> EpisodeAwardEntity => Set<EpisodeAwardEntity>();
+        //public DbSet<EpisodeAwardPersonEntity> EpisodeAwardPersonEntity => Set<EpisodeAwardPersonEntity>();
+        //public DbSet<EpisodeCastEntity> EpisodeCastEntity => Set<EpisodeCastEntity>();
+        //public DbSet<EpisodeCertificationEntity> EpisodeCertificationEntity => Set<EpisodeCertificationEntity>();
+        //public DbSet<EpisodeCompanyCreditsEntity> EpisodeCompanyCreditsEntity => Set<EpisodeCompanyCreditsEntity>();
+        //public DbSet<EpisodeCrewEntity> EpisodeCrewEntity => Set<EpisodeCrewEntity>();
+        //public DbSet<EpisodeFilmLengthEntity> EpisodeFilmLengthEntity => Set<EpisodeFilmLengthEntity>();
+        //public DbSet<EpisodeFilmingDateEntity> EpisodeFilmingDateEntity => Set<EpisodeFilmingDateEntity>();
+        //public DbSet<EpisodeFilmingLocationEntity> EpisodeFilmingLocationEntity => Set<EpisodeFilmingLocationEntity>();
+        //public DbSet<EpisodeImageEntity> EpisodeImageEntity => Set<EpisodeImageEntity>();
+        //public DbSet<EpisodeProductionDateEntity> EpisodeProductionDateEntity => Set<EpisodeProductionDateEntity>();
+        //public DbSet<EpisodeReleaseDateEntity> EpisodeReleaseDateEntity => Set<EpisodeReleaseDateEntity>();
+        //public DbSet<EpisodeRuntimeEntity> EpisodeRuntimeEntity => Set<EpisodeRuntimeEntity>();
+        //public DbSet<EpisodeTextEntity> EpisodeTextEntity => Set<EpisodeTextEntity>();
+        public DbSet<FilmFormatEntity> FilmFormatEntity => Set<FilmFormatEntity>();
+        public DbSet<GenderEntity> GenderEntity => Set<GenderEntity>();
+        public DbSet<GenreEntity> GenreEntity => Set<GenreEntity>();
+        //public DbSet<HardwareEntity> HardwareEntity => Set<HardwareEntity>();
+        public DbSet<ImageEntity> ImageEntity => Set<ImageEntity>();
+        public DbSet<ImageSourceEntity> ImageSourceEntity => Set<ImageSourceEntity>();
+        public DbSet<ImageTypeEntity> ImageTypeEntity => Set<ImageTypeEntity>();
+        //public DbSet<InputDeviceEntity> InputDeviceEntity => Set<InputDeviceEntity>();
+        //public DbSet<InputDeviceFeatureEntity> InputDeviceFeatureEntity => Set<InputDeviceFeatureEntity>();
+        public DbSet<LaboratoryEntity> LaboratoryEntity => Set<LaboratoryEntity>();
+        public DbSet<LanguageEntity> LanguageEntity => Set<LanguageEntity>();
+        public DbSet<LocationEntity> LocationEntity => Set<LocationEntity>();
+        //public DbSet<MacOSSprocketEntity> MacOSSprocketEntity => Set<MacOSSprocketEntity>();
+        //public DbSet<MediaTypeEntity> MediaTypeEntity => Set<MediaTypeEntity>();
+        public DbSet<MovieEntity> MovieEntity => Set<MovieEntity>();
+        public DbSet<MovieAspectRatioEntity> MovieAspectRatioEntity => Set<MovieAspectRatioEntity>();
+        public DbSet<MovieAwardEntity> MovieAwardEntity => Set<MovieAwardEntity>();
+        public DbSet<MovieAwardPersonEntity> MovieAwardPersonEntity => Set<MovieAwardPersonEntity>();
+        public DbSet<MovieCameraEntity> MovieCameraEntity => Set<MovieCameraEntity>();
+        public DbSet<MovieCastEntity> MovieCastEntity => Set<MovieCastEntity>();
+        public DbSet<MovieCertificationEntity> MovieCertificationEntity => Set<MovieCertificationEntity>();
+        public DbSet<MovieCinematographicProcessEntity> MovieCinematographicProcessEntity => Set<MovieCinematographicProcessEntity>();
+        public DbSet<MovieColorEntity> MovieColorEntity => Set<MovieColorEntity>();
+        public DbSet<MovieCompanyCreditsEntity> MovieCompanyCreditsEntity => Set<MovieCompanyCreditsEntity>();
+        public DbSet<MovieCountryEntity> MovieCountryEntity => Set<MovieCountryEntity>();
+        public DbSet<MovieCrewEntity> MovieCrewEntity => Set<MovieCrewEntity>();
+        public DbSet<MovieFilmLengthEntity> MovieFilmLengthEntity => Set<MovieFilmLengthEntity>();
+        public DbSet<MovieFilmingDateEntity> MovieFilmingDateEntity => Set<MovieFilmingDateEntity>();
+        public DbSet<MovieFilmingLocationEntity> MovieFilmingLocationEntity => Set<MovieFilmingLocationEntity>();
+        public DbSet<MovieGenreEntity> MovieGenreEntity => Set<MovieGenreEntity>();
+        public DbSet<MovieImageEntity> MovieImageEntity => Set<MovieImageEntity>();
+        public DbSet<MovieLaboratoryEntity> MovieLaboratoryEntity => Set<MovieLaboratoryEntity>();
+        public DbSet<MovieLanguageEntity> MovieLanguageEntity => Set<MovieLanguageEntity>();
+        public DbSet<MovieNegativeFormatEntity> MovieNegativeFormatEntity => Set<MovieNegativeFormatEntity>();
+        public DbSet<MoviePrintedFilmFormatEntity> MoviePrintedFilmFormatEntity => Set<MoviePrintedFilmFormatEntity>();
+        public DbSet<MovieProductionDateEntity> MovieProductionDateEntity => Set<MovieProductionDateEntity>();
+        public DbSet<MovieReleaseDateEntity> MovieReleaseDateEntity => Set<MovieReleaseDateEntity>();
+        public DbSet<MovieRuntimeEntity> MovieRuntimeEntity => Set<MovieRuntimeEntity>();
+        public DbSet<MovieScoreEntity> MovieScoreEntity => Set<MovieScoreEntity>();
+        public DbSet<MovieSoundMixEntity> MovieSoundMixEntity => Set<MovieSoundMixEntity>();
+        public DbSet<MovieTextEntity> MovieTextEntity => Set<MovieTextEntity>();
+        public DbSet<MovieUserEntity> MovieUserEntity => Set<MovieUserEntity>();
+        public DbSet<MovieWeblinkEntity> MovieWeblinkEntity => Set<MovieWeblinkEntity>();
+        //public DbSet<MultiplayerGameModeEntity> MultiplayerGameModeEntity => Set<MultiplayerGameModeEntity>();
+        //public DbSet<MultiplayerOptionEntity> MultiplayerOptionEntity => Set<MultiplayerOptionEntity>();
+        //public DbSet<OperatingSystemEntity> OperatingSystemEntity => Set<OperatingSystemEntity>();
+        public DbSet<PersonEntity> PersonEntity => Set<PersonEntity>();
+        //public DbSet<PersonEmployerEntity> PersonEmployerEntity => Set<PersonEmployerEntity>();
+        //public DbSet<PersonFamilyEntity> PersonFamilyEntity => Set<PersonFamilyEntity>();
+        //public DbSet<PersonPositionEntity> PersonPositionEntity => Set<PersonPositionEntity>();
+        //public DbSet<PersonProfessionEntity> PersonProfessionEntity => Set<PersonProfessionEntity>();
+        //public DbSet<PersonSpeciesEntity> PersonSpeciesEntity => Set<PersonSpeciesEntity>();
+        //public DbSet<PersonTextEntity> PersonTextEntity => Set<PersonTextEntity>();
+        //public DbSet<PersonWeblinkEntity> PersonWeblinkEntity => Set<PersonWeblinkEntity>();
+        //public DbSet<PerspectiveEntity> PerspectiveEntity => Set<PerspectiveEntity>();
+        //public DbSet<PlatformEntity> PlatformEntity => Set<PlatformEntity>();
+        //public DbSet<PositionEntity> PositionEntity => Set<PositionEntity>();
+        public DbSet<PriorityEntity> PriorityEntity => Set<PriorityEntity>();
+        //public DbSet<ProfessionEntity> ProfessionEntity => Set<ProfessionEntity>();
+        //public DbSet<PublicationEntity> PublicationEntity => Set<PublicationEntity>();
+        //public DbSet<PublicationCertificationEntity> PublicationCertificationEntity => Set<PublicationCertificationEntity>();
+        //public DbSet<PublicationCompanyCreditsEntity> PublicationCompanyCreditsEntity => Set<PublicationCompanyCreditsEntity>();
+        //public DbSet<PublicationLanguageEntity> PublicationLanguageEntity => Set<PublicationLanguageEntity>();
+        //public DbSet<PublicationReleaseDateEntity> PublicationReleaseDateEntity => Set<PublicationReleaseDateEntity>();
+        //public DbSet<PublicationTextEntity> PublicationTextEntity => Set<PublicationTextEntity>();
+        //public DbSet<RAMEntity> RAMEntity => Set<RAMEntity>();
+        //public DbSet<RelationshipEntity> RelationshipEntity => Set<RelationshipEntity>();
+        //public DbSet<SaveGameMethodEntity> SaveGameMethodEntity => Set<SaveGameMethodEntity>();
+        //public DbSet<SeriesEntity> SeriesEntity => Set<SeriesEntity>();
+        //public DbSet<SeriesAspectRatioEntity> SeriesAspectRatioEntity => Set<SeriesAspectRatioEntity>();
+        //public DbSet<SeriesAwardEntity> SeriesAwardEntity => Set<SeriesAwardEntity>();
+        //public DbSet<SeriesAwardPersonEntity> SeriesAwardPersonEntity => Set<SeriesAwardPersonEntity>();
+        //public DbSet<SeriesCameraEntity> SeriesCameraEntity => Set<SeriesCameraEntity>();
+        //public DbSet<SeriesCastEntity> SeriesCastEntity => Set<SeriesCastEntity>();
+        //public DbSet<SeriesCertificationEntity> SeriesCertificationEntity => Set<SeriesCertificationEntity>();
+        //public DbSet<SeriesCinematographicProcessEntity> SeriesCinematographicProcessEntity => Set<SeriesCinematographicProcessEntity>();
+        //public DbSet<SeriesColorEntity> SeriesColorEntity => Set<SeriesColorEntity>();
+        //public DbSet<SeriesCompanyCreditsEntity> SeriesCompanyCreditsEntity => Set<SeriesCompanyCreditsEntity>();
+        //public DbSet<SeriesCountryEntity> SeriesCountryEntity => Set<SeriesCountryEntity>();
+        //public DbSet<SeriesCrewEntity> SeriesCrewEntity => Set<SeriesCrewEntity>();
+        //public DbSet<SeriesFilmLengthEntity> SeriesFilmLengthEntity => Set<SeriesFilmLengthEntity>();
+        //public DbSet<SeriesFilmingDateEntity> SeriesFilmingDateEntity => Set<SeriesFilmingDateEntity>();
+        //public DbSet<SeriesFilmingLocationEntity> SeriesFilmingLocationEntity => Set<SeriesFilmingLocationEntity>();
+        //public DbSet<SeriesGenreEntity> SeriesGenreEntity => Set<SeriesGenreEntity>();
+        //public DbSet<SeriesImageEntity> SeriesImageEntity => Set<SeriesImageEntity>();
+        //public DbSet<SeriesLaboratoryEntity> SeriesLaboratoryEntity => Set<SeriesLaboratoryEntity>();
+        //public DbSet<SeriesLanguageEntity> SeriesLanguageEntity => Set<SeriesLanguageEntity>();
+        //public DbSet<SeriesNegativeFormatEntity> SeriesNegativeFormatEntity => Set<SeriesNegativeFormatEntity>();
+        //public DbSet<SeriesPrintedFilmFormatEntity> SeriesPrintedFilmFormatEntity => Set<SeriesPrintedFilmFormatEntity>();
+        //public DbSet<SeriesProductionDateEntity> SeriesProductionDateEntity => Set<SeriesProductionDateEntity>();
+        //public DbSet<SeriesReleaseDateFirstEpisodeEntity> SeriesReleaseDateFirstEpisodeEntity => Set<SeriesReleaseDateFirstEpisodeEntity>();
+        //public DbSet<SeriesReleaseDateLastEpisodeEntity> SeriesReleaseDateLastEpisodeEntity => Set<SeriesReleaseDateLastEpisodeEntity>();
+        //public DbSet<SeriesRuntimeEntity> SeriesRuntimeEntity => Set<SeriesRuntimeEntity>();
+        //public DbSet<SeriesScoreEntity> SeriesScoreEntity => Set<SeriesScoreEntity>();
+        //public DbSet<SeriesSoundMixEntity> SeriesSoundMixEntity => Set<SeriesSoundMixEntity>();
+        //public DbSet<SeriesTextEntity> SeriesTextEntity => Set<SeriesTextEntity>();
+        //public DbSet<SeriesUserEntity> SeriesUserEntity => Set<SeriesUserEntity>();
+        //public DbSet<SeriesWeblinkEntity> SeriesWeblinkEntity => Set<SeriesWeblinkEntity>();
+        //public DbSet<SettingEntity> SettingEntity => Set<SettingEntity>();
+        //public DbSet<SoundDeviceEntity> SoundDeviceEntity => Set<SoundDeviceEntity>();
+        public DbSet<SoundMixEntity> SoundMixEntity => Set<SoundMixEntity>();
+        //public DbSet<SoundModeEntity> SoundModeEntity => Set<SoundModeEntity>();
+        //public DbSet<SpeciesEntity> SpeciesEntity => Set<SpeciesEntity>();
+        public DbSet<StatusEntity> StatusEntity => Set<StatusEntity>();
+        //public DbSet<SystemEntity> SystemEntity => Set<SystemEntity>();
+        //public DbSet<TechnicalSpecificationEntity> TechnicalSpecificationEntity => Set<TechnicalSpecificationEntity>();
+        //public DbSet<TechnicalSpecificationCopyProtectionEntity> TechnicalSpecificationCopyProtectionEntity => Set<TechnicalSpecificationCopyProtectionEntity>();
+        //public DbSet<TechnicalSpecificationMacOSSprocketEntity> TechnicalSpecificationMacOSSprocketEntity => Set<TechnicalSpecificationMacOSSprocketEntity>();
+        //public DbSet<TechnicalSpecificationMediaTypeEntity> TechnicalSpecificationMediaTypeEntity => Set<TechnicalSpecificationMediaTypeEntity>();
+        //public DbSet<TechnicalSpecificationMultiplayerGameModeEntity> TechnicalSpecificationMultiplayerGameModeEntity => Set<TechnicalSpecificationMultiplayerGameModeEntity>();
+        //public DbSet<TechnicalSpecificationMultiplayerOptionEntity> TechnicalSpecificationMultiplayerOptionEntity => Set<TechnicalSpecificationMultiplayerOptionEntity>();
+        //public DbSet<TechnicalSpecificationRequiredAdditionalHardwareEntity> TechnicalSpecificationRequiredAdditionalHardwareEntity => Set<TechnicalSpecificationRequiredAdditionalHardwareEntity>();
+        //public DbSet<TechnicalSpecificationRequiredInputDeviceEntity> TechnicalSpecificationRequiredInputDeviceEntity => Set<TechnicalSpecificationRequiredInputDeviceEntity>();
+        //public DbSet<TechnicalSpecificationSaveGameMethodEntity> TechnicalSpecificationSaveGameMethodEntity => Set<TechnicalSpecificationSaveGameMethodEntity>();
+        //public DbSet<TechnicalSpecificationSupportedAdditionalHardwareEntity> TechnicalSpecificationSupportedAdditionalHardwareEntity => Set<TechnicalSpecificationSupportedAdditionalHardwareEntity>();
+        //public DbSet<TechnicalSpecificationSupportedDriverEntity> TechnicalSpecificationSupportedDriverEntity => Set<TechnicalSpecificationSupportedDriverEntity>();
+        //public DbSet<TechnicalSpecificationSupportedInputDeviceEntity> TechnicalSpecificationSupportedInputDeviceEntity => Set<TechnicalSpecificationSupportedInputDeviceEntity>();
+        //public DbSet<TechnicalSpecificationSupportedInputDeviceFeatureEntity> TechnicalSpecificationSupportedInputDeviceFeatureEntity => Set<TechnicalSpecificationSupportedInputDeviceFeatureEntity>();
+        //public DbSet<TechnicalSpecificationSupportedSoundDeviceEntity> TechnicalSpecificationSupportedSoundDeviceEntity => Set<TechnicalSpecificationSupportedSoundDeviceEntity>();
+        //public DbSet<TechnicalSpecificationSupportedSoundModeEntity> TechnicalSpecificationSupportedSoundModeEntity => Set<TechnicalSpecificationSupportedSoundModeEntity>();
+        //public DbSet<TechnicalSpecificationSupportedVideoModeEntity> TechnicalSpecificationSupportedVideoModeEntity => Set<TechnicalSpecificationSupportedVideoModeEntity>();
+        //public DbSet<TechnicalSpecificationSupportedVideoResolutionEntity> TechnicalSpecificationSupportedVideoResolutionEntity => Set<TechnicalSpecificationSupportedVideoResolutionEntity>();
+        public DbSet<TextEntity> TextEntity => Set<TextEntity>();
+        public DbSet<TextAuthorEntity> TextAuthorEntity => Set<TextAuthorEntity>();
+        public DbSet<TextSourceEntity> TextSourceEntity => Set<TextSourceEntity>();
+        public DbSet<TextTypeEntity> TextTypeEntity => Set<TextTypeEntity>();
+        public DbSet<TypeEntity> TypeEntity => Set<TypeEntity>();
+        public DbSet<UserEntity> UserEntity => Set<UserEntity>();
+        //public DbSet<VersionEntity> VersionEntity => Set<VersionEntity>();
+        //public DbSet<VideoGameEntity> VideoGameEntity => Set<VideoGameEntity>();
+        //public DbSet<VideoGameAwardEntity> VideoGameAwardEntity => Set<VideoGameAwardEntity>();
+        //public DbSet<VideoGameCastEntity> VideoGameCastEntity => Set<VideoGameCastEntity>();
+        //public DbSet<VideoGameCertificationEntity> VideoGameCertificationEntity => Set<VideoGameCertificationEntity>();
+        //public DbSet<VideoGameCompanyCreditsEntity> VideoGameCompanyCreditsEntity => Set<VideoGameCompanyCreditsEntity>();
+        //public DbSet<VideoGameCompletionEntity> VideoGameCompletionEntity => Set<VideoGameCompletionEntity>();
+        //public DbSet<VideoGameCrewEntity> VideoGameCrewEntity => Set<VideoGameCrewEntity>();
+        //public DbSet<VideoGameDifficultyEntity> VideoGameDifficultyEntity => Set<VideoGameDifficultyEntity>();
+        //public DbSet<VideoGameGenreEntity> VideoGameGenreEntity => Set<VideoGameGenreEntity>();
+        //public DbSet<VideoGameImageEntity> VideoGameImageEntity => Set<VideoGameImageEntity>();
+        //public DbSet<VideoGameLanguageEntity> VideoGameLanguageEntity => Set<VideoGameLanguageEntity>();
+        //public DbSet<VideoGamePerspectiveEntity> VideoGamePerspectiveEntity => Set<VideoGamePerspectiveEntity>();
+        //public DbSet<VideoGameReleaseDateEntity> VideoGameReleaseDateEntity => Set<VideoGameReleaseDateEntity>();
+        //public DbSet<VideoGameScoreEntity> VideoGameScoreEntity => Set<VideoGameScoreEntity>();
+        //public DbSet<VideoGameSettingEntity> VideoGameSettingEntity => Set<VideoGameSettingEntity>();
+        //public DbSet<VideoGameTextEntity> VideoGameTextEntity => Set<VideoGameTextEntity>();
+        //public DbSet<VideoGameUserEntity> VideoGameUserEntity => Set<VideoGameUserEntity>();
+        //public DbSet<VideoGameVersionEntity> VideoGameVersionEntity => Set<VideoGameVersionEntity>();
+        //public DbSet<VideoGameWeblinkEntity> VideoGameWeblinkEntity => Set<VideoGameWeblinkEntity>();
+        //public DbSet<VideoModeEntity> VideoModeEntity => Set<VideoModeEntity>();
+        //public DbSet<VideoResolutionEntity> VideoResolutionEntity => Set<VideoResolutionEntity>();
+        public DbSet<WeblinkEntity> WeblinkEntity => Set<WeblinkEntity>();
+
+
+        // --- Constructors ---
+
+        public EntertainmentInfothekDbContext(
+            DbContextOptions<EntertainmentInfothekDbContext> options)
+            : base(options)
+        { }
+
+
+        // --- Methods ---
+
+        protected override void OnModelCreating(
+            ModelBuilder modelBuilder)
+        {
+            // Every one of the 196 tables has an explicit configuration class.
+            modelBuilder.ApplyConfigurationsFromAssembly(
+                typeof(EntertainmentInfothekDbContext).Assembly);
+
+            //// The generated EF entities contain collection properties for every schema FK.
+            //// Most of those collections are convenience properties only; the actual FK
+            //// relationships are configured from the dependent side. If EF is allowed to
+            //// discover these collections by convention, it creates a second relationship
+            //// for many FKs (and therefore more relationships than exist in the schema).
+            //// Keep only the collection navigations that are explicitly paired in the
+            //// configuration; all other collection properties are ignored by EF.
+            //var configuredCollectionNavigations = new HashSet<string>(StringComparer.Ordinal)
+            //{
+            //    $"{nameof(RAMEntity)}.{nameof(Entities.RAMEntity.TechnicalSpecificationMinimumRAMs)}",
+            //    $"{nameof(RAMEntity)}.{nameof(Entities.RAMEntity.TechnicalSpecificationMinimumVideoRAMs)}",
+            //    $"{nameof(LocationEntity)}.{nameof(Entities.LocationEntity.PersonLocationOfBirths)}",
+            //    $"{nameof(LocationEntity)}.{nameof(Entities.LocationEntity.PersonLocationOfDeaths)}"
+            //};
+
+            //foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            //{
+            //    var collectionProperties = entityType.ClrType
+            //        .GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public)
+            //        .Where(property =>
+            //            property.PropertyType.IsGenericType &&
+            //            property.PropertyType.GetGenericTypeDefinition() == typeof(ICollection<>))
+            //        .ToList();
+
+            //    foreach (var property in collectionProperties)
+            //    {
+            //        var key = $"{entityType.ClrType.Name}.{property.Name}";
+            //        if (!configuredCollectionNavigations.Contains(key))
+            //            modelBuilder.Entity(entityType.ClrType).Ignore(property.Name);
+            //    }
+            //}
+
+            base.OnModelCreating(modelBuilder);
+        }
+    }
+}
