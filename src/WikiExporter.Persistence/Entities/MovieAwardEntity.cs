@@ -1,0 +1,69 @@
+﻿// WikiExporter.Persistence.dll: Provides access to the EntertainmentInfothek.db
+// Copyright (C) 2026 Sandra Scherer
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace WikiExporter.Persistence.Entities
+{
+    /// <summary>
+    /// EF representation of the SQLite table <c>Movie_Award</c>.
+    /// The entity is persistence-only.
+    /// </summary>
+    public class MovieAwardEntity
+    {
+        // --- Fields ---
+
+        /// <summary>Maps to <c>ID</c>.</summary>
+        public string Id { get; set; } = string.Empty;
+
+        /// <summary>Maps to <c>MovieID</c>.</summary>
+        public string? MovieId { get; set; }
+
+        /// <summary>Maps to <c>AwardID</c>.</summary>
+        public string? AwardId { get; set; }
+
+        /// <summary>Maps to <c>Category</c>.</summary>
+        public string? Category { get; set; }
+
+        /// <summary>Maps to <c>Date</c>.</summary>
+        public string? Date { get; set; }
+
+        /// <summary>Maps to <c>Winner</c>.</summary>
+        public string? Winner { get; set; }
+
+        /// <summary>Maps to <c>Order</c>.</summary>
+        public string? Order { get; set; }
+
+        /// <summary>Maps to <c>Details</c>.</summary>
+        public string? Details { get; set; }
+
+        /// <summary>Maps to <c>Notes</c>.</summary>
+        public string? Notes { get; set; }
+
+        /// <summary>Maps to <c>StatusID</c>.</summary>
+        public string? StatusId { get; set; }
+
+        /// <summary>Maps to <c>LastUpdated</c>.</summary>
+        public string? LastUpdated { get; set; }
+
+
+        // --- Foreign Key Navigation Properties ---
+
+        /// <summary>Navigation for FK <c>MovieID</c> to <c>Movie</c>.</summary>
+        public MovieEntity? MovieEntity { get; set; }
+
+        /// <summary>Navigation for FK <c>AwardID</c> to <c>Award</c>.</summary>
+        public AwardEntity? AwardEntity { get; set; }
+
+        /// <summary>Navigation for FK <c>StatusID</c> to <c>Status</c>.</summary>
+        public StatusEntity? StatusEntity { get; set; }
+
+
+        // --- Dependent Navigation Properties ---
+
+        ///// <summary>Dependent rows referencing this MovieAward.</summary>
+        //public ICollection<MovieAwardPersonEntity> MovieAwardPersons { get; set; } = new List<MovieAwardPersonEntity>();
+    }
+}

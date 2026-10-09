@@ -8,4 +8,8 @@
     <UseVSTest>true</UseVSTest>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\WikiExporter.Persistence\WikiExporter.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
