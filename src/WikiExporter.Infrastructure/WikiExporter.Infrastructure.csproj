@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WikiExporter.Application\WikiExporter.Application.csproj" />
-    <ProjectReference Include="..\WikiExporter.Domain\WikiExporter.Domain.csproj" />
     <ProjectReference Include="..\WikiExporter.Markdown\WikiExporter.Markdown.csproj" />
   </ItemGroup>
 

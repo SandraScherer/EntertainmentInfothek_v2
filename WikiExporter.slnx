@@ -2,7 +2,6 @@
   <Folder Name="/src/">
     <Project Path="src/WikiExporter.Application/WikiExporter.Application.csproj" />
     <Project Path="src/WikiExporter.Console/WikiExporter.Console.csproj" />
-    <Project Path="src/WikiExporter.Domain/WikiExporter.Domain.csproj" />
     <Project Path="src/WikiExporter.Infrastructure/WikiExporter.Infrastructure.csproj" />
     <Project Path="src/WikiExporter.Markdown/WikiExporter.Markdown.csproj" />
   </Folder>
