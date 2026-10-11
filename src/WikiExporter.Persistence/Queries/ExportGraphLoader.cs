@@ -6,15 +6,6 @@ using WikiExporter.Persistence.DbContext;
 
 namespace WikiExporter.Persistence.Queries;
 
-/// <summary>In-memory representation of a bounded export graph. Only the current root batch is retained.</summary>
-internal sealed class ExportGraph
-{
-/// <summary>Gets the entities.</summary>
-    public Dictionary<(IEntityType TypeEntity,string Id),object> Entities { get; } = new();
-/// <summary>Gets the foreign keys.</summary>
-    public Dictionary<(IEntityType TypeEntity,string Id), Dictionary<string,string?>> ForeignKeys { get; } = new();
-}
-
 /// <summary>Loads complete root-specific association graphs with set-based IN queries. It never uses Include or one query per row.</summary>
 internal sealed class ExportGraphLoader
 {

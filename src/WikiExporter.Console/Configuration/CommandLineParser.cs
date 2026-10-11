@@ -2,18 +2,6 @@ using WikiExporter.Application.Export.Requests;
 
 namespace WikiExporter.Console.Configuration;
 
-/// <summary>Parsed command-line arguments. Interactive input is used for omitted selection values.</summary>
-public sealed record CommandLineOptions(
-    string? DatabasePath,
-    string? OutputDirectory,
-    ExportEntityType? EntityType,
-    string? EntityId,
-    bool All,
-    ExportLanguage? Language,
-    ExportFormat? Format,
-    int? BatchSize,
-    bool Help);
-
 /// <summary>Defines the command line parser type.</summary>
 public static class CommandLineParser
 {
