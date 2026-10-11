@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Setting</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class SettingConfiguration : IEntityTypeConfiguration<SettingEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<SettingEntity> builder)
     {
         builder.ToTable("Setting");

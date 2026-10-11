@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Publication_Text</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class PublicationTextConfiguration : IEntityTypeConfiguration<PublicationTextEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<PublicationTextEntity> builder)
     {
         builder.ToTable("Publication_Text");

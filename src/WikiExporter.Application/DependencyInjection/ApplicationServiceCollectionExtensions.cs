@@ -6,8 +6,10 @@ using WikiExporter.Application.Localization;
 
 namespace WikiExporter.Application.DependencyInjection;
 
+/// <summary>Defines the application service collection extensions type.</summary>
 public static class ApplicationServiceCollectionExtensions
 {
+/// <summary>Executes the add wiki exporter application operation.</summary>
     public static IServiceCollection AddWikiExporterApplication(this IServiceCollection services)
     {
         services.AddSingleton<ILocalizedValueSelector,LocalizedValueSelector>();

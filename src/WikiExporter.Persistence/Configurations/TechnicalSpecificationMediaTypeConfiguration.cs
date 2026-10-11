@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification_MediaType</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class TechnicalSpecificationMediaTypeConfiguration : IEntityTypeConfiguration<TechnicalSpecificationMediaTypeEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<TechnicalSpecificationMediaTypeEntity> builder)
     {
         builder.ToTable("TechnicalSpecification_MediaType");

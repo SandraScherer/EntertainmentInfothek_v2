@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Certification</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class CertificationConfiguration : IEntityTypeConfiguration<CertificationEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<CertificationEntity> builder)
     {
         builder.ToTable("Certification");

@@ -8,6 +8,7 @@ namespace WikiExporter.Application.Export.Services;
 /// <summary>Application orchestration only: select reader, load bounded data, build neutral documents and collect errors.</summary>
 public sealed class ExportUseCase(IExportReaderResolver readers, IDocumentBuilderResolver builders, ILocalizedValueSelector localization, ILogger<ExportUseCase> logger) : IExportUseCase
 {
+/// <summary>Executes the execute async operation.</summary>
     public async Task<ExportResult> ExecuteAsync(ExportRequest request, CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(request);

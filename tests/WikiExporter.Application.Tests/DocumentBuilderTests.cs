@@ -8,8 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace WikiExporter.Application.Tests;
 
+/// <summary>Defines the document builder tests type.</summary>
 public sealed class DocumentBuilderTests
 {
+/// <summary>Executes the row operation.</summary>
     private static ExportRowData Row(string table, string id, IReadOnlyDictionary<string,string?>? fields = null, IReadOnlyDictionary<string,string?>? fks = null, string? order = null)
         => new(table, id, fields ?? new Dictionary<string,string?>(), fks ?? new Dictionary<string,string?>(), order);
 
@@ -80,6 +82,7 @@ public sealed class DocumentBuilderTests
     }
 }
 
+/// <summary>Defines the document builder coverage tests type.</summary>
 public sealed partial class DocumentBuilderCoverageTests
 {
     [Fact]
@@ -95,8 +98,10 @@ public sealed partial class DocumentBuilderCoverageTests
     }
 }
 
+/// <summary>Defines the remaining document builder tests type.</summary>
 public sealed class RemainingDocumentBuilderTests
 {
+/// <summary>Stores the selector value.</summary>
     private static readonly ILocalizedValueSelector Selector = new LocalizedValueSelector();
 
     [Fact]
@@ -125,6 +130,7 @@ public sealed class RemainingDocumentBuilderTests
             new ExportRowData("Person", "p2", new Dictionary<string,string?> { ["FirstName"]="Jane", ["LastName"]="Doe" }, new Dictionary<string,string?>()),
             new ExportRowData("Person_Family", "f1", new Dictionary<string,string?> { ["EnglishRole"]="Sister" }, new Dictionary<string,string?> { ["FamilyID"]="p2", ["RelationshipID"]="rel1" }),
             new ExportRowData("Person_Profession", "pr1", new Dictionary<string,string?>(), new Dictionary<string,string?> { ["ProfessionID"]="prof1" }),
+/// <summary>Initializes a new instance of the export row data type.</summary>
             new ExportRowData("Profession", "prof1", new Dictionary<string,string?> { ["OriginalName"]="Actor" }, new Dictionary<string,string?>())
         };
         var data = new PersonExportData("p1", new("Max", "Max Mustermann", "Max Mustermann"), null, null, null, null, null, null, null, null, null, rows);

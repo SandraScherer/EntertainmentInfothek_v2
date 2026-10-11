@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Episode_Text</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class EpisodeTextConfiguration : IEntityTypeConfiguration<EpisodeTextEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<EpisodeTextEntity> builder)
     {
         builder.ToTable("Episode_Text");

@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>VideoGame_Genre</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class VideoGameGenreConfiguration : IEntityTypeConfiguration<VideoGameGenreEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<VideoGameGenreEntity> builder)
     {
         builder.ToTable("VideoGame_Genre");

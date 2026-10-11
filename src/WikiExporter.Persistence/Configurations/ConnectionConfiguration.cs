@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Connection</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class ConnectionConfiguration : IEntityTypeConfiguration<ConnectionEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<ConnectionEntity> builder)
     {
         builder.ToTable("Connection");

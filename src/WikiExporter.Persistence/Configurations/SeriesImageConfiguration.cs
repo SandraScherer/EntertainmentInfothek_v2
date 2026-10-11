@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Series_Image</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class SeriesImageConfiguration : IEntityTypeConfiguration<SeriesImageEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<SeriesImageEntity> builder)
     {
         builder.ToTable("Series_Image");

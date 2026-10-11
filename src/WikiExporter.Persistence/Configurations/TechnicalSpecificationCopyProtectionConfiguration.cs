@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification_CopyProtection</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class TechnicalSpecificationCopyProtectionConfiguration : IEntityTypeConfiguration<TechnicalSpecificationCopyProtectionEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<TechnicalSpecificationCopyProtectionEntity> builder)
     {
         builder.ToTable("TechnicalSpecification_CopyProtection");

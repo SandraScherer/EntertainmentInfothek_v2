@@ -9,8 +9,10 @@ using WikiExporter.Export.Paths;
 
 namespace WikiExporter.Export.DependencyInjection;
 
+/// <summary>Defines the export service collection extensions type.</summary>
 public static class ExportServiceCollectionExtensions
 {
+/// <summary>Executes the add wiki exporter export operation.</summary>
     public static IServiceCollection AddWikiExporterExport(this IServiceCollection services)
     {
         services.AddSingleton<IExportFileNameGenerator, ExportFileNameGenerator>();

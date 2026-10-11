@@ -14,8 +14,10 @@ public interface IConsoleInteraction
     void WriteLine(string text = "");
 }
 
+/// <summary>Defines the console interaction type.</summary>
 public sealed class ConsoleInteraction : IConsoleInteraction
 {
+/// <summary>Executes the select entity type operation.</summary>
     public ExportEntityType SelectEntityType()
     {
         var values = Enum.GetValues<ExportEntityType>();
@@ -24,6 +26,7 @@ public sealed class ConsoleInteraction : IConsoleInteraction
         return values[ReadIndex(values.Length, "Selection")];
     }
 
+/// <summary>Executes the select language operation.</summary>
     public ExportLanguage SelectLanguage(ExportLanguage defaultValue)
     {
         WriteLine($"Language [{defaultValue}]:");
@@ -33,6 +36,7 @@ public sealed class ConsoleInteraction : IConsoleInteraction
         return string.IsNullOrWhiteSpace(line) ? defaultValue : ParseIndexOrEnum<ExportLanguage>(line, values);
     }
 
+/// <summary>Executes the select format operation.</summary>
     public ExportFormat SelectFormat(ExportFormat defaultValue)
     {
         WriteLine($"Format [{defaultValue}]:");
@@ -42,6 +46,7 @@ public sealed class ConsoleInteraction : IConsoleInteraction
         return string.IsNullOrWhiteSpace(line) ? defaultValue : ParseIndexOrEnum<ExportFormat>(line, values);
     }
 
+/// <summary>Executes the select scope operation.</summary>
     public ExportScope SelectScope()
     {
         WriteLine("Scope:");
@@ -53,6 +58,7 @@ public sealed class ConsoleInteraction : IConsoleInteraction
         throw new ArgumentException("Invalid scope selection.");
     }
 
+/// <summary>Executes the read required operation.</summary>
     public string ReadRequired(string prompt)
     {
         Write(prompt);
@@ -61,9 +67,13 @@ public sealed class ConsoleInteraction : IConsoleInteraction
         return value.Trim();
     }
 
+/// <summary>Executes the write operation.</summary>
     public void Write(string text) => System.Console.Write(text);
+/// <summary>Executes the write line operation.</summary>
     public void WriteLine(string text = "") => System.Console.WriteLine(text);
+/// <summary>Executes the read line or empty operation.</summary>
     private static string ReadLineOrEmpty() => System.Console.ReadLine()?.Trim() ?? "";
+/// <summary>Executes the read index operation.</summary>
     private static int ReadIndex(int count, string prompt)
     {
         var value = new ConsoleInteraction().ReadRequired($"{prompt}: ");

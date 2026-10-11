@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Book_Image</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class BookImageConfiguration : IEntityTypeConfiguration<BookImageEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<BookImageEntity> builder)
     {
         builder.ToTable("Book_Image");

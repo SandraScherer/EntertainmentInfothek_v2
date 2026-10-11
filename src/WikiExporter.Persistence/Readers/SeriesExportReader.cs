@@ -9,8 +9,10 @@ namespace WikiExporter.Persistence.Readers;
 /// <summary>Concrete Series reader. All associations are loaded in bounded set-based batches.</summary>
 internal sealed class SeriesExportReader : ExportReaderBase, ISeriesExportReader
 {
+/// <summary>Initializes a new instance of the series export reader type.</summary>
     public SeriesExportReader(IDbContextFactory<EntertainmentInfothekDbContext> factory) : base(factory) { }
 
+/// <summary>Executes the get async operation.</summary>
     public async Task<SeriesExportData?> GetAsync(string id, CancellationToken ct = default)
     {
         await using var db = await Factory.CreateDbContextAsync(ct);
@@ -19,6 +21,7 @@ internal sealed class SeriesExportReader : ExportReaderBase, ISeriesExportReader
         return await LoadAndMapAsync(db, new[] { id }, ct).ContinueWith(t => t.Result.SingleOrDefault(), ct);
     }
 
+/// <summary>Executes the read all async operation.</summary>
     public async IAsyncEnumerable<SeriesExportData> ReadAllAsync(BatchOptions options, [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken ct = default)
     {
         await using var db = await Factory.CreateDbContextAsync(ct);
@@ -32,6 +35,7 @@ internal sealed class SeriesExportReader : ExportReaderBase, ISeriesExportReader
         }
     }
 
+/// <summary>Executes the load and map async operation.</summary>
     private static async Task<List<SeriesExportData>> LoadAndMapAsync(EntertainmentInfothekDbContext db, IReadOnlyCollection<string> ids, CancellationToken ct)
     {
         var loader = new ExportGraphLoader(db);
@@ -48,5 +52,6 @@ internal sealed class SeriesExportReader : ExportReaderBase, ISeriesExportReader
         return result;
     }
 
+/// <summary>Executes the episodes operation.</summary>
     private static IReadOnlyList<EpisodeReference> Episodes(ExportGraph g) => g.Entities.Where(x => (x.Key.TypeEntity.GetTableName() ?? x.Key.TypeEntity.Name) == "Episode").Select(x => { var t=x.Key.TypeEntity; var e=x.Value; return new EpisodeReference(x.Key.Id, ExportGraphMapper.Title(t,e), ExportGraphMapper.Get(t,e,"SeasonNo"), ExportGraphMapper.Get(t,e,"EpisodeNo")); }).OrderBy(x=>x.SeasonNo,StringComparer.Ordinal).ThenBy(x=>x.EpisodeNo,StringComparer.Ordinal).ThenBy(x=>x.Id,StringComparer.Ordinal).ToArray();
 }

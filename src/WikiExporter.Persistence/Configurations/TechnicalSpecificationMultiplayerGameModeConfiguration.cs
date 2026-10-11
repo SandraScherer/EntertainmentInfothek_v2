@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification_MultiplayerGameMode</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class TechnicalSpecificationMultiplayerGameModeConfiguration : IEntityTypeConfiguration<TechnicalSpecificationMultiplayerGameModeEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<TechnicalSpecificationMultiplayerGameModeEntity> builder)
     {
         builder.ToTable("TechnicalSpecification_MultiplayerGameMode");

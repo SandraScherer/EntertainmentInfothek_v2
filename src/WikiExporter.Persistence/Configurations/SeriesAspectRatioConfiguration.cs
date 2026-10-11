@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Series_AspectRatio</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class SeriesAspectRatioConfiguration : IEntityTypeConfiguration<SeriesAspectRatioEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<SeriesAspectRatioEntity> builder)
     {
         builder.ToTable("Series_AspectRatio");

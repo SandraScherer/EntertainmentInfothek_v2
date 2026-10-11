@@ -9,8 +9,10 @@ namespace WikiExporter.Persistence.Readers;
 /// <summary>Concrete VideoGame reader. All associations are loaded in bounded set-based batches.</summary>
 internal sealed class VideoGameExportReader : ExportReaderBase, IVideoGameExportReader
 {
+/// <summary>Initializes a new instance of the video game export reader type.</summary>
     public VideoGameExportReader(IDbContextFactory<EntertainmentInfothekDbContext> factory) : base(factory) { }
 
+/// <summary>Executes the get async operation.</summary>
     public async Task<VideoGameExportData?> GetAsync(string id, CancellationToken ct = default)
     {
         await using var db = await Factory.CreateDbContextAsync(ct);
@@ -19,6 +21,7 @@ internal sealed class VideoGameExportReader : ExportReaderBase, IVideoGameExport
         return await LoadAndMapAsync(db, new[] { id }, ct).ContinueWith(t => t.Result.SingleOrDefault(), ct);
     }
 
+/// <summary>Executes the read all async operation.</summary>
     public async IAsyncEnumerable<VideoGameExportData> ReadAllAsync(BatchOptions options, [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken ct = default)
     {
         await using var db = await Factory.CreateDbContextAsync(ct);
@@ -32,6 +35,7 @@ internal sealed class VideoGameExportReader : ExportReaderBase, IVideoGameExport
         }
     }
 
+/// <summary>Executes the load and map async operation.</summary>
     private static async Task<List<VideoGameExportData>> LoadAndMapAsync(EntertainmentInfothekDbContext db, IReadOnlyCollection<string> ids, CancellationToken ct)
     {
         var loader = new ExportGraphLoader(db);

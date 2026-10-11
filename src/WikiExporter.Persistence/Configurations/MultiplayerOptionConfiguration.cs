@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>MultiplayerOption</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class MultiplayerOptionConfiguration : IEntityTypeConfiguration<MultiplayerOptionEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<MultiplayerOptionEntity> builder)
     {
         builder.ToTable("MultiplayerOption");

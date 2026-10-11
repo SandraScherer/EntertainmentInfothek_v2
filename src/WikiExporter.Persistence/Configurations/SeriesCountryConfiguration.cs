@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Series_Country</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class SeriesCountryConfiguration : IEntityTypeConfiguration<SeriesCountryEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<SeriesCountryEntity> builder)
     {
         builder.ToTable("Series_Country");

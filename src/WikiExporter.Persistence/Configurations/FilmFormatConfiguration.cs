@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>FilmFormat</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class FilmFormatConfiguration : IEntityTypeConfiguration<FilmFormatEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<FilmFormatEntity> builder)
     {
         builder.ToTable("FilmFormat");

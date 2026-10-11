@@ -9,12 +9,14 @@ namespace WikiExporter.Export.FileNames;
 /// <summary>Creates deterministic, file-system-safe names. The ID hash makes title collisions impossible in normal operation.</summary>
 public sealed class ExportFileNameGenerator : IExportFileNameGenerator
 {
+/// <summary>Executes the generate operation.</summary>
     public string Generate(MarkdownDocument document)
     {
         var hash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(document.EntityId))).ToLowerInvariant()[..8];
         return $"{Sanitize(document.DocumentType)}-{hash}.md";
     }
 
+/// <summary>Executes the sanitize operation.</summary>
     private static string Sanitize(string value)
     {
         var invalid = new string(Path.GetInvalidFileNameChars()) + "#%&{}\\<>*?$!'\"@+`|=:/";

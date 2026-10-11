@@ -9,19 +9,25 @@ namespace WikiExporter.Persistence.Queries;
 /// <summary>In-memory representation of a bounded export graph. Only the current root batch is retained.</summary>
 internal sealed class ExportGraph
 {
+/// <summary>Gets the entities.</summary>
     public Dictionary<(IEntityType TypeEntity,string Id),object> Entities { get; } = new();
+/// <summary>Gets the foreign keys.</summary>
     public Dictionary<(IEntityType TypeEntity,string Id), Dictionary<string,string?>> ForeignKeys { get; } = new();
 }
 
 /// <summary>Loads complete root-specific association graphs with set-based IN queries. It never uses Include or one query per row.</summary>
 internal sealed class ExportGraphLoader
 {
+/// <summary>Stores the  db value.</summary>
     private readonly EntertainmentInfothekDbContext _db;
+/// <summary>Stores the excluded columns value.</summary>
     private static readonly string[] ExcludedColumns = ["Notes", "StatusID", "LastUpdated"];
+/// <summary>Stores the user tables value.</summary>
     private static readonly HashSet<string> UserTables = ["Movie_User","Series_User","Book_User","VideoGame_User"];
 
     public ExportGraphLoader(EntertainmentInfothekDbContext db) => _db = db;
 
+/// <summary>Executes the load async operation.</summary>
     public async Task<ExportGraph> LoadAsync(IEntityType rootType, IReadOnlyCollection<string> rootIds, IReadOnlySet<string> expandableTables, CancellationToken ct)
     {
         var graph = new ExportGraph();
@@ -91,6 +97,7 @@ internal sealed class ExportGraphLoader
         return graph;
     }
 
+/// <summary>Executes the get no tracking set operation.</summary>
     private IQueryable GetNoTrackingSet(Type clrType)
     {
         var setMethod = typeof(Microsoft.EntityFrameworkCore.DbContext).GetMethods(BindingFlags.Public | BindingFlags.Instance)
@@ -101,6 +108,7 @@ internal sealed class ExportGraphLoader
         return (IQueryable)asNoTracking.MakeGenericMethod(clrType).Invoke(null, [query])!;
     }
 
+/// <summary>Executes the query by ids async operation.</summary>
     private async Task<List<object>> QueryByIdsAsync(IEntityType type, IReadOnlyCollection<string> ids, CancellationToken ct)
     {
         var key = type.FindPrimaryKey()?.Properties.SingleOrDefault();
@@ -117,6 +125,7 @@ internal sealed class ExportGraphLoader
         return ((System.Collections.IEnumerable)task.GetType().GetProperty("Result")!.GetValue(task)!).Cast<object>().ToList();
     }
 
+/// <summary>Executes the query dependent ids async operation.</summary>
     private async Task<List<string>> QueryDependentIdsAsync(IEntityType dependent, IReadOnlyCollection<IForeignKey> fks, IReadOnlyCollection<string> parentIds, CancellationToken ct)
     {
         var key = dependent.FindPrimaryKey()?.Properties.SingleOrDefault();
@@ -139,6 +148,7 @@ internal sealed class ExportGraphLoader
         return ((System.Collections.IEnumerable)task.GetType().GetProperty("Result")!.GetValue(task)!).Cast<object>().Select(o => key.PropertyInfo.GetValue(o) as string).Where(x => x is not null).Cast<string>().ToList();
     }
 
+/// <summary>Executes the add rows operation.</summary>
     private static void AddRows(ExportGraph graph, IEntityType type, IEnumerable<object> rows)
     {
         var key = type.FindPrimaryKey()?.Properties.SingleOrDefault();
@@ -158,6 +168,7 @@ internal sealed class ExportGraphLoader
         }
     }
 
+/// <summary>Executes the to row operation.</summary>
     internal static ExportRowData ToRow(IEntityType type, object entity)
     {
         var key = type.FindPrimaryKey()?.Properties.SingleOrDefault();

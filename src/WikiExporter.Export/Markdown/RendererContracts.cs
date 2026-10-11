@@ -13,6 +13,7 @@ public interface IMarkdownRenderer
     RenderedDocument Render(MarkdownDocument document);
 }
 
+/// <summary>Defines the i markdown renderer resolver type.</summary>
 public interface IMarkdownRendererResolver
 {
     IMarkdownRenderer Resolve(ExportFormat format);
@@ -37,6 +38,7 @@ public interface IExportLinkResolver
     string Resolve(MarkdownDocument source, string targetType, string targetId, ExportFormat format);
 }
 
+/// <summary>Defines the i export file writer type.</summary>
 public interface IExportFileWriter
 {
     Task WriteAsync(RenderedDocument document, string outputDirectory, CancellationToken ct = default);

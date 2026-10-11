@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Hardware</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class HardwareConfiguration : IEntityTypeConfiguration<HardwareEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<HardwareEntity> builder)
     {
         builder.ToTable("Hardware");

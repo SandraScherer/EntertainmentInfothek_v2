@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Series_FilmingDate</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class SeriesFilmingDateConfiguration : IEntityTypeConfiguration<SeriesFilmingDateEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<SeriesFilmingDateEntity> builder)
     {
         builder.ToTable("Series_FilmingDate");

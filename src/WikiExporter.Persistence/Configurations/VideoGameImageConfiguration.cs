@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>VideoGame_Image</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class VideoGameImageConfiguration : IEntityTypeConfiguration<VideoGameImageEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<VideoGameImageEntity> builder)
     {
         builder.ToTable("VideoGame_Image");

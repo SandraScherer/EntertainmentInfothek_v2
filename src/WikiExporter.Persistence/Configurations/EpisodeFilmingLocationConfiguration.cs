@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Episode_FilmingLocation</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class EpisodeFilmingLocationConfiguration : IEntityTypeConfiguration<EpisodeFilmingLocationEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<EpisodeFilmingLocationEntity> builder)
     {
         builder.ToTable("Episode_FilmingLocation");

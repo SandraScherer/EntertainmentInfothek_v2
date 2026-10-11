@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>VideoGame_Certification</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class VideoGameCertificationConfiguration : IEntityTypeConfiguration<VideoGameCertificationEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<VideoGameCertificationEntity> builder)
     {
         builder.ToTable("VideoGame_Certification");

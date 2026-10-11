@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>MacOSSprocket</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class MacOSSprocketConfiguration : IEntityTypeConfiguration<MacOSSprocketEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<MacOSSprocketEntity> builder)
     {
         builder.ToTable("MacOSSprocket");

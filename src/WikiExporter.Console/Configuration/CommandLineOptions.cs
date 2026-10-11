@@ -14,8 +14,10 @@ public sealed record CommandLineOptions(
     int? BatchSize,
     bool Help);
 
+/// <summary>Defines the command line parser type.</summary>
 public static class CommandLineParser
 {
+/// <summary>Executes the parse operation.</summary>
     public static CommandLineOptions Parse(string[] args)
     {
         string? db = null, output = null, id = null;
@@ -53,6 +55,7 @@ public static class CommandLineParser
         return new(db, output, type, id, all, language, format, batch, help);
     }
 
+/// <summary>Initializes a new instance of the static type.</summary>
     private static (string Name, string Value) Split(string arg, string[] args, ref int index)
     {
         var equals = arg.IndexOf('=');

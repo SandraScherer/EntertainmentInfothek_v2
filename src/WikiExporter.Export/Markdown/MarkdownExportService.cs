@@ -9,8 +9,10 @@ public interface IMarkdownExportService
     Task<RenderedDocument> ExportAsync(MarkdownDocument document, ExportFormat format, string outputDirectory, CancellationToken ct = default);
 }
 
+/// <summary>Defines the markdown export service type.</summary>
 public sealed class MarkdownExportService(IMarkdownRendererResolver renderers, IExportFileWriter writer) : IMarkdownExportService
 {
+/// <summary>Executes the export async operation.</summary>
     public async Task<RenderedDocument> ExportAsync(MarkdownDocument document, ExportFormat format, string outputDirectory, CancellationToken ct = default)
     {
         var rendered = renderers.Resolve(format).Render(document);

@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Series_Language</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class SeriesLanguageConfiguration : IEntityTypeConfiguration<SeriesLanguageEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<SeriesLanguageEntity> builder)
     {
         builder.ToTable("Series_Language");

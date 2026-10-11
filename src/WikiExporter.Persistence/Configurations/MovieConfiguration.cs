@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Movie</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<MovieEntity> builder)
     {
         builder.ToTable("Movie");

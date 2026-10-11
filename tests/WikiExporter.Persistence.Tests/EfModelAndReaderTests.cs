@@ -7,6 +7,7 @@ using WikiExporter.Persistence.DependencyInjection;
 
 namespace WikiExporter.Persistence.Tests;
 
+/// <summary>Defines the ef model and reader tests type.</summary>
 public sealed class EfModelAndReaderTests
 {
     [Fact]
@@ -49,6 +50,7 @@ public sealed class EfModelAndReaderTests
     }
 }
 
+/// <summary>Defines the relationship reader tests type.</summary>
 public sealed class RelationshipReaderTests
 {
     [Fact]

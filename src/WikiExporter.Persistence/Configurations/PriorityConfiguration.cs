@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Priority</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class PriorityConfiguration : IEntityTypeConfiguration<PriorityEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<PriorityEntity> builder)
     {
         builder.ToTable("Priority");

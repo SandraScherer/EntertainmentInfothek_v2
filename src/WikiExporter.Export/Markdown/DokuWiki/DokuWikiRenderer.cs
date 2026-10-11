@@ -7,8 +7,10 @@ namespace WikiExporter.Export.Markdown.DokuWiki;
 /// <summary>Renders the neutral document tree using DokuWiki syntax.</summary>
 public sealed class DokuWikiRenderer(IExportPathResolver paths, IExportLinkResolver links) : IMarkdownRenderer
 {
+/// <summary>Stores the format value.</summary>
     public ExportFormat Format => ExportFormat.DokuWiki;
 
+/// <summary>Executes the render operation.</summary>
     public RenderedDocument Render(MarkdownDocument document)
     {
         var sb = new StringBuilder();
@@ -29,6 +31,7 @@ public sealed class DokuWikiRenderer(IExportPathResolver paths, IExportLinkResol
         return new(paths.GetRelativePath(document, Format), sb.ToString().TrimEnd() + Environment.NewLine);
     }
 
+/// <summary>Executes the render table operation.</summary>
     private static void RenderTable(StringBuilder sb, TableBlock table)
     {
         sb.AppendLine("^ " + string.Join(" ^ ", table.Headers.Select(MarkdownEscaper.DokuWikiTable)) + " ^");

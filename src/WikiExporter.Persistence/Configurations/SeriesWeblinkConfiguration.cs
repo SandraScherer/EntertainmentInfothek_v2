@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Series_Weblink</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class SeriesWeblinkConfiguration : IEntityTypeConfiguration<SeriesWeblinkEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<SeriesWeblinkEntity> builder)
     {
         builder.ToTable("Series_Weblink");

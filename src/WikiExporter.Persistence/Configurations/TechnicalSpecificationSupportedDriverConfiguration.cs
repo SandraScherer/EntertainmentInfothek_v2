@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification_SupportedDriver</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class TechnicalSpecificationSupportedDriverConfiguration : IEntityTypeConfiguration<TechnicalSpecificationSupportedDriverEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<TechnicalSpecificationSupportedDriverEntity> builder)
     {
         builder.ToTable("TechnicalSpecification_SupportedDriver");

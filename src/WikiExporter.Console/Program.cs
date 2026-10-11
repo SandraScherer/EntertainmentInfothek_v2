@@ -13,6 +13,7 @@ namespace WikiExporter.ConsoleApp;
 /// <summary>Console entry point. All UI concerns stay here; business orchestration remains in Application.</summary>
 public static class Program
 {
+/// <summary>Executes the main operation.</summary>
     public static async Task<int> Main(string[] args)
     {
         try
@@ -71,18 +72,22 @@ public static class Program
         }
     }
 
+/// <summary>Executes the validate database operation.</summary>
     private static void ValidateDatabase(string path)
     {
         var full = Path.GetFullPath(path);
         if (!File.Exists(full)) throw new FileNotFoundException($"SQLite database not found: {full}", full);
     }
 
+/// <summary>Executes the parse default language operation.</summary>
     private static ExportLanguage ParseDefaultLanguage(string value)
         => Enum.TryParse<ExportLanguage>(value, true, out var result) ? result : ExportLanguage.German;
 
+/// <summary>Executes the parse default format operation.</summary>
     private static ExportFormat ParseDefaultFormat(string value)
         => Enum.TryParse<ExportFormat>(value, true, out var result) ? result : ExportFormat.Obsidian;
 
+/// <summary>Executes the print help operation.</summary>
     private static void PrintHelp()
     {
         System.Console.WriteLine("WikiExporter");

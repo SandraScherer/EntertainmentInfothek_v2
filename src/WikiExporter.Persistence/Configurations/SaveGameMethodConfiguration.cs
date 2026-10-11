@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>SaveGameMethod</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class SaveGameMethodConfiguration : IEntityTypeConfiguration<SaveGameMethodEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<SaveGameMethodEntity> builder)
     {
         builder.ToTable("SaveGameMethod");

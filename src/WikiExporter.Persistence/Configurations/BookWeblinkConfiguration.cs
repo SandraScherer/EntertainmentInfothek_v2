@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Book_Weblink</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class BookWeblinkConfiguration : IEntityTypeConfiguration<BookWeblinkEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<BookWeblinkEntity> builder)
     {
         builder.ToTable("Book_Weblink");

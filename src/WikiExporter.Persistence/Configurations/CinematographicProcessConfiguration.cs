@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>CinematographicProcess</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class CinematographicProcessConfiguration : IEntityTypeConfiguration<CinematographicProcessEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<CinematographicProcessEntity> builder)
     {
         builder.ToTable("CinematographicProcess");

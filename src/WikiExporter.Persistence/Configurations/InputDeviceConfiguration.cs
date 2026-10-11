@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>InputDevice</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class InputDeviceConfiguration : IEntityTypeConfiguration<InputDeviceEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<InputDeviceEntity> builder)
     {
         builder.ToTable("InputDevice");

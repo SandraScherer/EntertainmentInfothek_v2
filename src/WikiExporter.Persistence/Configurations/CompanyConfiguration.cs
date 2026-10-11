@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Company</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class CompanyConfiguration : IEntityTypeConfiguration<CompanyEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<CompanyEntity> builder)
     {
         builder.ToTable("Company");

@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Driver</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class DriverConfiguration : IEntityTypeConfiguration<DriverEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<DriverEntity> builder)
     {
         builder.ToTable("Driver");

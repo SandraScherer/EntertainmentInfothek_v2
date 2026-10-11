@@ -15,14 +15,18 @@ namespace WikiExporter.Application.Documents.Builders;
 /// </summary>
 public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
 {
+/// <summary>Stores the selector value.</summary>
     protected ILocalizedValueSelector Selector => selector;
 
+/// <summary>Executes the title operation.</summary>
     protected string Title(LocalizedValue value, ExportLanguage language)
         => selector.Select(value, language) ?? "Untitled";
 
+/// <summary>Executes the metadata operation.</summary>
     protected static Dictionary<string, string?> Metadata(string type, string id, string title)
         => new(StringComparer.Ordinal) { ["type"] = type, ["id"] = id, ["title"] = title };
 
+/// <summary>Executes the add details operation.</summary>
     protected static void AddDetails(List<MarkdownBlock> blocks, string? details)
     {
         if (string.IsNullOrWhiteSpace(details)) return;
@@ -30,6 +34,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         blocks.Add(new ParagraphBlock(details));
     }
 
+/// <summary>Executes the add connections operation.</summary>
     protected void AddConnections(List<MarkdownBlock> blocks, ExportDataBase data, ExportLanguage language)
     {
         switch (data)
@@ -49,6 +54,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         }
     }
 
+/// <summary>Executes the add reference section operation.</summary>
     private void AddReferenceSection(List<MarkdownBlock> blocks, string heading, string type, string id, ExportLanguage language, IReadOnlyList<ExportRowData> rows)
     {
         blocks.Add(new HeadingBlock(2, heading));
@@ -69,6 +75,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         AddWeblinks(blocks, rows, language);
     }
 
+/// <summary>Executes the add cast operation.</summary>
     protected void AddCast(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language, bool enabled = true)
     {
         if (!enabled) return;
@@ -91,6 +98,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         }
     }
 
+/// <summary>Executes the add crew operation.</summary>
     protected void AddCrew(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language, bool enabled = true)
     {
         if (!enabled) return;
@@ -113,6 +121,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         }
     }
 
+/// <summary>Executes the add awards operation.</summary>
     protected void AddAwards(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language)
     {
         var awards = rows.Where(r => r.Table.EndsWith("_Award", StringComparison.Ordinal) && !r.Table.EndsWith("_Award_Person", StringComparison.Ordinal))
@@ -151,6 +160,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         }
     }
 
+/// <summary>Executes the add company credits operation.</summary>
     protected void AddCompanyCredits(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language)
     {
         var credits = rows.Where(r => r.Table.EndsWith("_CompanyCredits", StringComparison.Ordinal))
@@ -174,6 +184,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         }
     }
 
+/// <summary>Executes the add classifications operation.</summary>
     protected void AddClassifications(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language)
     {
         AddLookupList(blocks, rows, language, "Genres", "_Genre", "GenreID", "Genre");
@@ -185,6 +196,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         AddLookupList(blocks, rows, language, "Perspectives", "_Perspective", "PerspectiveID", "Perspective");
     }
 
+/// <summary>Executes the add dates operation.</summary>
     protected void AddDates(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language)
     {
         var dateTables = rows.Where(r => r.Table.Contains("ReleaseDate", StringComparison.Ordinal)
@@ -206,6 +218,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         }
     }
 
+/// <summary>Executes the add media operation.</summary>
     protected void AddMedia(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language)
     {
         var images = rows.Where(r => r.Table.EndsWith("_Image", StringComparison.Ordinal)).OrderBy(OrderKey).ThenBy(r => r.Id, StringComparer.Ordinal).ToArray();
@@ -222,6 +235,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         }
     }
 
+/// <summary>Executes the add texts operation.</summary>
     protected void AddTexts(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language)
     {
         var texts = rows.Where(r => r.Table.EndsWith("_Text", StringComparison.Ordinal) && !r.Table.Equals("Publication_Text", StringComparison.Ordinal))
@@ -238,6 +252,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         }
     }
 
+/// <summary>Executes the add weblinks operation.</summary>
     protected void AddWeblinks(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language)
     {
         var links = rows.Where(r => r.Table.EndsWith("_Weblink", StringComparison.Ordinal)).OrderBy(OrderKey).ThenBy(r => r.Id, StringComparer.Ordinal).ToArray();
@@ -329,18 +344,22 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         }
     }
 
+/// <summary>Executes the field operation.</summary>
     protected static string? Field(ExportRowData row, string name)
         => row.Fields.TryGetValue(name, out var value) ? value : row.ForeignKeys.TryGetValue(name, out var fk) ? fk : null;
 
+/// <summary>Executes the lookup field operation.</summary>
     protected static string? LookupField(IEnumerable<ExportRowData> rows, string table, string? id, string field)
         => rows.FirstOrDefault(r => r.Table.Equals(table, StringComparison.Ordinal) && r.Id == id)?.Fields.GetValueOrDefault(field);
 
+/// <summary>Executes the lookup localized operation.</summary>
     protected string? LookupLocalized(IEnumerable<ExportRowData> rows, string table, string? id, ExportLanguage language, string englishField, string germanField)
     {
         var row = rows.FirstOrDefault(r => r.Table.Equals(table, StringComparison.Ordinal) && r.Id == id);
         return row is null ? null : LocalizedField(row, language, englishField, germanField);
     }
 
+/// <summary>Executes the localized field operation.</summary>
     protected string? LocalizedField(ExportRowData row, ExportLanguage language, string englishField, string germanField)
     {
         var english = Field(row, englishField);
@@ -353,6 +372,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         };
     }
 
+/// <summary>Executes the reference name operation.</summary>
     protected string ReferenceName(IEnumerable<ExportRowData> rows, string table, string id, ExportLanguage language)
     {
         if (string.IsNullOrWhiteSpace(id)) return table;
@@ -360,6 +380,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         return row is null ? id : ReferenceName(row, language);
     }
 
+/// <summary>Executes the reference name operation.</summary>
     private string ReferenceName(ExportRowData row, ExportLanguage language)
     {
         var localized = LocalizedField(row, language, "EnglishName", "GermanName")
@@ -375,6 +396,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         };
     }
 
+/// <summary>Executes the add person link operation.</summary>
     protected string? AddPersonLink(List<MarkdownBlock> blocks, ExportRowData row, string field, string label, IReadOnlyList<ExportRowData> rows, ExportLanguage language)
     {
         var id = Field(row, field);
@@ -383,9 +405,11 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         return id;
     }
 
+/// <summary>Executes the non empty rows operation.</summary>
     protected static IReadOnlyList<IReadOnlyList<string>> NonEmptyRows(params (string Name, string? Value)[] values)
         => values.Where(x => !string.IsNullOrWhiteSpace(x.Value)).Select(x => (IReadOnlyList<string>)new[] { x.Name, x.Value! }).ToArray();
 
+/// <summary>Executes the humanize table name operation.</summary>
     protected static string HumanizeTableName(string table)
     {
         var name = table;
@@ -394,11 +418,15 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         return string.Concat(name.Select((c, i) => i > 0 && char.IsUpper(c) ? " " + c : c.ToString())).Trim();
     }
 
+/// <summary>Executes the order key operation.</summary>
     protected static string? OrderKey(ExportRowData row) => row.Order ?? "";
+/// <summary>Executes the first non empty operation.</summary>
     private static string? FirstNonEmpty(params string?[] values) => values.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x));
+/// <summary>Executes the lookup localized direct operation.</summary>
     private static string? LookupLocalizedDirect(ExportRowData row, ExportLanguage language, string english, string german)
         => language switch { ExportLanguage.German => FirstNonEmpty(Field(row, german), Field(row, "OriginalTitle"), Field(row, english)), ExportLanguage.English => FirstNonEmpty(Field(row, english), Field(row, "OriginalTitle"), Field(row, german)), _ => FirstNonEmpty(Field(row, "OriginalTitle"), Field(row, english), Field(row, german)) };
 
+/// <summary>Executes the add lookup list operation.</summary>
     private void AddLookupList(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language, string heading, string suffix, string fk, string lookupTable)
     {
         var selected = rows.Where(r => r.Table.EndsWith(suffix, StringComparison.Ordinal)).OrderBy(OrderKey).ThenBy(r => r.Id, StringComparer.Ordinal).ToArray();
@@ -411,6 +439,7 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
         }
     }
 
+/// <summary>Executes the add publication children operation.</summary>
     private void AddPublicationChildren(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, string publicationId, ExportLanguage language, string table, string heading, string? lookupField, string? lookupTable)
     {
         var children = rows.Where(r => r.Table.Equals(table, StringComparison.Ordinal) && string.Equals(Field(r, "PublicationID"), publicationId, StringComparison.Ordinal)).OrderBy(OrderKey).ThenBy(r => r.Id, StringComparer.Ordinal).ToArray();
@@ -433,9 +462,12 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
     }
 }
 
+/// <summary>Defines the movie document builder type.</summary>
 public sealed class MovieDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
+/// <summary>Stores the entity type value.</summary>
     public ExportEntityType EntityType => ExportEntityType.Movie;
+/// <summary>Executes the build operation.</summary>
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (MovieExportData)data; var title = Title(d.Title, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };
@@ -448,9 +480,12 @@ public sealed class MovieDocumentBuilder(ILocalizedValueSelector s) : DocumentBu
     }
 }
 
+/// <summary>Defines the series document builder type.</summary>
 public sealed class SeriesDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
+/// <summary>Stores the entity type value.</summary>
     public ExportEntityType EntityType => ExportEntityType.Series;
+/// <summary>Executes the build operation.</summary>
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (SeriesExportData)data; var title = Title(d.Title, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };
@@ -469,9 +504,12 @@ public sealed class SeriesDocumentBuilder(ILocalizedValueSelector s) : DocumentB
     }
 }
 
+/// <summary>Defines the episode document builder type.</summary>
 public sealed class EpisodeDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
+/// <summary>Stores the entity type value.</summary>
     public ExportEntityType EntityType => ExportEntityType.Episode;
+/// <summary>Executes the build operation.</summary>
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (EpisodeExportData)data; var title = Title(d.Title, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };
@@ -484,9 +522,12 @@ public sealed class EpisodeDocumentBuilder(ILocalizedValueSelector s) : Document
     }
 }
 
+/// <summary>Defines the book document builder type.</summary>
 public sealed class BookDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
+/// <summary>Stores the entity type value.</summary>
     public ExportEntityType EntityType => ExportEntityType.Book;
+/// <summary>Executes the build operation.</summary>
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (BookExportData)data; var title = Title(d.Title, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };
@@ -500,9 +541,12 @@ public sealed class BookDocumentBuilder(ILocalizedValueSelector s) : DocumentBui
     }
 }
 
+/// <summary>Defines the video game document builder type.</summary>
 public sealed class VideoGameDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
+/// <summary>Stores the entity type value.</summary>
     public ExportEntityType EntityType => ExportEntityType.VideoGame;
+/// <summary>Executes the build operation.</summary>
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (VideoGameExportData)data; var title = Title(d.Title, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };
@@ -516,9 +560,12 @@ public sealed class VideoGameDocumentBuilder(ILocalizedValueSelector s) : Docume
     }
 }
 
+/// <summary>Defines the person document builder type.</summary>
 public sealed class PersonDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
+/// <summary>Stores the entity type value.</summary>
     public ExportEntityType EntityType => ExportEntityType.Person;
+/// <summary>Executes the build operation.</summary>
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (PersonExportData)data; var title = Title(d.Name, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };
@@ -532,6 +579,7 @@ public sealed class PersonDocumentBuilder(ILocalizedValueSelector s) : DocumentB
         return new("Person", d.Id, Metadata("Person", d.Id, title), blocks);
     }
 
+/// <summary>Executes the add person relations operation.</summary>
     private void AddPersonRelations(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language)
     {
         AddRelationList(blocks, rows, language, "Family", "Person_Family", "FamilyID", "RelationshipID");
@@ -541,6 +589,7 @@ public sealed class PersonDocumentBuilder(ILocalizedValueSelector s) : DocumentB
         AddRelationList(blocks, rows, language, "Species", "Person_Species", "SpeciesID", null);
     }
 
+/// <summary>Executes the add relation list operation.</summary>
     private void AddRelationList(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language, string heading, string table, string targetField, string? relationField)
     {
         var selected = rows.Where(r => r.Table.Equals(table, StringComparison.Ordinal)).OrderBy(OrderKey).ThenBy(r => r.Id, StringComparer.Ordinal).ToArray();
@@ -558,9 +607,12 @@ public sealed class PersonDocumentBuilder(ILocalizedValueSelector s) : DocumentB
     }
 }
 
+/// <summary>Defines the connection document builder type.</summary>
 public sealed class ConnectionDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
+/// <summary>Stores the entity type value.</summary>
     public ExportEntityType EntityType => ExportEntityType.Connection;
+/// <summary>Executes the build operation.</summary>
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (ConnectionExportData)data; var title = Title(d.Name, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };

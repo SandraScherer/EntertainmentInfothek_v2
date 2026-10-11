@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Movie_Color</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class MovieColorConfiguration : IEntityTypeConfiguration<MovieColorEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<MovieColorEntity> builder)
     {
         builder.ToTable("Movie_Color");

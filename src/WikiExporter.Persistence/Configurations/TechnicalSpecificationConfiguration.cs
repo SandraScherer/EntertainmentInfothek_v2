@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class TechnicalSpecificationConfiguration : IEntityTypeConfiguration<TechnicalSpecificationEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<TechnicalSpecificationEntity> builder)
     {
         builder.ToTable("TechnicalSpecification");

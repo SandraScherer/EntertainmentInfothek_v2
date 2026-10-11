@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>SoundMix</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class SoundMixConfiguration : IEntityTypeConfiguration<SoundMixEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<SoundMixEntity> builder)
     {
         builder.ToTable("SoundMix");

@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Language</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class LanguageConfiguration : IEntityTypeConfiguration<LanguageEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<LanguageEntity> builder)
     {
         builder.ToTable("Language");

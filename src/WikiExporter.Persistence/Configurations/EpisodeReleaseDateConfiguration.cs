@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Episode_ReleaseDate</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class EpisodeReleaseDateConfiguration : IEntityTypeConfiguration<EpisodeReleaseDateEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<EpisodeReleaseDateEntity> builder)
     {
         builder.ToTable("Episode_ReleaseDate");

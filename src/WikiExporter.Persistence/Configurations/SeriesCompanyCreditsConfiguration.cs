@@ -7,6 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Series_CompanyCredits</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class SeriesCompanyCreditsConfiguration : IEntityTypeConfiguration<SeriesCompanyCreditsEntity>
 {
+/// <summary>Executes the configure operation.</summary>
     public void Configure(EntityTypeBuilder<SeriesCompanyCreditsEntity> builder)
     {
         builder.ToTable("Series_CompanyCredits");
