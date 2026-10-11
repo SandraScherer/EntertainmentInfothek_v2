@@ -19,7 +19,7 @@ public sealed class MovieRepository
         _db = db;
     }
 
-    public async Task<MovieExportDto>
+    public async Task<MovieExportData>
         GetForExportAsync(
             string movieId,
             CancellationToken cancellationToken)
@@ -29,7 +29,7 @@ public sealed class MovieRepository
                 .AsNoTracking()
                 .Where(x => x.Id == movieId)
                 .Select(x =>
-                    new MovieExportDto
+                    new MovieExportData
                     {
                         Id = x.Id,
                         OriginalTitle =

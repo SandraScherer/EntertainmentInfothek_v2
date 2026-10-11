@@ -4,7 +4,7 @@ namespace WikiExporter.Application.Interfaces;
 
 public interface IMovieRepository
 {
-    Task<MovieExportDto> GetForExportAsync(
+    Task<MovieExportData> GetForExportAsync(
         string movieId,
         CancellationToken cancellationToken);
 }

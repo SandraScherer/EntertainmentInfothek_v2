@@ -6,7 +6,7 @@ namespace WikiExporter.Application.Validation;
 public static class MovieExportValidator
 {
     public static void Validate(
-        MovieExportDto dto)
+        MovieExportData dto)
     {
         if (dto is null)
         {

@@ -6,6 +6,6 @@ namespace WikiExporter.Application.Interfaces;
 public interface IMovieExportDocumentBuilder
 {
     ExportDocument Build(
-        MovieExportDto dto,
+        MovieExportData dto,
         string language);
 }

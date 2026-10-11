@@ -14,7 +14,7 @@ public sealed class MovieExportDocumentBuilder
     : IMovieExportDocumentBuilder
 {
     public ExportDocument Build(
-        MovieExportDto dto,
+        MovieExportData dto,
         string language)
     {
         MovieExportValidator.Validate(
@@ -50,7 +50,7 @@ public sealed class MovieExportDocumentBuilder
     }
 
     private static string ResolveTitle(
-        MovieExportDto dto,
+        MovieExportData dto,
         string language)
     {
         if (language.StartsWith("de"))
@@ -76,7 +76,7 @@ public sealed class MovieExportDocumentBuilder
     }
 
     private static ExportMetadata CreateMetadata(
-        MovieExportDto dto)
+        MovieExportData dto)
     {
         return new ExportMetadata
         {
@@ -92,7 +92,7 @@ public sealed class MovieExportDocumentBuilder
 
     private static void AddGeneralSection(
         ExportDocument document,
-        MovieExportDto dto)
+        MovieExportData dto)
     {
         var table = new TableBlock
         {
@@ -140,7 +140,7 @@ public sealed class MovieExportDocumentBuilder
 
     private static void AddGenreSection(
         ExportDocument document,
-        MovieExportDto dto)
+        MovieExportData dto)
     {
         if (!dto.Genres.Any())
         {
@@ -167,7 +167,7 @@ public sealed class MovieExportDocumentBuilder
 
     private static void AddStorySection(
         ExportDocument document,
-        MovieExportDto dto)
+        MovieExportData dto)
     {
         var texts =
             dto.Texts
@@ -202,7 +202,7 @@ public sealed class MovieExportDocumentBuilder
 
     private static void AddCastSection(
         ExportDocument document,
-        MovieExportDto dto)
+        MovieExportData dto)
     {
         if (!dto.Cast.Any())
         {
@@ -250,7 +250,7 @@ public sealed class MovieExportDocumentBuilder
 
     private static void AddCrewSection(
         ExportDocument document,
-        MovieExportDto dto)
+        MovieExportData dto)
     {
         if (!dto.Crew.Any())
         {
@@ -300,7 +300,7 @@ public sealed class MovieExportDocumentBuilder
 
     private static void AddImagesSection(
         ExportDocument document,
-        MovieExportDto dto)
+        MovieExportData dto)
     {
         if (!dto.Images.Any())
         {
@@ -329,7 +329,7 @@ public sealed class MovieExportDocumentBuilder
 
     private static void AddLinksSection(
         ExportDocument document,
-        MovieExportDto dto)
+        MovieExportData dto)
     {
         if (!dto.Weblinks.Any())
         {

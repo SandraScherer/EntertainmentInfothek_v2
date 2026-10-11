@@ -1,6 +1,6 @@
 namespace WikiExporter.Application.DTOs;
 
-public sealed class MovieExportDto
+public sealed class MovieExportData
 {
     public required string Id { get; init; }
 

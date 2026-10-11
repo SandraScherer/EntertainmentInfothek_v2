@@ -78,10 +78,10 @@ public sealed class ExportMovieUseCaseIntegrationTest
             .BeTrue();
     }
 
-    private static MovieExportDto
+    private static MovieExportData
         CreateMovie()
     {
-        return new MovieExportDto
+        return new MovieExportData
         {
             Id = "_xxx",
 
