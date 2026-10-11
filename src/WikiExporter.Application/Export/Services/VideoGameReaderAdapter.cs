@@ -1,5 +1,5 @@
 using WikiExporter.Application.Persistence;
-using WikiExporter.Application.Abstractions.Export;
+using WikiExporter.Application.Export;
 using WikiExporter.Domain.Export;
 
 namespace WikiExporter.Application.Export.Services;
