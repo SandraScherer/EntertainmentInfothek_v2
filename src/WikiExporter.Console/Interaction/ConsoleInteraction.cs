@@ -9,10 +9,10 @@ public sealed class ConsoleInteraction : IConsoleInteraction
     public ExportEntityType SelectEntityType() => SelectEnum<ExportEntityType>("Export type");
 
     /// <summary>Prompts for an export language, allowing the supplied default to be retained.</summary>
-    public ExportLanguage SelectLanguage(ExportLanguage defaultValue) => SelectEnum("Language", defaultValue);
+    public ExportLanguage SelectLanguage(ExportLanguage defaultValue) => SelectEnum<ExportLanguage>("Language", defaultValue);
 
     /// <summary>Prompts for an output format, allowing the supplied default to be retained.</summary>
-    public ExportFormat SelectFormat(ExportFormat defaultValue) => SelectEnum("Format", defaultValue);
+    public ExportFormat SelectFormat(ExportFormat defaultValue) => SelectEnum<ExportFormat>("Format", defaultValue);
 
     /// <summary>Prompts whether to export one entity or all entities of the selected type.</summary>
     public ExportScope SelectScope()
