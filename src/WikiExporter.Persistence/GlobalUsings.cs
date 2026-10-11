@@ -10,4 +10,3 @@ global using Microsoft.EntityFrameworkCore.Metadata;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using WikiExporter.Application.Persistence;
 global using WikiExporter.Domain.Export;
-global using WikiExporter.Persistence.Entities;
