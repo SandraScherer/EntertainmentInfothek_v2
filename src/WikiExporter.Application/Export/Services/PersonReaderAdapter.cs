@@ -1,4 +1,4 @@
-using WikiExporter.Application.Abstractions.Persistence;
+using WikiExporter.Application.Persistence;
 using WikiExporter.Application.Abstractions.Export;
 using WikiExporter.Domain.Export;
 
