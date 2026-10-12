@@ -33,4 +33,29 @@ public sealed class ConsoleTests
         Assert.NotNull(host.Services.GetService<WikiExporter.Export.Markdown.IMarkdownExportService>());
         Assert.NotNull(host.Services.GetService<WikiExporter.Application.Persistence.IMovieExportReader>());
     }
+
+
+    [Fact]
+    public void Parser_SupportsEqualsSyntaxAndHelpFlag()
+    {
+        var options = CommandLineParser.Parse(new[] { "--database=db.sqlite", "--type=Person", "--help" });
+        Assert.Equal("db.sqlite", options.DatabasePath);
+        Assert.Equal(ExportEntityType.Person, options.EntityType);
+        Assert.True(options.Help);
+    }
+
+    [Theory]
+    [InlineData("--batch-size", "0")]
+    [InlineData("--batch-size", "-2")]
+    [InlineData("--batch-size", "abc")]
+    public void Parser_RejectsInvalidBatchSizes(string argument, string value)
+        => Assert.Throws<ArgumentException>(() => CommandLineParser.Parse(new[] { argument, value }));
+
+    [Fact]
+    public void Parser_RejectsUnknownArguments()
+        => Assert.Throws<ArgumentException>(() => CommandLineParser.Parse(new[] { "--unknown" }));
+
+    [Fact]
+    public void Parser_RejectsMissingValues()
+        => Assert.Throws<ArgumentException>(() => CommandLineParser.Parse(new[] { "--database" }));
 }

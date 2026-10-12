@@ -25,4 +25,12 @@ public sealed class LocalizationTests
     [Fact]
     public void Select_EnglishFallsBackToOriginalThenGerman()
         => Assert.Equal("Deutsch", _selector.Select(new(null, null, "Deutsch"), ExportLanguage.English));
+
+
+    [Fact]
+    public void Select_SkipsWhitespaceAndReturnsNullWhenNoTranslationExists()
+    {
+        Assert.Equal("English", _selector.Select(new("  ", "English", "Deutsch"), ExportLanguage.Original));
+        Assert.Null(_selector.Select(new(null, " ", null), ExportLanguage.German));
+    }
 }
