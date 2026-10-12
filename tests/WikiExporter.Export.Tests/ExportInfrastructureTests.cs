@@ -115,4 +115,37 @@ public sealed class ExportInfrastructureTests
         var rendered = renderer.Render(document);
         Assert.Contains("Action\\|Adventure", rendered.Content);
     }
+
+    [Fact]
+    public void ObsidianRenderer_QuotesYamlValuesWithSpecialCharactersAndEscapesQuotes()
+    {
+        var paths = new ExportPathResolver(new ExportFileNameGenerator());
+        var renderer = new ObsidianRenderer(paths, new ExportLinkResolver(paths));
+        var document = new MarkdownDocument("Movie", "movie-yaml", new Dictionary<string, string?>
+        {
+            ["description"] = "A \"quoted\" title: #1",
+            ["empty"] = string.Empty,
+            ["missing"] = null,
+            ["plain"] = "simple"
+        }, Array.Empty<MarkdownBlock>());
+
+        var rendered = renderer.Render(document);
+
+        Assert.Contains("description: \"A \\\"quoted\\\" title: #1\"", rendered.Content);
+        Assert.Contains("empty: \"\"", rendered.Content);
+        Assert.Contains("missing: null", rendered.Content);
+        Assert.Contains("plain: simple", rendered.Content);
+    }
+
+    [Fact]
+    public void RendererResolver_RejectsUnknownFormat()
+    {
+        var paths = new ExportPathResolver(new ExportFileNameGenerator());
+        var dokuWiki = new DokuWikiRenderer(paths, new ExportLinkResolver(paths));
+        var obsidian = new ObsidianRenderer(paths, new ExportLinkResolver(paths));
+        var resolver = new MarkdownRendererResolver(dokuWiki, obsidian);
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => resolver.Resolve((ExportFormat)999));
+    }
+
 }

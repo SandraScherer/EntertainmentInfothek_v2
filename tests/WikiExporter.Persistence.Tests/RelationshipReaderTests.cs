@@ -220,4 +220,66 @@ public sealed class RelationshipReaderTests
         Assert.DoesNotContain("StatusID", personRow.Fields.Keys);
     }
 
+
+    [Fact]
+    public async Task SeriesReader_OrdersEpisodeReferencesAndKeepsThemAsLightweightReferences()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.SeriesEntity.Add(new SeriesEntity { Id = "s-order", OriginalTitle = "Ordered Series" });
+            db.EpisodeEntity.AddRange(
+                new EpisodeEntity { Id = "e3", SeriesId = "s-order", OriginalTitle = "Second Season", SeasonNo = "2", EpisodeNo = "1", Details = "episode details" },
+                new EpisodeEntity { Id = "e2", SeriesId = "s-order", OriginalTitle = "Second Episode", SeasonNo = "1", EpisodeNo = "2" },
+                new EpisodeEntity { Id = "e1", SeriesId = "s-order", OriginalTitle = "First Episode", SeasonNo = "1", EpisodeNo = "1" });
+            await db.SaveChangesAsync();
+        }
+
+        var result = await provider.GetRequiredService<ISeriesExportReader>().GetAsync("s-order");
+
+        Assert.NotNull(result);
+        Assert.Equal(new[] { "e1", "e2", "e3" }, result!.Episodes.Select(x => x.Id));
+        Assert.Equal(new[] { "First Episode", "Second Episode", "Second Season" }, result.Episodes.Select(x => x.Title.Original));
+        Assert.Equal(new[] { "1", "1", "2" }, result.Episodes.Select(x => x.SeasonNo));
+    }
+
+    [Fact]
+    public async Task EpisodeReader_ReadAllUsesStableBatchesAndExcludesNotesAndTrackingColumns()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.SeriesEntity.Add(new SeriesEntity { Id = "s-episode", OriginalTitle = "Parent Series" });
+            db.EpisodeEntity.AddRange(
+                new EpisodeEntity { Id = "e2", SeriesId = "s-episode", OriginalTitle = "Second", SeasonNo = "1", EpisodeNo = "2", Details = "visible details", Notes = "private note", LastUpdated = "2025-01-01" },
+                new EpisodeEntity { Id = "e1", SeriesId = "s-episode", OriginalTitle = "First", SeasonNo = "1", EpisodeNo = "1" });
+            await db.SaveChangesAsync();
+        }
+
+        var actual = new List<EpisodeExportData>();
+        await foreach (var item in provider.GetRequiredService<IEpisodeExportReader>().ReadAllAsync(new BatchOptions(1)))
+            actual.Add(item);
+
+        Assert.Equal(new[] { "e1", "e2" }, actual.Select(x => x.Id));
+        var episode = Assert.Single(actual, x => x.Id == "e2");
+        Assert.Equal("s-episode", episode.SeriesId);
+        Assert.Equal("visible details", episode.Details);
+        var row = Assert.Single(episode.RelatedData, x => x.Table == "Episode");
+        Assert.DoesNotContain("Notes", row.Fields.Keys);
+        Assert.DoesNotContain("StatusID", row.Fields.Keys);
+        Assert.DoesNotContain("LastUpdated", row.Fields.Keys);
+    }
+
 }

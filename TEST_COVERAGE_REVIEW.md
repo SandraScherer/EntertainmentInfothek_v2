@@ -81,3 +81,13 @@ The added integration coverage also exposed two reader mapping issues: connectio
 ## Validation note for this pass
 
 The .NET SDK is not available in the editing environment, so these additions and fixes have not been executed here. Run `dotnet test` locally before merging.
+
+
+## Additional test batch (2026-10)
+
+- `SeriesReader_OrdersEpisodeReferencesAndKeepsThemAsLightweightReferences`: verifies episode reference ordering by season/episode and title mapping without embedding episode detail fields in the reference model.
+- `EpisodeReader_ReadAllUsesStableBatchesAndExcludesNotesAndTrackingColumns`: verifies stable keyset pagination with batch size one, parent-series reference mapping, Details inclusion, and exclusion of Notes/StatusID/LastUpdated from exported row fields.
+- `ObsidianRenderer_QuotesYamlValuesWithSpecialCharactersAndEscapesQuotes`: covers YAML quoting for whitespace/special characters, embedded quotes, empty values, nulls, and ordinary values.
+- `RendererResolver_RejectsUnknownFormat`: verifies invalid enum values are rejected rather than silently choosing a renderer.
+
+These tests were added but could not be executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate them.
