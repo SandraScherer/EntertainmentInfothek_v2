@@ -91,3 +91,13 @@ The .NET SDK is not available in the editing environment, so these additions and
 - `RendererResolver_RejectsUnknownFormat`: verifies invalid enum values are rejected rather than silently choosing a renderer.
 
 These tests were added but could not be executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate them.
+
+## Additional edge-case coverage
+
+The latest test expansion adds `DocumentBuilderEdgeCaseTests` with coverage for:
+
+- all seven document builders falling back to `Untitled` when all title variants are blank, and omitting empty Details sections;
+- localized movie title fallback to the original title when the requested language is unavailable;
+- connection references whose target is not present in the read model, preserving the stable target ID as the link label;
+- publication text being included only for the publication that owns the relationship, excluding orphaned publication-text rows;
+- technical-specification child rows being scoped to their parent specification rather than leaking across specifications.
