@@ -46,3 +46,15 @@ Existing tests continue to cover document-builder registration, localized-value 
 ## Validation note
 
 The editing environment used for this review does not have the .NET SDK installed. The added tests were checked against the source-level contracts, but `dotnet test` could not be executed here. Run `dotnet test` locally before treating this package as verified.
+
+## Additional tests in the latest pass
+
+- **Persistence / export-reader integration**
+  - Each of the seven export readers returns `null` for an unknown entity ID against an in-memory SQLite database with the EF schema created.
+  - Movie export-all uses stable ID ordering and continues correctly across one-item pages.
+- **Application / cancellation**
+  - Single-item export forwards the cancellation token to the reader, propagates cancellation, and does not invoke the document builder.
+
+## Validation note for this pass
+
+The new tests were added to the source package but were not executed in this environment because the .NET SDK is unavailable here. Run `dotnet test` locally to validate them.
