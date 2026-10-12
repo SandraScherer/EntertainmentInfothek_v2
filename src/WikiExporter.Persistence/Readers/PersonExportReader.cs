@@ -47,7 +47,7 @@ internal sealed class PersonExportReader : ExportReaderBase, IPersonExportReader
             if (!graph.Entities.TryGetValue((rootType,id), out var obj)) continue;
             var t = rootType; var e = (PersonEntity)obj;
             var rows = ExportGraphMapper.Rows(graph, "Person", id);
-            result.Add(new PersonExportData(e.Id, ExportGraphMapper.Name(t,e), ExportGraphMapper.Get(t,e,"BirthName"), ExportGraphMapper.Get(t,e,"DateOfBirth"), ExportGraphMapper.Get(t,e,"DateOfDeath"), ExportGraphMapper.Get(t,e,"EnglishCauseOfDeath"), ExportGraphMapper.Get(t,e,"GermanCauseOfDeath"), ExportGraphMapper.Get(t,e,"GenderId"), ExportGraphMapper.Get(t,e,"Height"), ExportGraphMapper.Get(t,e,"TypeId"), ExportGraphMapper.Get(t,e,"Details"), rows));
+            result.Add(new PersonExportData(e.Id, new LocalizedValue(string.Join(" ", new[] { e.FirstName, e.LastName, e.NameAddOn }.Where(x => !string.IsNullOrWhiteSpace(x))), null, null), ExportGraphMapper.Get(t,e,"BirthName"), ExportGraphMapper.Get(t,e,"DateOfBirth"), ExportGraphMapper.Get(t,e,"DateOfDeath"), ExportGraphMapper.Get(t,e,"EnglishCauseOfDeath"), ExportGraphMapper.Get(t,e,"GermanCauseOfDeath"), ExportGraphMapper.Get(t,e,"GenderId"), ExportGraphMapper.Get(t,e,"Height"), ExportGraphMapper.Get(t,e,"TypeId"), ExportGraphMapper.Get(t,e,"Details"), rows));
         }
         return result;
     }

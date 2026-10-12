@@ -91,4 +91,133 @@ public sealed class RelationshipReaderTests
         Assert.Equal(new[] { "First", "Second", "Third" }, actual.Select(item => item.Title.Original));
     }
 
+
+    [Fact]
+    public async Task ConnectionReader_KeepsChildAndWorkReferencesScopedToEachConnection()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.ConnectionEntity.AddRange(
+                new ConnectionEntity { Id = "c1", OriginalName = "Universe One", Details = "first details" },
+                new ConnectionEntity { Id = "c2", OriginalName = "Universe Two", Details = "second details" },
+                new ConnectionEntity { Id = "c1-child", OriginalName = "Child Universe", ConnectionId = "c1" });
+            db.MovieEntity.AddRange(
+                new MovieEntity { Id = "m1", OriginalTitle = "Movie One", ConnectionId = "c1" },
+                new MovieEntity { Id = "m2", OriginalTitle = "Movie Two", ConnectionId = "c2" });
+            db.BookEntity.Add(new BookEntity { Id = "b1", OriginalTitle = "Book One", ConnectionId = "c1" });
+            db.SaveChanges();
+        }
+
+        var reader = provider.GetRequiredService<IConnectionExportReader>();
+        var results = new List<ConnectionExportData>();
+        await foreach (var item in reader.ReadAllAsync(new BatchOptions(10))) results.Add(item);
+
+        var first = Assert.Single(results, x => x.Id == "c1");
+        Assert.Equal("first details", first.Details);
+        Assert.Equal("c1-child", Assert.Single(first.Children).Id);
+        Assert.Equal(new[] { "b1", "m1" }, first.Works.Select(x => x.Id));
+
+        var second = Assert.Single(results, x => x.Id == "c2");
+        Assert.Empty(second.Children);
+        Assert.Equal(new[] { "m2" }, second.Works.Select(x => x.Id));
+    }
+
+    [Fact]
+    public async Task BookReader_IncludesPublicationRowsButExcludesPrivateAndTrackingColumns()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.BookEntity.Add(new BookEntity { Id = "b1", OriginalTitle = "Original Book", Details = "book details", Notes = "do not export", LastUpdated = "2025-01-01" });
+            db.PublicationEntity.Add(new PublicationEntity { Id = "pub1", BookId = "b1", EnglishTitle = "English Edition", ISBN13 = "9780000000000", Details = "publication details", Notes = "private publication note" });
+            await db.SaveChangesAsync();
+        }
+
+        var result = await provider.GetRequiredService<IBookExportReader>().GetAsync("b1");
+
+        Assert.NotNull(result);
+        Assert.Equal("Original Book", result!.Title.Original);
+        Assert.Equal("book details", result.Details);
+        var publication = Assert.Single(result.RelatedData, row => row.Table == "Publication");
+        Assert.Equal("pub1", publication.Id);
+        Assert.Equal("English Edition", publication.Fields["EnglishTitle"]);
+        Assert.Equal("9780000000000", publication.Fields["ISBN13"]);
+        Assert.DoesNotContain("Notes", publication.Fields.Keys);
+        Assert.DoesNotContain("LastUpdated", publication.Fields.Keys);
+        Assert.DoesNotContain("StatusID", publication.Fields.Keys);
+        var bookRow = Assert.Single(result.RelatedData, row => row.Table == "Book");
+        Assert.DoesNotContain("Notes", bookRow.Fields.Keys);
+        Assert.DoesNotContain("LastUpdated", bookRow.Fields.Keys);
+        Assert.DoesNotContain("StatusID", bookRow.Fields.Keys);
+    }
+
+    [Fact]
+    public async Task VideoGameReader_IncludesTechnicalSpecificationAsRows()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.VideoGameEntity.Add(new VideoGameEntity { Id = "g1", OriginalTitle = "Game", Details = "game details" });
+            db.TechnicalSpecificationEntity.Add(new TechnicalSpecificationEntity { Id = "spec1", VideoGameId = "g1", NoOfPlayersOffline = "2", GermanAnnotation = "Lokaler Mehrspieler", Notes = "private note" });
+            await db.SaveChangesAsync();
+        }
+
+        var result = await provider.GetRequiredService<IVideoGameExportReader>().GetAsync("g1");
+
+        Assert.NotNull(result);
+        Assert.Equal("game details", result!.Details);
+        var specification = Assert.Single(result.RelatedData, row => row.Table == "TechnicalSpecification");
+        Assert.Equal("spec1", specification.Id);
+        Assert.Equal("2", specification.Fields["NoOfPlayersOffline"]);
+        Assert.Equal("Lokaler Mehrspieler", specification.Fields["GermanAnnotation"]);
+        Assert.DoesNotContain("Notes", specification.Fields.Keys);
+    }
+
+    [Fact]
+    public async Task PersonReader_MapsNameAndDetailsAndDoesNotExportNotes()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.PersonEntity.Add(new PersonEntity { Id = "p1", FirstName = "Ada", LastName = "Lovelace", BirthName = "Augusta Ada King", Details = "mathematician", Notes = "private note" });
+            await db.SaveChangesAsync();
+        }
+
+        var result = await provider.GetRequiredService<IPersonExportReader>().GetAsync("p1");
+
+        Assert.NotNull(result);
+        Assert.Equal("Ada Lovelace", result!.Name.Original);
+        Assert.Equal("Augusta Ada King", result.BirthName);
+        Assert.Equal("mathematician", result.Details);
+        var personRow = Assert.Single(result.RelatedData, row => row.Table == "Person");
+        Assert.DoesNotContain("Notes", personRow.Fields.Keys);
+        Assert.DoesNotContain("LastUpdated", personRow.Fields.Keys);
+        Assert.DoesNotContain("StatusID", personRow.Fields.Keys);
+    }
+
 }

@@ -58,3 +58,26 @@ The editing environment used for this review does not have the .NET SDK installe
 ## Validation note for this pass
 
 The new tests were added to the source package but were not executed in this environment because the .NET SDK is unavailable here. Run `dotnet test` locally to validate them.
+
+
+## Additional tests in this pass
+
+- **Connection reader / relationship scoping**
+  - Child connections are returned as references.
+  - Works are associated only with their own connection when multiple connections are loaded in one batch.
+  - Work references include different exportable work types and remain references rather than nested documents.
+- **Book reader / publication data**
+  - Publication is included as related row data, with representative edition metadata retained.
+  - `Notes`, `StatusID`, and `LastUpdated` are excluded while `Details` remains available.
+- **Video-game reader / technical specifications**
+  - Technical specification data is included in the video game's related rows.
+  - Representative player-count and localized annotation fields are retained while notes are excluded.
+- **Person reader**
+  - Person display name is composed from first name, last name, and optional name add-on.
+  - Details are retained while notes and tracking/status columns are excluded.
+
+The added integration coverage also exposed two reader mapping issues: connection work references were being shared across every connection in a multi-item batch, and person names were mapped using title/name fields that do not exist on the Person table. Both implementations were corrected alongside the tests.
+
+## Validation note for this pass
+
+The .NET SDK is not available in the editing environment, so these additions and fixes have not been executed here. Run `dotnet test` locally before merging.
