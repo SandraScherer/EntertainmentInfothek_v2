@@ -30,7 +30,7 @@ namespace WikiExporter.Application.UseCases;
 /// </summary>
 public sealed class ExportMovieUseCase
 {
-    private readonly IMovieRepository _repository;
+    private readonly IMovieExportReader _repository;
 
     private readonly IMovieExportDocumentBuilder _builder;
 
@@ -41,7 +41,7 @@ public sealed class ExportMovieUseCase
     private readonly ILogger<ExportMovieUseCase> _logger;
 
     public ExportMovieUseCase(
-        IMovieRepository repository,
+        IMovieExportReader repository,
         IMovieExportDocumentBuilder builder,
         IMarkdownRendererFactory rendererFactory,
         IFileWriter fileWriter,

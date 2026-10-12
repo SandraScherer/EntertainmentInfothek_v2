@@ -23,7 +23,7 @@ public sealed class ExportMovieUseCaseIntegrationTest
     public async Task Should_Create_File()
     {
         var repository =
-            new Mock<IMovieRepository>();
+            new Mock<IMovieExportReader>();
 
         repository
             .Setup(x =>

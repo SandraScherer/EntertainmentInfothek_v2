@@ -31,8 +31,8 @@ public static class ServiceCollectionExtensions
                         "EntertainmentInfothek")));
 
         services.AddScoped<
-            IMovieRepository,
-            MovieRepository>();
+            IMovieExportReader,
+            MovieExportReader>();
 
         services.AddScoped<
             IMovieExportDocumentBuilder,

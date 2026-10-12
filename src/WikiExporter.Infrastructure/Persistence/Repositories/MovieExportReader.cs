@@ -8,12 +8,12 @@ namespace WikiExporter.Infrastructure.Persistence.Repositories;
 /// <summary>
 /// Lädt Movie-Exportdaten.
 /// </summary>
-public sealed class MovieRepository
-    : IMovieRepository
+public sealed class MovieExportReader
+    : IMovieExportReader
 {
     private readonly EntertainmentInfothekDbContext _db;
 
-    public MovieRepository(
+    public MovieExportReader(
         EntertainmentInfothekDbContext db)
     {
         _db = db;

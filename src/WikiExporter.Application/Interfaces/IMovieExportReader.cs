@@ -2,7 +2,7 @@ using WikiExporter.Application.DTOs;
 
 namespace WikiExporter.Application.Interfaces;
 
-public interface IMovieRepository
+public interface IMovieExportReader
 {
     Task<MovieExportData> GetForExportAsync(
         string movieId,

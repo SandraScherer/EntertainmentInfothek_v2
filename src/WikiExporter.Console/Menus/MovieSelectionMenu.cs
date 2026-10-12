@@ -7,10 +7,10 @@ namespace WikiExporter.Console.Menus;
 /// </summary>
 public sealed class MovieSelectionMenu
 {
-    private readonly IMovieRepository _repository;
+    private readonly IMovieExportReader _repository;
 
     public MovieSelectionMenu(
-        IMovieRepository repository)
+        IMovieExportReader repository)
     {
         _repository = repository;
     }
