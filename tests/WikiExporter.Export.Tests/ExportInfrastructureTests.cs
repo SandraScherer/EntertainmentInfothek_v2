@@ -73,6 +73,56 @@ public sealed class ExportInfrastructureTests
     }
 
 
+
+    [Fact]
+    public async Task FileWriter_CreatesNestedDirectoriesAndAllowsEmptyContent()
+    {
+        var root = Path.Combine(Path.GetTempPath(), "WikiExporterTests", Guid.NewGuid().ToString("N"));
+        try
+        {
+            var writer = new FileSystemExportFileWriter();
+            await writer.WriteAsync(new("Connections/Universes/connection-1.md", string.Empty), root);
+
+            var path = Path.Combine(root, "Connections", "Universes", "connection-1.md");
+            Assert.True(File.Exists(path));
+            Assert.Equal(string.Empty, await File.ReadAllTextAsync(path));
+        }
+        finally
+        {
+            if (Directory.Exists(root)) Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
+    public async Task FileWriter_RejectsAbsolutePathOutsideOutputDirectory()
+    {
+        var root = Path.Combine(Path.GetTempPath(), "WikiExporterTests", Guid.NewGuid().ToString("N"));
+        var outside = Path.Combine(Path.GetTempPath(), $"wiki-exporter-outside-{Guid.NewGuid():N}.md");
+        var writer = new FileSystemExportFileWriter();
+
+        try
+        {
+            await Assert.ThrowsAsync<InvalidOperationException>(() =>
+                writer.WriteAsync(new(outside, "must not be written"), root));
+            Assert.False(File.Exists(outside));
+        }
+        finally
+        {
+            if (Directory.Exists(root)) Directory.Delete(root, recursive: true);
+            if (File.Exists(outside)) File.Delete(outside);
+        }
+    }
+
+    [Fact]
+    public async Task FileWriter_RejectsBlankRelativePathBeforeCreatingOutput()
+    {
+        var root = Path.Combine(Path.GetTempPath(), "WikiExporterTests", Guid.NewGuid().ToString("N"));
+        var writer = new FileSystemExportFileWriter();
+
+        await Assert.ThrowsAsync<ArgumentException>(() => writer.WriteAsync(new(" ", "content"), root));
+        Assert.False(Directory.Exists(root));
+    }
+
     [Fact]
     public void FileNameGenerator_IsDeterministicAndDependsOnEntityId()
     {

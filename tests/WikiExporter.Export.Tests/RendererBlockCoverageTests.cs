@@ -34,16 +34,15 @@ public sealed class RendererBlockCoverageTests
         });
 
         var rendered = renderer.Render(document).Content;
-        var normalized = rendered.Replace("\r\n", "\n");
 
-        Assert.Contains("- first", normalized);
-        Assert.Contains("- second", normalized);
-        Assert.Contains("1. alpha", normalized);
-        Assert.Contains("2. beta", normalized);
-        Assert.Contains("![Poster](images/poster.png)", normalized);
-        Assert.DoesNotContain("No image", normalized);
-        Assert.Contains("```text\nline 1\nline 2\n```", normalized);
-        Assert.Contains("---", normalized);
+        Assert.Contains("- first", rendered);
+        Assert.Contains("- second", rendered);
+        Assert.Contains("1. alpha", rendered);
+        Assert.Contains("2. beta", rendered);
+        Assert.Contains("![Poster](images/poster.png)", rendered);
+        Assert.DoesNotContain("No image", rendered);
+        Assert.Contains("```text\nline 1\nline 2\n```", rendered);
+        Assert.Contains("---", rendered);
     }
 
     [Fact]

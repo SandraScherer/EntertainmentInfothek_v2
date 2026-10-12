@@ -110,3 +110,12 @@ The latest test expansion adds `DocumentBuilderEdgeCaseTests` with coverage for:
 - **Markdown export service**: rendering is followed by writing; the rendered result is returned; null documents and blank output directories are rejected before writing; cancellation and writer exceptions propagate.
 
 The editing environment does not have the .NET SDK, so the new tests have not been executed here. Run `dotnet test` locally.
+
+
+## Additional test batch (2026-10, file-writer boundary cases)
+
+- `FileWriter_CreatesNestedDirectoriesAndAllowsEmptyContent`: verifies nested output folders are created and an empty Markdown document is still written as a file.
+- `FileWriter_RejectsAbsolutePathOutsideOutputDirectory`: verifies absolute paths cannot escape the configured export root and no outside file is written.
+- `FileWriter_RejectsBlankRelativePathBeforeCreatingOutput`: verifies invalid relative paths fail before creating the output directory.
+
+These tests were added but not executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate them.
