@@ -33,7 +33,7 @@ public sealed class RendererBlockCoverageTests
             new HorizontalRuleBlock()
         });
 
-        var rendered = renderer.Render(document).Content;
+        var rendered = NormalizeLineEndings(renderer.Render(document).Content);
 
         Assert.Contains("- first", rendered);
         Assert.Contains("- second", rendered);
@@ -58,7 +58,7 @@ public sealed class RendererBlockCoverageTests
             new HorizontalRuleBlock()
         });
 
-        var rendered = renderer.Render(document).Content;
+        var rendered = NormalizeLineEndings(renderer.Render(document).Content);
 
         Assert.Contains("  * unordered", rendered);
         Assert.Contains("  - ordered", rendered);
@@ -103,8 +103,8 @@ public sealed class RendererBlockCoverageTests
             new TableBlock(new[] { "Field", "Value" }, new[] { (IReadOnlyList<string>)new[] { "Plot", "one|two\r\nthree" } })
         });
 
-        var obsidianContent = obsidian.Render(document).Content;
-        var dokuWikiContent = dokuWiki.Render(document).Content;
+        var obsidianContent = NormalizeLineEndings(obsidian.Render(document).Content);
+        var dokuWikiContent = NormalizeLineEndings(dokuWiki.Render(document).Content);
 
         Assert.Contains("first\nsecond\nthird", obsidianContent);
         Assert.Contains("one\\|two<br>three", obsidianContent);
@@ -163,6 +163,9 @@ public sealed class RendererBlockCoverageTests
         var failure = await Assert.ThrowsAsync<IOException>(() => failureService.ExportAsync(document, ExportFormat.Obsidian, "/exports"));
         Assert.Equal("disk full", failure.Message);
     }
+
+    private static string NormalizeLineEndings(string value) =>
+        value.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n');
 
     private sealed class RecordingWriter : IExportFileWriter
     {
