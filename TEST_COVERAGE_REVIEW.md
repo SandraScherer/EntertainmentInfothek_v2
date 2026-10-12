@@ -119,3 +119,10 @@ The editing environment does not have the .NET SDK, so the new tests have not be
 - `FileWriter_RejectsBlankRelativePathBeforeCreatingOutput`: verifies invalid relative paths fail before creating the output directory.
 
 These tests were added but not executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate them.
+
+## Additional test batch (2026-10, links and localization)
+
+- `ExportLinkResolverTests` verifies that Obsidian links use relative paths across folders, avoid unnecessary parent traversal within the same folder, omit `.md` from wiki-link targets, and use stable ID-derived filenames. DokuWiki links are checked for colon namespaces and stable target names; unknown entity types are checked against the `Other` folder fallback.
+- `LocalizedValueSelectorFallbackMatrixTests` covers all three requested-language fallback orders (German → Original → English, English → Original → German, Original → English → German), including whitespace-only values.
+
+These tests were added but could not be executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
