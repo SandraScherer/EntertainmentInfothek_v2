@@ -101,3 +101,12 @@ The latest test expansion adds `DocumentBuilderEdgeCaseTests` with coverage for:
 - connection references whose target is not present in the read model, preserving the stable target ID as the link label;
 - publication text being included only for the publication that owns the relationship, excluding orphaned publication-text rows;
 - technical-specification child rows being scoped to their parent specification rather than leaking across specifications.
+
+## Additional renderer and export-service coverage (2026-10, follow-up)
+
+- **Obsidian renderer block types**: unordered/ordered lists, images including blank image paths, fenced code blocks, horizontal rules, and heading-level clamping.
+- **DokuWiki renderer block types**: unordered/ordered lists, images, code blocks, horizontal rules, and heading-level clamping.
+- **Text normalization**: paragraph CRLF/CR newlines are normalized, and table-cell pipes and embedded line breaks are escaped consistently for both renderers.
+- **Markdown export service**: rendering is followed by writing; the rendered result is returned; null documents and blank output directories are rejected before writing; cancellation and writer exceptions propagate.
+
+The editing environment does not have the .NET SDK, so the new tests have not been executed here. Run `dotnet test` locally.
