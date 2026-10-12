@@ -2,7 +2,7 @@ using WikiExporter.Domain.Export;
 
 namespace WikiExporter.Domain.Tests;
 
-/// <summary>Defines the export models tests type.</summary>
+/// <summary>Represents export models tests.</summary>
 public sealed class ExportModelsTests
 {
     [Fact]

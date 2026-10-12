@@ -4,5 +4,5 @@ using WikiExporter.Domain.Export;
 
 namespace WikiExporter.Application.Export;
 
-/// <summary>Defines the export error type.</summary>
+/// <summary>Represents export error.</summary>
 public sealed record ExportError(string? EntityId, string Message, Exception? Exception = null);

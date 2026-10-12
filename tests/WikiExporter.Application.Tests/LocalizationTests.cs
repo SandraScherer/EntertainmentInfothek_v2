@@ -5,10 +5,10 @@ using WikiExporter.Domain.Export;
 
 namespace WikiExporter.Application.Tests;
 
-/// <summary>Defines the localization tests type.</summary>
+/// <summary>Represents localization tests.</summary>
 public sealed class LocalizationTests
 {
-/// <summary>Stores the  selector value.</summary>
+/// <summary>Stores selector for use by this component.</summary>
     private readonly ILocalizedValueSelector _selector = new LocalizedValueSelector();
 
     [Theory]

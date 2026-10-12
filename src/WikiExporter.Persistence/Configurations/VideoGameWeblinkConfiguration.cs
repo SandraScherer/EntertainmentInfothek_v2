@@ -7,7 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>VideoGame_Weblink</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class VideoGameWeblinkConfiguration : IEntityTypeConfiguration<VideoGameWeblinkEntity>
 {
-/// <summary>Executes the configure operation.</summary>
+/// <summary>Performs the configure operation.</summary>
     public void Configure(EntityTypeBuilder<VideoGameWeblinkEntity> builder)
     {
         builder.ToTable("VideoGame_Weblink");

@@ -4,5 +4,5 @@ using WikiExporter.Domain.Export;
 
 namespace WikiExporter.Application.Export;
 
-/// <summary>Defines the exported document type.</summary>
+/// <summary>Represents exported document.</summary>
 public sealed record ExportedDocument(string EntityId, ExportEntityType EntityType, MarkdownDocument Document);

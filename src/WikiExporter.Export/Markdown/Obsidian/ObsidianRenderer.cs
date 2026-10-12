@@ -7,10 +7,10 @@ namespace WikiExporter.Export.Markdown.Obsidian;
 /// <summary>Renders the neutral document tree as Markdown with Obsidian YAML frontmatter and wikilinks.</summary>
 public sealed class ObsidianRenderer(IExportPathResolver paths, IExportLinkResolver links) : IMarkdownRenderer
 {
-/// <summary>Stores the format value.</summary>
+/// <summary>Stores format for use by this component.</summary>
     public ExportFormat Format => ExportFormat.Obsidian;
 
-/// <summary>Executes the render operation.</summary>
+/// <summary>Performs the render operation.</summary>
     public RenderedDocument Render(MarkdownDocument document)
     {
         var sb = new StringBuilder();
@@ -36,7 +36,7 @@ public sealed class ObsidianRenderer(IExportPathResolver paths, IExportLinkResol
         return new(paths.GetRelativePath(document, Format), sb.ToString().TrimEnd() + Environment.NewLine);
     }
 
-/// <summary>Executes the render table operation.</summary>
+/// <summary>Performs the render table operation.</summary>
     private static void RenderTable(StringBuilder sb, TableBlock table)
     {
         sb.AppendLine("| " + string.Join(" | ", table.Headers.Select(MarkdownEscaper.Table)) + " |");
@@ -45,7 +45,7 @@ public sealed class ObsidianRenderer(IExportPathResolver paths, IExportLinkResol
         sb.AppendLine();
     }
 
-/// <summary>Executes the yaml operation.</summary>
+/// <summary>Performs the yaml operation.</summary>
     private static string Yaml(string? value)
     {
         if (value is null) return "null";

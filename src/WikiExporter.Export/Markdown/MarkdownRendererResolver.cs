@@ -4,10 +4,10 @@ using WikiExporter.Export.Markdown.Obsidian;
 
 namespace WikiExporter.Export.Markdown;
 
-/// <summary>Defines the markdown renderer resolver type.</summary>
+/// <summary>Represents markdown renderer resolver.</summary>
 public sealed class MarkdownRendererResolver(DokuWikiRenderer dokuWiki, ObsidianRenderer obsidian) : IMarkdownRendererResolver
 {
-/// <summary>Executes the resolve operation.</summary>
+/// <summary>Performs the resolve operation.</summary>
     public IMarkdownRenderer Resolve(ExportFormat format) => format switch
     {
         ExportFormat.DokuWiki => dokuWiki,

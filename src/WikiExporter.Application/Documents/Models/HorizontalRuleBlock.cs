@@ -1,4 +1,4 @@
 namespace WikiExporter.Application.Documents.Models;
 
-/// <summary>Defines the horizontal rule block type.</summary>
+/// <summary>Represents horizontal rule block.</summary>
 public sealed record HorizontalRuleBlock() : MarkdownBlock;

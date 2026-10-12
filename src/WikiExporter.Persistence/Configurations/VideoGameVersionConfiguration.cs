@@ -7,7 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>VideoGame_Version</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class VideoGameVersionConfiguration : IEntityTypeConfiguration<VideoGameVersionEntity>
 {
-/// <summary>Executes the configure operation.</summary>
+/// <summary>Performs the configure operation.</summary>
     public void Configure(EntityTypeBuilder<VideoGameVersionEntity> builder)
     {
         builder.ToTable("VideoGame_Version");

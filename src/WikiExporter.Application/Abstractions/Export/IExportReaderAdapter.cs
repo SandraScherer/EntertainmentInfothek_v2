@@ -4,7 +4,7 @@ using WikiExporter.Domain.Export;
 
 namespace WikiExporter.Application.Export;
 
-/// <summary>Defines the i export reader adapter type.</summary>
+/// <summary>Represents i export reader adapter.</summary>
 public interface IExportReaderAdapter
 {
     Task<ExportDataBase?> GetAsync(string id, CancellationToken ct);

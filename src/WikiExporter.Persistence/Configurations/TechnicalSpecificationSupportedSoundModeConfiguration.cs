@@ -7,7 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>TechnicalSpecification_SupportedSoundMode</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class TechnicalSpecificationSupportedSoundModeConfiguration : IEntityTypeConfiguration<TechnicalSpecificationSupportedSoundModeEntity>
 {
-/// <summary>Executes the configure operation.</summary>
+/// <summary>Performs the configure operation.</summary>
     public void Configure(EntityTypeBuilder<TechnicalSpecificationSupportedSoundModeEntity> builder)
     {
         builder.ToTable("TechnicalSpecification_SupportedSoundMode");

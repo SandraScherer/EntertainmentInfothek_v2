@@ -7,7 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Status</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class StatusConfiguration : IEntityTypeConfiguration<StatusEntity>
 {
-/// <summary>Executes the configure operation.</summary>
+/// <summary>Performs the configure operation.</summary>
     public void Configure(EntityTypeBuilder<StatusEntity> builder)
     {
         builder.ToTable("Status");

@@ -4,7 +4,7 @@ using WikiExporter.Domain.Export;
 
 namespace WikiExporter.Application.Export;
 
-/// <summary>Defines the i localized value selector type.</summary>
+/// <summary>Represents i localized value selector.</summary>
 public interface ILocalizedValueSelector
 {
     string? Select(LocalizedValue value, ExportLanguage language);

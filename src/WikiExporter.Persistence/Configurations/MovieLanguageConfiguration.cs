@@ -7,7 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Movie_Language</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class MovieLanguageConfiguration : IEntityTypeConfiguration<MovieLanguageEntity>
 {
-/// <summary>Executes the configure operation.</summary>
+/// <summary>Performs the configure operation.</summary>
     public void Configure(EntityTypeBuilder<MovieLanguageEntity> builder)
     {
         builder.ToTable("Movie_Language");

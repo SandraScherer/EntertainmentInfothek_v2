@@ -1,8 +1,8 @@
 namespace WikiExporter.Application.Export.Requests;
 
-/// <summary>Defines the export scope type.</summary>
+/// <summary>Represents export scope.</summary>
 public abstract partial record ExportScope
 {
-/// <summary>Initializes a new instance of the export scope type.</summary>
+/// <summary>Initializes this export scope instance.</summary>
     private ExportScope() { }
 }

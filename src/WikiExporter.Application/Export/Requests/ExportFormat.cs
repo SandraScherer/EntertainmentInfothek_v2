@@ -1,4 +1,4 @@
 namespace WikiExporter.Application.Export.Requests;
 
-/// <summary>Defines the export format type.</summary>
+/// <summary>Represents export format.</summary>
 public enum ExportFormat { DokuWiki, Obsidian }

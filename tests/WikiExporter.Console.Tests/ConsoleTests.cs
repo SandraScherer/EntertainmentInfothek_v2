@@ -5,7 +5,7 @@ using WikiExporter.ConsoleApp;
 
 namespace WikiExporter.Console.Tests;
 
-/// <summary>Defines the console tests type.</summary>
+/// <summary>Represents console tests.</summary>
 public sealed class ConsoleTests
 {
     [Fact]

@@ -6,12 +6,12 @@ using WikiExporter.Domain.Export;
 
 namespace WikiExporter.Application.Documents.Builders;
 
-/// <summary>Defines the person document builder type.</summary>
+/// <summary>Represents person document builder.</summary>
 public sealed class PersonDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
-/// <summary>Stores the entity type value.</summary>
+/// <summary>Stores entity type for use by this component.</summary>
     public ExportEntityType EntityType => ExportEntityType.Person;
-/// <summary>Executes the build operation.</summary>
+/// <summary>Performs the build operation.</summary>
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (PersonExportData)data; var title = Title(d.Name, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };
@@ -25,7 +25,7 @@ public sealed class PersonDocumentBuilder(ILocalizedValueSelector s) : DocumentB
         return new("Person", d.Id, Metadata("Person", d.Id, title), blocks);
     }
 
-/// <summary>Executes the add person relations operation.</summary>
+/// <summary>Performs the add person relations operation.</summary>
     private void AddPersonRelations(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language)
     {
         AddRelationList(blocks, rows, language, "Family", "Person_Family", "FamilyID", "RelationshipID");
@@ -35,7 +35,7 @@ public sealed class PersonDocumentBuilder(ILocalizedValueSelector s) : DocumentB
         AddRelationList(blocks, rows, language, "Species", "Person_Species", "SpeciesID", null);
     }
 
-/// <summary>Executes the add relation list operation.</summary>
+/// <summary>Performs the add relation list operation.</summary>
     private void AddRelationList(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language, string heading, string table, string targetField, string? relationField)
     {
         var selected = rows.Where(r => r.Table.Equals(table, StringComparison.Ordinal)).OrderBy(OrderKey).ThenBy(r => r.Id, StringComparer.Ordinal).ToArray();

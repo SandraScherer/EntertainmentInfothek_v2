@@ -7,7 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Text_Author</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class TextAuthorConfiguration : IEntityTypeConfiguration<TextAuthorEntity>
 {
-/// <summary>Executes the configure operation.</summary>
+/// <summary>Performs the configure operation.</summary>
     public void Configure(EntityTypeBuilder<TextAuthorEntity> builder)
     {
         builder.ToTable("Text_Author");

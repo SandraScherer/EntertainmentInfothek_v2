@@ -4,7 +4,7 @@ using WikiExporter.Domain.Export;
 
 namespace WikiExporter.Application.Export;
 
-/// <summary>Defines the i document builder type.</summary>
+/// <summary>Represents i document builder.</summary>
 public interface IDocumentBuilder
 {
     ExportEntityType EntityType { get; }

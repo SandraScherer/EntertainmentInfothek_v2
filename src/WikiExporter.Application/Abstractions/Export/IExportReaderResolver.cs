@@ -4,7 +4,7 @@ using WikiExporter.Domain.Export;
 
 namespace WikiExporter.Application.Export;
 
-/// <summary>Defines the i export reader resolver type.</summary>
+/// <summary>Represents i export reader resolver.</summary>
 public interface IExportReaderResolver
 {
     IExportReaderAdapter Resolve(ExportEntityType type);

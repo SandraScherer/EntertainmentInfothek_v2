@@ -7,7 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Series_Runtime</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class SeriesRuntimeConfiguration : IEntityTypeConfiguration<SeriesRuntimeEntity>
 {
-/// <summary>Executes the configure operation.</summary>
+/// <summary>Performs the configure operation.</summary>
     public void Configure(EntityTypeBuilder<SeriesRuntimeEntity> builder)
     {
         builder.ToTable("Series_Runtime");

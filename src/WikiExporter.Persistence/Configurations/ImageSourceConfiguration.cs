@@ -7,7 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Image_Source</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class ImageSourceConfiguration : IEntityTypeConfiguration<ImageSourceEntity>
 {
-/// <summary>Executes the configure operation.</summary>
+/// <summary>Performs the configure operation.</summary>
     public void Configure(EntityTypeBuilder<ImageSourceEntity> builder)
     {
         builder.ToTable("Image_Source");

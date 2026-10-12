@@ -4,7 +4,7 @@ using WikiExporter.Domain.Export;
 
 namespace WikiExporter.Application.Export;
 
-/// <summary>Defines the i document builder resolver type.</summary>
+/// <summary>Represents i document builder resolver.</summary>
 public interface IDocumentBuilderResolver
 {
     IDocumentBuilder Resolve(ExportEntityType type);

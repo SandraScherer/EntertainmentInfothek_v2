@@ -1,4 +1,4 @@
 namespace WikiExporter.Application.Documents.Models;
 
-/// <summary>Defines the markdown block type.</summary>
+/// <summary>Represents markdown block.</summary>
 public abstract record MarkdownBlock;

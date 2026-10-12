@@ -9,10 +9,10 @@ using WikiExporter.Export.Paths;
 
 namespace WikiExporter.Export.Tests;
 
-/// <summary>Defines the export infrastructure tests type.</summary>
+/// <summary>Represents export infrastructure tests.</summary>
 public sealed class ExportInfrastructureTests
 {
-/// <summary>Executes the document operation.</summary>
+/// <summary>Performs the document operation.</summary>
     private static MarkdownDocument Document() => new("Movie", "movie-1",
         new Dictionary<string,string?> { ["id"]="movie-1", ["type"]="Movie", ["title"]="Test Movie" },
         new MarkdownBlock[]
@@ -20,7 +20,7 @@ public sealed class ExportInfrastructureTests
             new HeadingBlock(1,"Test Movie"),
             new ParagraphBlock("Hello"),
             new TableBlock(new[]{"Field","Value"}, new[]{(IReadOnlyList<string>)new[]{"Year","2026"}}),
-/// <summary>Initializes a new instance of the link block type.</summary>
+/// <summary>Initializes this link block instance.</summary>
             new LinkBlock("A Person", "Person", "person-1")
         });
 

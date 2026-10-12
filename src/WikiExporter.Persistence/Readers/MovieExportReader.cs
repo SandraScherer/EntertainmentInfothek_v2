@@ -9,10 +9,10 @@ namespace WikiExporter.Persistence.Readers;
 /// <summary>Concrete Movie reader. All associations are loaded in bounded set-based batches.</summary>
 internal sealed class MovieExportReader : ExportReaderBase, IMovieExportReader
 {
-/// <summary>Initializes a new instance of the movie export reader type.</summary>
+/// <summary>Initializes this movie export reader instance.</summary>
     public MovieExportReader(IDbContextFactory<EntertainmentInfothekDbContext> factory) : base(factory) { }
 
-/// <summary>Executes the get async operation.</summary>
+/// <summary>Performs the get async operation.</summary>
     public async Task<MovieExportData?> GetAsync(string id, CancellationToken ct = default)
     {
         await using var db = await Factory.CreateDbContextAsync(ct);
@@ -21,7 +21,7 @@ internal sealed class MovieExportReader : ExportReaderBase, IMovieExportReader
         return await LoadAndMapAsync(db, new[] { id }, ct).ContinueWith(t => t.Result.SingleOrDefault(), ct);
     }
 
-/// <summary>Executes the read all async operation.</summary>
+/// <summary>Performs the read all async operation.</summary>
     public async IAsyncEnumerable<MovieExportData> ReadAllAsync(BatchOptions options, [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken ct = default)
     {
         await using var db = await Factory.CreateDbContextAsync(ct);
@@ -35,7 +35,7 @@ internal sealed class MovieExportReader : ExportReaderBase, IMovieExportReader
         }
     }
 
-/// <summary>Executes the load and map async operation.</summary>
+/// <summary>Performs the load and map async operation.</summary>
     private static async Task<List<MovieExportData>> LoadAndMapAsync(EntertainmentInfothekDbContext db, IReadOnlyCollection<string> ids, CancellationToken ct)
     {
         var loader = new ExportGraphLoader(db);

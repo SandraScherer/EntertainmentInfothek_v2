@@ -9,10 +9,10 @@ namespace WikiExporter.Persistence.Readers;
 /// <summary>Concrete Book reader. All associations are loaded in bounded set-based batches.</summary>
 internal sealed class BookExportReader : ExportReaderBase, IBookExportReader
 {
-/// <summary>Initializes a new instance of the book export reader type.</summary>
+/// <summary>Initializes this book export reader instance.</summary>
     public BookExportReader(IDbContextFactory<EntertainmentInfothekDbContext> factory) : base(factory) { }
 
-/// <summary>Executes the get async operation.</summary>
+/// <summary>Performs the get async operation.</summary>
     public async Task<BookExportData?> GetAsync(string id, CancellationToken ct = default)
     {
         await using var db = await Factory.CreateDbContextAsync(ct);
@@ -21,7 +21,7 @@ internal sealed class BookExportReader : ExportReaderBase, IBookExportReader
         return await LoadAndMapAsync(db, new[] { id }, ct).ContinueWith(t => t.Result.SingleOrDefault(), ct);
     }
 
-/// <summary>Executes the read all async operation.</summary>
+/// <summary>Performs the read all async operation.</summary>
     public async IAsyncEnumerable<BookExportData> ReadAllAsync(BatchOptions options, [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken ct = default)
     {
         await using var db = await Factory.CreateDbContextAsync(ct);
@@ -35,7 +35,7 @@ internal sealed class BookExportReader : ExportReaderBase, IBookExportReader
         }
     }
 
-/// <summary>Executes the load and map async operation.</summary>
+/// <summary>Performs the load and map async operation.</summary>
     private static async Task<List<BookExportData>> LoadAndMapAsync(EntertainmentInfothekDbContext db, IReadOnlyCollection<string> ids, CancellationToken ct)
     {
         var loader = new ExportGraphLoader(db);

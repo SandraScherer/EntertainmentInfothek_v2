@@ -10,7 +10,7 @@ namespace WikiExporter.Export.Links;
 /// </summary>
 public sealed class ExportLinkResolver(IExportPathResolver paths) : IExportLinkResolver
 {
-/// <summary>Executes the resolve operation.</summary>
+/// <summary>Performs the resolve operation.</summary>
     public string Resolve(MarkdownDocument source, string targetType, string targetId, ExportFormat format)
     {
         // A full target document is not available here, therefore use the canonical ID file name.
@@ -26,25 +26,25 @@ public sealed class ExportLinkResolver(IExportPathResolver paths) : IExportLinkR
         };
     }
 
-/// <summary>Executes the canonical target path operation.</summary>
+/// <summary>Performs the canonical target path operation.</summary>
     private static string CanonicalTargetPath(string type, string id)
         => $"{Folder(type)}/{StableIdFileName(type, id)}";
 
-/// <summary>Executes the folder operation.</summary>
+/// <summary>Performs the folder operation.</summary>
     private static string Folder(string type) => type switch
     {
         "Movie" => "Movies", "Series" => "Series", "Episode" => "Episodes", "Book" => "Books",
         "VideoGame" => "VideoGames", "Person" => "Persons", "Connection" => "Connections", _ => "Other"
     };
 
-/// <summary>Executes the stable id file name operation.</summary>
+/// <summary>Performs the stable id file name operation.</summary>
     private static string StableIdFileName(string type, string id)
     {
         var bytes = System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(id));
         return $"{type}-{Convert.ToHexString(bytes).ToLowerInvariant()[..8]}.md";
     }
 
-/// <summary>Executes the relative path operation.</summary>
+/// <summary>Performs the relative path operation.</summary>
     private static string RelativePath(string sourceDirectory, string target)
     {
         var from = sourceDirectory.Replace('\\', '/').TrimEnd('/');
@@ -57,8 +57,8 @@ public sealed class ExportLinkResolver(IExportPathResolver paths) : IExportLinkR
         return string.Join('/', parts);
     }
 
-/// <summary>Executes the doku wiki target operation.</summary>
+/// <summary>Performs the doku wiki target operation.</summary>
     private static string DokuWikiTarget(string target) => target.Replace('/', ':').Replace(".md", "", StringComparison.OrdinalIgnoreCase);
-/// <summary>Executes the obsidian target operation.</summary>
+/// <summary>Performs the obsidian target operation.</summary>
     private static string ObsidianTarget(string relative) => relative.EndsWith(".md", StringComparison.OrdinalIgnoreCase) ? relative[..^3] : relative;
 }

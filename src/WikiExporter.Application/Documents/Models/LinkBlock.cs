@@ -1,4 +1,4 @@
 namespace WikiExporter.Application.Documents.Models;
 
-/// <summary>Defines the link block type.</summary>
+/// <summary>Represents link block.</summary>
 public sealed record LinkBlock(string Text, string TargetType, string TargetId) : MarkdownBlock;

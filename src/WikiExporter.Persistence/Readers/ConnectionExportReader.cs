@@ -6,13 +6,13 @@ using WikiExporter.Persistence.Queries;
 
 namespace WikiExporter.Persistence.Readers;
 
-/// <summary>Defines the connection export reader type.</summary>
+/// <summary>Represents connection export reader.</summary>
 internal sealed class ConnectionExportReader : ExportReaderBase, IConnectionExportReader
 {
-/// <summary>Initializes a new instance of the connection export reader type.</summary>
+/// <summary>Initializes this connection export reader instance.</summary>
     public ConnectionExportReader(IDbContextFactory<EntertainmentInfothekDbContext> factory) : base(factory) { }
 
-/// <summary>Executes the get async operation.</summary>
+/// <summary>Performs the get async operation.</summary>
     public async Task<ConnectionExportData?> GetAsync(string id, CancellationToken ct = default)
     {
         await using var db = await Factory.CreateDbContextAsync(ct);
@@ -20,14 +20,14 @@ internal sealed class ConnectionExportReader : ExportReaderBase, IConnectionExpo
         return (await LoadAsync(db, ids, ct)).SingleOrDefault();
     }
 
-/// <summary>Executes the read all async operation.</summary>
+/// <summary>Performs the read all async operation.</summary>
     public async IAsyncEnumerable<ConnectionExportData> ReadAllAsync(BatchOptions options, [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken ct = default)
     {
         await using var db = await Factory.CreateDbContextAsync(ct); string? after=null;
         while(true) { var ids=await db.ConnectionEntity.AsNoTracking().Where(x=>after==null||string.Compare(x.Id,after)>0).OrderBy(x=>x.Id).Select(x=>x.Id).Take(Size(options)).ToListAsync(ct); if(ids.Count==0)yield break; foreach(var x in await LoadAsync(db,ids,ct))yield return x; after=ids[^1]; }
     }
 
-/// <summary>Executes the load async operation.</summary>
+/// <summary>Performs the load async operation.</summary>
     private static async Task<List<ConnectionExportData>> LoadAsync(EntertainmentInfothekDbContext db, IReadOnlyCollection<string> ids, CancellationToken ct)
     {
         var loader=new ExportGraphLoader(db); var root=db.Model.FindEntityType(typeof(ConnectionEntity))!; var graph=await loader.LoadAsync(root,ids,RootGraphPlans.ConnectionEntity,ct);

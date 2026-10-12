@@ -7,7 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Movie_Weblink</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class MovieWeblinkConfiguration : IEntityTypeConfiguration<MovieWeblinkEntity>
 {
-/// <summary>Executes the configure operation.</summary>
+/// <summary>Performs the configure operation.</summary>
     public void Configure(EntityTypeBuilder<MovieWeblinkEntity> builder)
     {
         builder.ToTable("Movie_Weblink");

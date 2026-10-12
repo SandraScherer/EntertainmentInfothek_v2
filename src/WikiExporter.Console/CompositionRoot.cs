@@ -14,7 +14,7 @@ namespace WikiExporter.ConsoleApp;
 /// </summary>
 public static class CompositionRoot
 {
-/// <summary>Executes the build host operation.</summary>
+/// <summary>Performs the build host operation.</summary>
     public static IHost BuildHost(string[] args, string? databasePathOverride = null)
     {
         return Host.CreateDefaultBuilder(args)
@@ -45,7 +45,7 @@ public static class CompositionRoot
             .Build();
     }
 
-/// <summary>Executes the build sqlite connection string operation.</summary>
+/// <summary>Performs the build sqlite connection string operation.</summary>
     private static string BuildSqliteConnectionString(string databasePath)
     {
         // Relative database paths are resolved against the process working directory.

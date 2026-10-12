@@ -4,7 +4,7 @@ using WikiExporter.Domain.Export;
 
 namespace WikiExporter.Application.Export;
 
-/// <summary>Defines the export result type.</summary>
+/// <summary>Represents export result.</summary>
 public sealed record ExportResult(
     ExportEntityType EntityType,
     int RequestedItems,

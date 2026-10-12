@@ -3,7 +3,7 @@ using WikiExporter.Application.Export.Requests;
 
 namespace WikiExporter.Export.Markdown;
 
-/// <summary>Defines the i markdown renderer resolver type.</summary>
+/// <summary>Represents i markdown renderer resolver.</summary>
 public interface IMarkdownRendererResolver
 {
     IMarkdownRenderer Resolve(ExportFormat format);

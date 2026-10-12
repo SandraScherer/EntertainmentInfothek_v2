@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace WikiExporter.Application.Tests;
 
-/// <summary>Defines the document builder coverage tests type.</summary>
+/// <summary>Represents document builder coverage tests.</summary>
 public sealed partial class DocumentBuilderCoverageTests
 {
     [Fact]

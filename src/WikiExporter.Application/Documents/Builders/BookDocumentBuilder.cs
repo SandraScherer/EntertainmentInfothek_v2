@@ -6,12 +6,12 @@ using WikiExporter.Domain.Export;
 
 namespace WikiExporter.Application.Documents.Builders;
 
-/// <summary>Defines the book document builder type.</summary>
+/// <summary>Represents book document builder.</summary>
 public sealed class BookDocumentBuilder(ILocalizedValueSelector s) : DocumentBuilderBase(s), IDocumentBuilder
 {
-/// <summary>Stores the entity type value.</summary>
+/// <summary>Stores entity type for use by this component.</summary>
     public ExportEntityType EntityType => ExportEntityType.Book;
-/// <summary>Executes the build operation.</summary>
+/// <summary>Performs the build operation.</summary>
     public MarkdownDocument Build(ExportDataBase data, ExportLanguage language)
     {
         var d = (BookExportData)data; var title = Title(d.Title, language); var blocks = new List<MarkdownBlock> { new HeadingBlock(1, title) };

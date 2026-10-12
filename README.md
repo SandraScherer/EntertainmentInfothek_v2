@@ -2,6 +2,8 @@
 
 This package contains the complete Clean-Architecture baseline built from the supplied EntertainmentInfothek SQLite schema.
 
+For layer boundaries, export flow, localization fallback, persistence strategy, and design constraints, see [ARCHITECTURE.md](ARCHITECTURE.md).
+
 ## Layers
 
 - `WikiExporter.Domain` – export read models and neutral domain contracts.
@@ -40,7 +42,7 @@ A test project exists for each layer:
 
 The persistence tests validate the 196-table / 542-FK EF model and exercise a reader against SQLite in-memory data. Application tests cover localization, all seven document builders and the export use case. Export tests cover both renderers, paths, links and filesystem traversal protection. Console tests cover argument parsing and the composition root.
 
-The environment used to generate this archive did not contain the .NET SDK, so `dotnet build`/`dotnet test` could not be executed here.
+The latest project baseline was reported by the project owner to build and pass its tests before this documentation review. Documentation-only edits in this archive have not been independently compiled in this environment.
 
 
 ## Persistence entity naming

@@ -6,7 +6,7 @@ namespace WikiExporter.Export.FileSystem;
 /// <summary>Writes UTF-8 Markdown beneath the caller-selected export directory.</summary>
 public sealed class FileSystemExportFileWriter : IExportFileWriter
 {
-/// <summary>Executes the write async operation.</summary>
+/// <summary>Performs the write async operation.</summary>
     public async Task WriteAsync(RenderedDocument document, string outputDirectory, CancellationToken ct = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(outputDirectory);

@@ -7,11 +7,11 @@ namespace WikiExporter.Export.Paths;
 /// <summary>Uses one predictable namespace per exported entity type.</summary>
 public sealed class ExportPathResolver(IExportFileNameGenerator fileNames) : IExportPathResolver
 {
-/// <summary>Executes the get relative path operation.</summary>
+/// <summary>Performs the get relative path operation.</summary>
     public string GetRelativePath(MarkdownDocument document, ExportFormat format)
         => Path.Combine(GetDirectory(document, format), fileNames.Generate(document)).Replace('\\', '/');
 
-/// <summary>Executes the get directory operation.</summary>
+/// <summary>Performs the get directory operation.</summary>
     public string GetDirectory(MarkdownDocument document, ExportFormat format) => document.DocumentType switch
     {
         "Movie" => "Movies",

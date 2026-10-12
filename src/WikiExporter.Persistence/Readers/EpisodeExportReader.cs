@@ -9,10 +9,10 @@ namespace WikiExporter.Persistence.Readers;
 /// <summary>Concrete Episode reader. All associations are loaded in bounded set-based batches.</summary>
 internal sealed class EpisodeExportReader : ExportReaderBase, IEpisodeExportReader
 {
-/// <summary>Initializes a new instance of the episode export reader type.</summary>
+/// <summary>Initializes this episode export reader instance.</summary>
     public EpisodeExportReader(IDbContextFactory<EntertainmentInfothekDbContext> factory) : base(factory) { }
 
-/// <summary>Executes the get async operation.</summary>
+/// <summary>Performs the get async operation.</summary>
     public async Task<EpisodeExportData?> GetAsync(string id, CancellationToken ct = default)
     {
         await using var db = await Factory.CreateDbContextAsync(ct);
@@ -21,7 +21,7 @@ internal sealed class EpisodeExportReader : ExportReaderBase, IEpisodeExportRead
         return await LoadAndMapAsync(db, new[] { id }, ct).ContinueWith(t => t.Result.SingleOrDefault(), ct);
     }
 
-/// <summary>Executes the read all async operation.</summary>
+/// <summary>Performs the read all async operation.</summary>
     public async IAsyncEnumerable<EpisodeExportData> ReadAllAsync(BatchOptions options, [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken ct = default)
     {
         await using var db = await Factory.CreateDbContextAsync(ct);
@@ -35,7 +35,7 @@ internal sealed class EpisodeExportReader : ExportReaderBase, IEpisodeExportRead
         }
     }
 
-/// <summary>Executes the load and map async operation.</summary>
+/// <summary>Performs the load and map async operation.</summary>
     private static async Task<List<EpisodeExportData>> LoadAndMapAsync(EntertainmentInfothekDbContext db, IReadOnlyCollection<string> ids, CancellationToken ct)
     {
         var loader = new ExportGraphLoader(db);

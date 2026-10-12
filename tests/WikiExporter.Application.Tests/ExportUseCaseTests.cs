@@ -9,7 +9,7 @@ using WikiExporter.Application.Persistence;
 
 namespace WikiExporter.Application.Tests;
 
-/// <summary>Defines the export use case tests type.</summary>
+/// <summary>Represents export use case tests.</summary>
 public sealed class ExportUseCaseTests
 {
     [Fact]

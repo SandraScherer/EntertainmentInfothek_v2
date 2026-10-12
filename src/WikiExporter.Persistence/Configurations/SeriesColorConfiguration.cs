@@ -7,7 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Series_Color</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class SeriesColorConfiguration : IEntityTypeConfiguration<SeriesColorEntity>
 {
-/// <summary>Executes the configure operation.</summary>
+/// <summary>Performs the configure operation.</summary>
     public void Configure(EntityTypeBuilder<SeriesColorEntity> builder)
     {
         builder.ToTable("Series_Color");

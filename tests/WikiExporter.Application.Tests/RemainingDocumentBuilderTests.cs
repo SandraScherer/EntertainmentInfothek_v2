@@ -8,10 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace WikiExporter.Application.Tests;
 
-/// <summary>Defines the remaining document builder tests type.</summary>
+/// <summary>Represents remaining document builder tests.</summary>
 public sealed class RemainingDocumentBuilderTests
 {
-/// <summary>Stores the selector value.</summary>
+/// <summary>Stores selector for use by this component.</summary>
     private static readonly ILocalizedValueSelector Selector = new LocalizedValueSelector();
 
     [Fact]
@@ -40,7 +40,7 @@ public sealed class RemainingDocumentBuilderTests
             new ExportRowData("Person", "p2", new Dictionary<string,string?> { ["FirstName"]="Jane", ["LastName"]="Doe" }, new Dictionary<string,string?>()),
             new ExportRowData("Person_Family", "f1", new Dictionary<string,string?> { ["EnglishRole"]="Sister" }, new Dictionary<string,string?> { ["FamilyID"]="p2", ["RelationshipID"]="rel1" }),
             new ExportRowData("Person_Profession", "pr1", new Dictionary<string,string?>(), new Dictionary<string,string?> { ["ProfessionID"]="prof1" }),
-/// <summary>Initializes a new instance of the export row data type.</summary>
+/// <summary>Initializes this export row data instance.</summary>
             new ExportRowData("Profession", "prof1", new Dictionary<string,string?> { ["OriginalName"]="Actor" }, new Dictionary<string,string?>())
         };
         var data = new PersonExportData("p1", new("Max", "Max Mustermann", "Max Mustermann"), null, null, null, null, null, null, null, null, null, rows);

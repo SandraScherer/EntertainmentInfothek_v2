@@ -6,7 +6,7 @@ namespace WikiExporter.Console.Configuration;
 /// </summary>
 public sealed class WikiExporterOptions
 {
-/// <summary>Stores the section name value.</summary>
+/// <summary>Stores section name for use by this component.</summary>
     public const string SectionName = "WikiExporter";
 
 /// <summary>Gets or sets the database path.</summary>

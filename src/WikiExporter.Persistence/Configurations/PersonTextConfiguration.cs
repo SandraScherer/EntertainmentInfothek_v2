@@ -7,7 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Person_Text</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class PersonTextConfiguration : IEntityTypeConfiguration<PersonTextEntity>
 {
-/// <summary>Executes the configure operation.</summary>
+/// <summary>Performs the configure operation.</summary>
     public void Configure(EntityTypeBuilder<PersonTextEntity> builder)
     {
         builder.ToTable("Person_Text");

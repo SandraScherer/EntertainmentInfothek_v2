@@ -1,4 +1,4 @@
 namespace WikiExporter.Application.Documents.Models;
 
-/// <summary>Defines the paragraph block type.</summary>
+/// <summary>Represents paragraph block.</summary>
 public sealed record ParagraphBlock(string Text) : MarkdownBlock;

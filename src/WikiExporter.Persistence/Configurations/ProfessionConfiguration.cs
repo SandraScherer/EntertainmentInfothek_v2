@@ -7,7 +7,7 @@ namespace WikiExporter.Persistence.Configurations;
 /// <summary>Explicit EF Core mapping for <c>Profession</c>. No conventions are relied upon for columns/FKs.</summary>
 public sealed class ProfessionConfiguration : IEntityTypeConfiguration<ProfessionEntity>
 {
-/// <summary>Executes the configure operation.</summary>
+/// <summary>Performs the configure operation.</summary>
     public void Configure(EntityTypeBuilder<ProfessionEntity> builder)
     {
         builder.ToTable("Profession");

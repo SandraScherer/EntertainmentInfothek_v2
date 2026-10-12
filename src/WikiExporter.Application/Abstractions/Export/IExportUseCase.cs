@@ -4,7 +4,7 @@ using WikiExporter.Domain.Export;
 
 namespace WikiExporter.Application.Export;
 
-/// <summary>Defines the i export use case type.</summary>
+/// <summary>Represents i export use case.</summary>
 public interface IExportUseCase
 {
     Task<ExportResult> ExecuteAsync(ExportRequest request, CancellationToken ct = default);

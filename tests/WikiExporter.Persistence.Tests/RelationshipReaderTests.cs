@@ -7,7 +7,7 @@ using WikiExporter.Persistence.DependencyInjection;
 
 namespace WikiExporter.Persistence.Tests;
 
-/// <summary>Defines the relationship reader tests type.</summary>
+/// <summary>Represents relationship reader tests.</summary>
 public sealed class RelationshipReaderTests
 {
     [Fact]

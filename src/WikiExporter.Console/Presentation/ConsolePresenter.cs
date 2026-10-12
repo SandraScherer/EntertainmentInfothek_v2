@@ -5,7 +5,7 @@ namespace WikiExporter.Console.Presentation;
 /// <summary>Formats application results for a human-readable terminal summary.</summary>
 public sealed class ConsolePresenter
 {
-/// <summary>Executes the print operation.</summary>
+/// <summary>Performs the print operation.</summary>
     public void Print(ExportResult result)
     {
         System.Console.WriteLine();

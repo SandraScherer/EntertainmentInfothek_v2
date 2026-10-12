@@ -2,10 +2,10 @@ using WikiExporter.Application.Export.Requests;
 
 namespace WikiExporter.Console.Configuration;
 
-/// <summary>Defines the command line parser type.</summary>
+/// <summary>Represents command line parser.</summary>
 public static class CommandLineParser
 {
-/// <summary>Executes the parse operation.</summary>
+/// <summary>Performs the parse operation.</summary>
     public static CommandLineOptions Parse(string[] args)
     {
         string? db = null, output = null, id = null;
@@ -43,7 +43,7 @@ public static class CommandLineParser
         return new(db, output, type, id, all, language, format, batch, help);
     }
 
-/// <summary>Initializes a new instance of the static type.</summary>
+/// <summary>Initializes this static instance.</summary>
     private static (string Name, string Value) Split(string arg, string[] args, ref int index)
     {
         var equals = arg.IndexOf('=');
