@@ -187,6 +187,35 @@ public sealed class ExportInfrastructureTests
         Assert.Contains("plain: simple", rendered.Content);
     }
 
+
+    [Fact]
+    public void FileNameGenerator_UsesEntityIdRatherThanTitleAndSanitizesDocumentType()
+    {
+        var generator = new ExportFileNameGenerator();
+        var first = new MarkdownDocument("Movie/Unsafe:Type", "same-id", new Dictionary<string, string?> { ["title"] = "First title" }, Array.Empty<MarkdownBlock>());
+        var renamed = new MarkdownDocument("Movie/Unsafe:Type", "same-id", new Dictionary<string, string?> { ["title"] = "Different title" }, Array.Empty<MarkdownBlock>());
+        var otherId = new MarkdownDocument("Movie/Unsafe:Type", "other-id", new Dictionary<string, string?> { ["title"] = "First title" }, Array.Empty<MarkdownBlock>());
+
+        var firstName = generator.Generate(first);
+        Assert.Equal(firstName, generator.Generate(renamed));
+        Assert.NotEqual(firstName, generator.Generate(otherId));
+        Assert.DoesNotContain("/", firstName);
+        Assert.DoesNotContain(":", firstName);
+        Assert.EndsWith(".md", firstName);
+    }
+
+    [Fact]
+    public void PathResolver_UsesStableIdBasedPathsForDuplicateTitles()
+    {
+        var resolver = new ExportPathResolver(new ExportFileNameGenerator());
+        var first = new MarkdownDocument("Movie", "movie-a", new Dictionary<string, string?> { ["title"] = "Same title" }, Array.Empty<MarkdownBlock>());
+        var second = new MarkdownDocument("Movie", "movie-b", new Dictionary<string, string?> { ["title"] = "Same title" }, Array.Empty<MarkdownBlock>());
+
+        Assert.NotEqual(
+            resolver.GetRelativePath(first, ExportFormat.Obsidian),
+            resolver.GetRelativePath(second, ExportFormat.Obsidian));
+    }
+
     [Fact]
     public void RendererResolver_RejectsUnknownFormat()
     {

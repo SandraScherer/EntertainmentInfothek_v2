@@ -126,3 +126,11 @@ These tests were added but not executed in this editing environment because the 
 - `LocalizedValueSelectorFallbackMatrixTests` covers all three requested-language fallback orders (German → Original → English, English → Original → German, Original → English → German), including whitespace-only values.
 
 These tests were added but could not be executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
+
+## Additional test batch (2026-10, stability and cancellation)
+
+- **Batch export cancellation**: verifies cancellation from the reader propagates out of export-all and no document builder is invoked.
+- **File-name stability and safety**: verifies file names are based on stable entity IDs rather than mutable titles, sanitize unsafe document-type characters, and differ for distinct IDs even when titles are duplicated.
+- **Command-line enum validation**: verifies invalid entity types, languages, formats, and empty `--name=` values are rejected.
+
+These tests were added but not executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.

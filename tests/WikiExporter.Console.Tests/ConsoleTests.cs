@@ -25,6 +25,18 @@ public sealed class ConsoleTests
     public void Parser_RejectsAllAndIdTogether()
         => Assert.Throws<ArgumentException>(() => CommandLineParser.Parse(new[] { "--all", "--id", "m1" }));
 
+
+    [Theory]
+    [InlineData("--type", "NotAType")]
+    [InlineData("--language", "Klingon")]
+    [InlineData("--format", "HTML")]
+    public void Parser_RejectsUnknownEnumValues(string argument, string value)
+        => Assert.Throws<ArgumentException>(() => CommandLineParser.Parse(new[] { argument, value }));
+
+    [Fact]
+    public void Parser_RejectsEmptyEqualsValue()
+        => Assert.Throws<ArgumentException>(() => CommandLineParser.Parse(new[] { "--type=" }));
+
     [Fact]
     public void CompositionRoot_RegistersApplicationPersistenceAndExportServices()
     {

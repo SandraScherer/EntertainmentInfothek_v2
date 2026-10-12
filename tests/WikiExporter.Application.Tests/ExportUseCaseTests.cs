@@ -159,6 +159,38 @@ public sealed class ExportUseCaseTests
         builder.Verify(x => x.Build(It.IsAny<ExportDataBase>(), It.IsAny<ExportLanguage>()), Times.Never);
     }
 
+
+    [Fact]
+    public async Task AllExport_PropagatesCancellationFromReaderAndDoesNotBuildDocuments()
+    {
+        using var cancellation = new CancellationTokenSource();
+        cancellation.Cancel();
+        var token = cancellation.Token;
+        var reader = new Mock<IExportReaderAdapter>();
+        var builder = new Mock<IDocumentBuilder>();
+        var readers = new Mock<IExportReaderResolver>();
+        var builders = new Mock<IDocumentBuilderResolver>();
+        reader.Setup(x => x.ReadAllAsync(It.IsAny<BatchOptions>(), token))
+            .Returns((BatchOptions _, CancellationToken ct) => ThrowOnCancellation(ct));
+        readers.Setup(x => x.Resolve(ExportEntityType.Movie)).Returns(reader.Object);
+        builders.Setup(x => x.Resolve(ExportEntityType.Movie)).Returns(builder.Object);
+
+        var sut = new ExportUseCase(readers.Object, builders.Object, new Mock<ILocalizedValueSelector>().Object, NullLogger<ExportUseCase>.Instance);
+
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => sut.ExecuteAsync(
+            new ExportRequest(ExportEntityType.Movie, new ExportScope.All(10), ExportLanguage.English), token));
+
+        reader.Verify(x => x.ReadAllAsync(It.Is<BatchOptions>(options => options.Size == 10), token), Times.Once);
+        builder.Verify(x => x.Build(It.IsAny<ExportDataBase>(), It.IsAny<ExportLanguage>()), Times.Never);
+    }
+
+    private static async IAsyncEnumerable<ExportDataBase> ThrowOnCancellation(CancellationToken ct)
+    {
+        await Task.Yield();
+        ct.ThrowIfCancellationRequested();
+        yield break;
+    }
+
     private static async IAsyncEnumerable<ExportDataBase> Yield(params ExportDataBase[] items)
     {
         foreach (var item in items)
