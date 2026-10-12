@@ -24,6 +24,16 @@ The test suite was reviewed by responsibility across Domain, Application, Export
 
 Existing tests continue to cover document-builder registration, localized-value selection, both Markdown renderers, UTF-8 file output without a BOM, path-traversal rejection, command-line parsing, dependency-injection registration, and Series-to-Episode references.
 
+## Additional tests in the follow-up pass
+
+- **Batch export orchestration**
+  - A builder failure for one item does not prevent later items from being exported.
+  - Result counts, successful document IDs, and per-item error details are consistent.
+  - Empty export-all input returns zero counts and no documents or errors.
+  - The configured batch size is passed to the reader.
+- **Batch-size normalization**
+  - Default size, negative and zero sizes, normal values, the upper bound, and values above the upper bound are tested.
+
 ## Remaining gaps / recommended follow-up
 
 1. Add schema-level persistence tests asserting all mapped table names and foreign-key counts against the checked-in SQLite schema. Keep the schema fixture/version explicit so intentional schema changes update the expectations deliberately.
