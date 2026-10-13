@@ -216,6 +216,52 @@ public sealed class ExportInfrastructureTests
             resolver.GetRelativePath(second, ExportFormat.Obsidian));
     }
 
+
+    [Fact]
+    public void ObsidianRenderer_QuotesYamlStringsThatCouldChangeTypeAndEscapesBackslashes()
+    {
+        var paths = new ExportPathResolver(new ExportFileNameGenerator());
+        var renderer = new ObsidianRenderer(paths, new ExportLinkResolver(paths));
+        var document = new MarkdownDocument("Movie", "movie-yaml-scalars", new Dictionary<string, string?>
+        {
+            ["boolean"] = "true",
+            ["nullLiteral"] = "null",
+            ["number"] = "123",
+            ["quoted"] = "say \"hi\"",
+            ["path"] = @"C:\temp",
+            ["plain"] = "simple"
+        }, Array.Empty<MarkdownBlock>());
+
+        var rendered = renderer.Render(document).Content.Replace("\r\n", "\n", StringComparison.Ordinal);
+
+        Assert.Contains("boolean: \"true\"", rendered);
+        Assert.Contains("nullLiteral: \"null\"", rendered);
+        Assert.Contains("number: \"123\"", rendered);
+        Assert.Contains("quoted: \"say \\\"hi\\\"\"", rendered);
+        Assert.Contains("path: \"C:\\\\temp\"", rendered);
+        Assert.Contains("plain: simple", rendered);
+    }
+
+    [Fact]
+    public void ObsidianRenderer_SortsMetadataKeysDeterministically()
+    {
+        var paths = new ExportPathResolver(new ExportFileNameGenerator());
+        var renderer = new ObsidianRenderer(paths, new ExportLinkResolver(paths));
+        var document = new MarkdownDocument("Movie", "movie-yaml-order", new Dictionary<string, string?>
+        {
+            ["zeta"] = "last",
+            ["alpha"] = "first",
+            ["middle"] = "between"
+        }, Array.Empty<MarkdownBlock>());
+
+        var rendered = renderer.Render(document).Content.Replace("\r\n", "\n", StringComparison.Ordinal);
+        var alpha = rendered.IndexOf("alpha: first", StringComparison.Ordinal);
+        var middle = rendered.IndexOf("middle: between", StringComparison.Ordinal);
+        var zeta = rendered.IndexOf("zeta: last", StringComparison.Ordinal);
+
+        Assert.True(alpha >= 0 && alpha < middle && middle < zeta, rendered);
+    }
+
     [Fact]
     public void RendererResolver_RejectsUnknownFormat()
     {

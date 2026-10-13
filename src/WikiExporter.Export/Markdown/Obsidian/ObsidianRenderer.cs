@@ -49,8 +49,22 @@ public sealed class ObsidianRenderer(IExportPathResolver paths, IExportLinkResol
     private static string Yaml(string? value)
     {
         if (value is null) return "null";
-        if (value.Length == 0 || value.Any(char.IsWhiteSpace) || value.Contains(':') || value.Contains('#'))
-            return "\"" + value.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"";
-        return value;
+
+        // Keep simple human-readable strings unquoted, but quote values that YAML could
+        // interpret as another scalar type or that require escaping.
+        var reserved = value.Equals("null", StringComparison.OrdinalIgnoreCase)
+            || value.Equals("true", StringComparison.OrdinalIgnoreCase)
+            || value.Equals("false", StringComparison.OrdinalIgnoreCase)
+            || value.Equals("yes", StringComparison.OrdinalIgnoreCase)
+            || value.Equals("no", StringComparison.OrdinalIgnoreCase)
+            || value.Equals("on", StringComparison.OrdinalIgnoreCase)
+            || value.Equals("off", StringComparison.OrdinalIgnoreCase)
+            || value == "~";
+        var simplePlainScalar = value.Length > 0
+            && (char.IsAsciiLetter(value[0]) || value[0] == '_')
+            && value.All(c => char.IsAsciiLetterOrDigit(c) || c is '_' or '-');
+
+        if (simplePlainScalar && !reserved) return value;
+        return "\"" + value.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"";
     }
 }

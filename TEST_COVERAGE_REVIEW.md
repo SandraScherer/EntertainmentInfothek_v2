@@ -134,3 +134,11 @@ These tests were added but could not be executed in this environment because the
 - **Command-line enum validation**: verifies invalid entity types, languages, formats, and empty `--name=` values are rejected.
 
 These tests were added but not executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
+
+## Additional test batch (2026-10, YAML scalar fidelity)
+
+- `ObsidianRenderer_QuotesYamlStringsThatCouldChangeTypeAndEscapesBackslashes`: verifies string values such as `true`, `null`, and numeric-looking values stay strings in YAML frontmatter, while embedded quotes and Windows-style backslashes are escaped. Ordinary simple values remain readable and unquoted.
+- `ObsidianRenderer_SortsMetadataKeysDeterministically`: verifies frontmatter metadata is emitted in ordinal key order regardless of dictionary insertion order.
+- The scalar tests exposed a serialization gap: quote-only, backslash, and type-like scalar values were not consistently quoted. The Obsidian YAML scalar writer was tightened accordingly.
+
+These tests have not been executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
