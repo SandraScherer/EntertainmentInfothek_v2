@@ -183,3 +183,11 @@ These tests were added but not executed in this editing environment because the 
 - These tests exposed a graph-mapping defect: `ExportGraphMapper.Rows` previously returned every relevant table row from a batch for each root entity. The mapper now follows foreign-key relationships back to the requested root and excludes rows belonging to sibling roots in the same batch.
 
 Validation note: the .NET SDK is unavailable in this editing environment, so this package has not been executed here. Run `dotnet test` locally before treating it as verified.
+
+## Follow-up fix package (2026-10-13, root-specific relationship filtering)
+
+- Fixed `ExportGraphMapper.Rows` to traverse only related rows connected to the current root through actual foreign-key relationships. This prevents sibling root rows and sibling association rows from leaking into each entity's `RelatedData` when multiple roots are loaded in one batch.
+- Kept Text/Image author/source association rows reachable through root-specific rows while excluding the lookup principal rows themselves from emitted related data.
+- The two reported persistence tests cover this regression: movie genre associations and video-game technical specifications must remain scoped to their owning root.
+
+The .NET SDK is unavailable in this environment, so the corrected package has not been executed here. Run `dotnet test` locally before treating it as verified.
