@@ -47,11 +47,29 @@ internal sealed class SeriesExportReader : ExportReaderBase, ISeriesExportReader
             if (!graph.Entities.TryGetValue((rootType,id), out var obj)) continue;
             var t = rootType; var e = (SeriesEntity)obj;
             var rows = ExportGraphMapper.Rows(graph, "Series", id);
-            result.Add(new SeriesExportData(e.Id, ExportGraphMapper.Title(t,e), ExportGraphMapper.Get(t,e,"TypeId"), ExportGraphMapper.Get(t,e,"NoOfSeasons"), ExportGraphMapper.Get(t,e,"NoOfEpisodes"), ExportGraphMapper.Get(t,e,"ConnectionId"), ExportGraphMapper.Get(t,e,"Details"), Episodes(graph), rows));
+            result.Add(new SeriesExportData(e.Id, ExportGraphMapper.Title(t,e), ExportGraphMapper.Get(t,e,"TypeId"), ExportGraphMapper.Get(t,e,"NoOfSeasons"), ExportGraphMapper.Get(t,e,"NoOfEpisodes"), ExportGraphMapper.Get(t,e,"ConnectionId"), ExportGraphMapper.Get(t,e,"Details"), Episodes(graph, id), rows));
         }
         return result;
     }
 
 /// <summary>Performs the episodes operation.</summary>
-    private static IReadOnlyList<EpisodeReference> Episodes(ExportGraph g) => g.Entities.Where(x => (x.Key.TypeEntity.GetTableName() ?? x.Key.TypeEntity.Name) == "Episode").Select(x => { var t=x.Key.TypeEntity; var e=x.Value; return new EpisodeReference(x.Key.Id, ExportGraphMapper.Title(t,e), ExportGraphMapper.Get(t,e,"SeasonNo"), ExportGraphMapper.Get(t,e,"EpisodeNo")); }).OrderBy(x=>x.SeasonNo,StringComparer.Ordinal).ThenBy(x=>x.EpisodeNo,StringComparer.Ordinal).ThenBy(x=>x.Id,StringComparer.Ordinal).ToArray();
+    private static IReadOnlyList<EpisodeReference> Episodes(ExportGraph graph, string seriesId) =>
+        graph.Entities
+            .Where(x =>
+                string.Equals(x.Key.TypeEntity.GetTableName() ?? x.Key.TypeEntity.Name, "Episode", StringComparison.Ordinal) &&
+                string.Equals(ExportGraphMapper.Get(x.Key.TypeEntity, x.Value, "SeriesId"), seriesId, StringComparison.Ordinal))
+            .Select(x =>
+            {
+                var type = x.Key.TypeEntity;
+                var entity = x.Value;
+                return new EpisodeReference(
+                    x.Key.Id,
+                    ExportGraphMapper.Title(type, entity),
+                    ExportGraphMapper.Get(type, entity, "SeasonNo"),
+                    ExportGraphMapper.Get(type, entity, "EpisodeNo"));
+            })
+            .OrderBy(x => x.SeasonNo, StringComparer.Ordinal)
+            .ThenBy(x => x.EpisodeNo, StringComparer.Ordinal)
+            .ThenBy(x => x.Id, StringComparer.Ordinal)
+            .ToArray();
 }

@@ -198,3 +198,10 @@ The .NET SDK is unavailable in this environment, so the corrected package has no
 - `SeriesReader_ScopesEpisodeReferencesToTheirOwningSeriesAcrossBatch`: seeds two series and one episode per series in the same batch and verifies episode references do not leak across series.
 
 These tests were added but not executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate them.
+
+
+## Regression correction after MoreTests18 feedback
+
+- Fixed `SeriesExportReader` so episode references are filtered by their owning `SeriesId` when the batch graph contains more than one series.
+- The cross-batch regression test `SeriesReader_ScopesEpisodeReferencesToTheirOwningSeriesAcrossBatch` verifies that each series only receives its own episode references.
+- Local `dotnet test` execution is still required to validate this correction in the target environment.
