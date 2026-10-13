@@ -159,3 +159,12 @@ The .NET SDK is unavailable in this editing environment, so this batch has not b
 - `ExportService_ReExportingSameEntityIdOverwritesItsFileWithoutCreatingDuplicate`: verifies repeated exports of one stable entity ID update the same Markdown file instead of creating a duplicate.
 
 These tests were added but not executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
+
+## Additional test batch (2026-10, cancellation and unusual identifiers)
+
+- **Mid-export cancellation**: verifies that cancellation occurring while processing an export-all stream is observed before the next entity is built.
+- **Path-like entity IDs in links**: verifies that IDs containing traversal-like segments, backslashes, and Unicode are represented by stable hashed link targets rather than injected into the output path, for both Obsidian and DokuWiki.
+- **Unicode and empty IDs**: verifies stable link naming for Unicode IDs and empty IDs without leaking the raw ID into the generated link.
+- **Empty document rendering**: verifies both renderers still return a stable Markdown path and a final newline for a document with no blocks or metadata.
+
+The .NET SDK is unavailable in this editing environment, so these tests have not been executed here. Run `dotnet test` locally to validate the package.

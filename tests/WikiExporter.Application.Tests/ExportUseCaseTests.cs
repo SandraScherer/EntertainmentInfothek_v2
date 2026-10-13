@@ -184,6 +184,44 @@ public sealed class ExportUseCaseTests
         builder.Verify(x => x.Build(It.IsAny<ExportDataBase>(), It.IsAny<ExportLanguage>()), Times.Never);
     }
 
+    [Fact]
+    public async Task AllExport_StopsWhenCancellationOccursAfterAnItemWasBuilt()
+    {
+        using var cancellation = new CancellationTokenSource();
+        var token = cancellation.Token;
+        var reader = new Mock<IExportReaderAdapter>();
+        var builder = new Mock<IDocumentBuilder>();
+        var readers = new Mock<IExportReaderResolver>();
+        var builders = new Mock<IDocumentBuilderResolver>();
+        var first = new MovieExportData("m-first", new("Original", "First", "Erster"), null, null, null, null, null, null, Array.Empty<ExportRowData>());
+        var document = new MarkdownDocument("Movie", "m-first", new Dictionary<string, string?>(), Array.Empty<MarkdownBlock>());
+
+        reader.Setup(x => x.ReadAllAsync(It.IsAny<BatchOptions>(), token))
+            .Returns((BatchOptions _, CancellationToken ct) => YieldThenCancel(first, ct));
+        builder.Setup(x => x.Build(first, ExportLanguage.English))
+            .Callback<ExportDataBase, ExportLanguage>((_, _) => cancellation.Cancel())
+            .Returns(document);
+        readers.Setup(x => x.Resolve(ExportEntityType.Movie)).Returns(reader.Object);
+        builders.Setup(x => x.Resolve(ExportEntityType.Movie)).Returns(builder.Object);
+
+        var sut = new ExportUseCase(readers.Object, builders.Object, new Mock<ILocalizedValueSelector>().Object, NullLogger<ExportUseCase>.Instance);
+
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => sut.ExecuteAsync(
+            new ExportRequest(ExportEntityType.Movie, new ExportScope.All(1), ExportLanguage.English), token));
+
+        builder.Verify(x => x.Build(first, ExportLanguage.English), Times.Once);
+        builder.Verify(x => x.Build(It.Is<ExportDataBase>(data => data.Id != "m-first"), It.IsAny<ExportLanguage>()), Times.Never);
+    }
+
+    private static async IAsyncEnumerable<ExportDataBase> YieldThenCancel(ExportDataBase first, CancellationToken ct)
+    {
+        await Task.Yield();
+        yield return first;
+        await Task.Yield();
+        ct.ThrowIfCancellationRequested();
+        yield break;
+    }
+
     private static async IAsyncEnumerable<ExportDataBase> ThrowOnCancellation(CancellationToken ct)
     {
         await Task.Yield();

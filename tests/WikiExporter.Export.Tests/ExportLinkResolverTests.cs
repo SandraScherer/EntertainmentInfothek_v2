@@ -61,6 +61,37 @@ public sealed class ExportLinkResolverTests
         Assert.StartsWith("../Other/FutureType-", link);
     }
 
+    [Fact]
+    public void LinksWithPathLikeEntityIdsRemainInsideStableTargetNamespace()
+    {
+        var resolver = CreateResolver();
+        const string hostileId = "../../escape\\nested\u2603";
+        var expectedName = Path.GetFileNameWithoutExtension(StableFileName("Person", hostileId));
+
+        var obsidian = resolver.Resolve(Source(), "Person", hostileId, ExportFormat.Obsidian);
+        var dokuWiki = resolver.Resolve(Source(), "Person", hostileId, ExportFormat.DokuWiki);
+
+        Assert.Equal($"../Persons/{expectedName}", obsidian);
+        Assert.Equal($"Persons:{expectedName}", dokuWiki);
+        Assert.DoesNotContain("escape", obsidian, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("\\", obsidian);
+        Assert.DoesNotContain("/../", obsidian);
+        Assert.DoesNotContain("/", dokuWiki);
+    }
+
+    [Fact]
+    public void StableTargetNameSupportsUnicodeAndEmptyEntityIds()
+    {
+        var resolver = CreateResolver();
+        var unicodeLink = resolver.Resolve(Source(), "Person", "人物-Äda-🎬", ExportFormat.DokuWiki);
+        var emptyIdLink = resolver.Resolve(Source(), "Person", string.Empty, ExportFormat.DokuWiki);
+
+        Assert.Equal($"Persons:{Path.GetFileNameWithoutExtension(StableFileName("Person", "人物-Äda-🎬"))}", unicodeLink);
+        Assert.Equal($"Persons:{Path.GetFileNameWithoutExtension(StableFileName("Person", string.Empty))}", emptyIdLink);
+        Assert.DoesNotContain("人物", unicodeLink);
+        Assert.DoesNotContain("/", emptyIdLink);
+    }
+
     private static ExportLinkResolver CreateResolver() =>
         new(new ExportPathResolver(new ExportFileNameGenerator()));
 

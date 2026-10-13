@@ -262,6 +262,24 @@ public sealed class ExportInfrastructureTests
         Assert.True(alpha >= 0 && alpha < middle && middle < zeta, rendered);
     }
 
+    [Theory]
+    [InlineData(ExportFormat.Obsidian)]
+    [InlineData(ExportFormat.DokuWiki)]
+    public void Renderer_EmptyDocumentStillReturnsStablePathAndFinalNewline(ExportFormat format)
+    {
+        var paths = new ExportPathResolver(new ExportFileNameGenerator());
+        var links = new ExportLinkResolver(paths);
+        var renderer = new MarkdownRendererResolver(new DokuWikiRenderer(paths, links), new ObsidianRenderer(paths, links)).Resolve(format);
+        var document = new MarkdownDocument("Movie", "empty-movie", new Dictionary<string, string?>(), Array.Empty<MarkdownBlock>());
+
+        var rendered = renderer.Render(document);
+
+        Assert.StartsWith("Movies/", rendered.RelativePath);
+        Assert.EndsWith(".md", rendered.RelativePath);
+        Assert.EndsWith(Environment.NewLine, rendered.Content);
+        Assert.DoesNotContain("empty-movie", rendered.Content);
+    }
+
     [Fact]
     public void RendererResolver_RejectsUnknownFormat()
     {
