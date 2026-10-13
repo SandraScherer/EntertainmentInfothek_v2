@@ -434,4 +434,80 @@ public sealed class RelationshipReaderTests
         Assert.Equal("4", secondSpec.Fields["NoOfPlayersOffline"]);
     }
 
+
+
+    [Fact]
+    public async Task BookReader_ScopesPublicationsToTheirOwningBookAcrossBatch()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.BookEntity.AddRange(
+                new BookEntity { Id = "b1", OriginalTitle = "Book One" },
+                new BookEntity { Id = "b2", OriginalTitle = "Book Two" });
+            db.PublicationEntity.AddRange(
+                new PublicationEntity { Id = "p1", BookId = "b1", EnglishTitle = "Edition One", ISBN13 = "111" },
+                new PublicationEntity { Id = "p2", BookId = "b2", EnglishTitle = "Edition Two", ISBN13 = "222" });
+            await db.SaveChangesAsync();
+        }
+
+        var books = new List<BookExportData>();
+        await foreach (var book in provider.GetRequiredService<IBookExportReader>().ReadAllAsync(new BatchOptions(2)))
+            books.Add(book);
+
+        var first = Assert.Single(books, x => x.Id == "b1");
+        var firstPublication = Assert.Single(first.RelatedData, x => x.Table == "Publication");
+        Assert.Equal("p1", firstPublication.Id);
+        Assert.Equal("Edition One", firstPublication.Fields["EnglishTitle"]);
+        Assert.DoesNotContain(first.RelatedData, x => x.Table == "Publication" && x.Id == "p2");
+
+        var second = Assert.Single(books, x => x.Id == "b2");
+        var secondPublication = Assert.Single(second.RelatedData, x => x.Table == "Publication");
+        Assert.Equal("p2", secondPublication.Id);
+        Assert.Equal("Edition Two", secondPublication.Fields["EnglishTitle"]);
+        Assert.DoesNotContain(second.RelatedData, x => x.Table == "Publication" && x.Id == "p1");
+    }
+
+    [Fact]
+    public async Task SeriesReader_ScopesEpisodeReferencesToTheirOwningSeriesAcrossBatch()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.SeriesEntity.AddRange(
+                new SeriesEntity { Id = "s1", OriginalTitle = "Series One" },
+                new SeriesEntity { Id = "s2", OriginalTitle = "Series Two" });
+            db.EpisodeEntity.AddRange(
+                new EpisodeEntity { Id = "e1", SeriesId = "s1", OriginalTitle = "Pilot One", SeasonNo = "1", EpisodeNo = "1" },
+                new EpisodeEntity { Id = "e2", SeriesId = "s2", OriginalTitle = "Pilot Two", SeasonNo = "1", EpisodeNo = "1" });
+            await db.SaveChangesAsync();
+        }
+
+        var series = new List<SeriesExportData>();
+        await foreach (var item in provider.GetRequiredService<ISeriesExportReader>().ReadAllAsync(new BatchOptions(2)))
+            series.Add(item);
+
+        var first = Assert.Single(series, x => x.Id == "s1");
+        var firstEpisode = Assert.Single(first.Episodes);
+        Assert.Equal("e1", firstEpisode.Id);
+        Assert.DoesNotContain(first.Episodes, x => x.Id == "e2");
+
+        var second = Assert.Single(series, x => x.Id == "s2");
+        var secondEpisode = Assert.Single(second.Episodes);
+        Assert.Equal("e2", secondEpisode.Id);
+        Assert.DoesNotContain(second.Episodes, x => x.Id == "e1");
+    }
+
 }

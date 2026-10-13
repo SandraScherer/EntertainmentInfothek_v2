@@ -191,3 +191,10 @@ Validation note: the .NET SDK is unavailable in this editing environment, so thi
 - The two reported persistence tests cover this regression: movie genre associations and video-game technical specifications must remain scoped to their owning root.
 
 The .NET SDK is unavailable in this environment, so the corrected package has not been executed here. Run `dotnet test` locally before treating it as verified.
+
+## Additional test batch (2026-10-13, book and series batch isolation)
+
+- `BookReader_ScopesPublicationsToTheirOwningBookAcrossBatch`: seeds two books with distinct publication rows in the same batch and verifies each book receives only its own edition metadata.
+- `SeriesReader_ScopesEpisodeReferencesToTheirOwningSeriesAcrossBatch`: seeds two series and one episode per series in the same batch and verifies episode references do not leak across series.
+
+These tests were added but not executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate them.
