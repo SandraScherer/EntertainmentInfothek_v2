@@ -175,3 +175,11 @@ The .NET SDK is unavailable in this editing environment, so these tests have not
 - `AllSevenReaders_RespectCancellationBeforeStartingReadAll`: supplies an already-cancelled token to each reader's async stream and verifies enumeration observes cancellation before returning an item.
 
 These tests were added but not executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
+
+## Additional test batch (2026-10-13, batch graph isolation)
+
+- `MovieReader_ScopesRootAndRelatedRowsToEachMovieWhenBatchContainsMultipleMovies`: places two movies and their genre-association rows in one reader batch, then verifies each exported model contains only its own root row and its own relationship row. Also verifies relationship `Details` is retained and `Notes` is excluded.
+- `VideoGameReader_ScopesTechnicalSpecificationsToTheirOwningGameAcrossBatch`: places two games and their technical specifications in the same graph batch and verifies that each game receives only its own specification.
+- These tests exposed a graph-mapping defect: `ExportGraphMapper.Rows` previously returned every relevant table row from a batch for each root entity. The mapper now follows foreign-key relationships back to the requested root and excludes rows belonging to sibling roots in the same batch.
+
+Validation note: the .NET SDK is unavailable in this editing environment, so this package has not been executed here. Run `dotnet test` locally before treating it as verified.

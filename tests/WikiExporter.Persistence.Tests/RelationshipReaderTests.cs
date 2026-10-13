@@ -353,4 +353,85 @@ public sealed class RelationshipReaderTests
         await AssertCanceled(provider.GetRequiredService<IConnectionExportReader>().ReadAllAsync(batch, ct), ct);
     }
 
+
+    [Fact]
+    public async Task MovieReader_ScopesRootAndRelatedRowsToEachMovieWhenBatchContainsMultipleMovies()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.MovieEntity.AddRange(
+                new MovieEntity { Id = "m1", OriginalTitle = "Movie One", Notes = "private one" },
+                new MovieEntity { Id = "m2", OriginalTitle = "Movie Two", Notes = "private two" });
+            db.GenreEntity.AddRange(
+                new GenreEntity { Id = "genre1", EnglishName = "Drama" },
+                new GenreEntity { Id = "genre2", EnglishName = "Comedy" });
+            db.MovieGenreEntity.AddRange(
+                new MovieGenreEntity { Id = "mg1", MovieId = "m1", GenreId = "genre1", Details = "first relationship" },
+                new MovieGenreEntity { Id = "mg2", MovieId = "m2", GenreId = "genre2", Details = "second relationship" });
+            await db.SaveChangesAsync();
+        }
+
+        var movies = new List<MovieExportData>();
+        await foreach (var movie in provider.GetRequiredService<IMovieExportReader>().ReadAllAsync(new BatchOptions(2)))
+            movies.Add(movie);
+
+        var first = Assert.Single(movies, x => x.Id == "m1");
+        Assert.Equal("Movie One", first.Title.Original);
+        Assert.DoesNotContain(first.RelatedData, x => x.Table == "Movie" && x.Id == "m2");
+        var firstGenre = Assert.Single(first.RelatedData, x => x.Table == "Movie_Genre");
+        Assert.Equal("mg1", firstGenre.Id);
+        Assert.Equal("first relationship", firstGenre.Fields["Details"]);
+        Assert.DoesNotContain("Notes", firstGenre.Fields.Keys);
+
+        var second = Assert.Single(movies, x => x.Id == "m2");
+        Assert.Equal("Movie Two", second.Title.Original);
+        Assert.DoesNotContain(second.RelatedData, x => x.Table == "Movie" && x.Id == "m1");
+        var secondGenre = Assert.Single(second.RelatedData, x => x.Table == "Movie_Genre");
+        Assert.Equal("mg2", secondGenre.Id);
+        Assert.Equal("second relationship", secondGenre.Fields["Details"]);
+    }
+
+    [Fact]
+    public async Task VideoGameReader_ScopesTechnicalSpecificationsToTheirOwningGameAcrossBatch()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.VideoGameEntity.AddRange(
+                new VideoGameEntity { Id = "g1", OriginalTitle = "Game One" },
+                new VideoGameEntity { Id = "g2", OriginalTitle = "Game Two" });
+            db.TechnicalSpecificationEntity.AddRange(
+                new TechnicalSpecificationEntity { Id = "spec1", VideoGameId = "g1", NoOfPlayersOffline = "1" },
+                new TechnicalSpecificationEntity { Id = "spec2", VideoGameId = "g2", NoOfPlayersOffline = "4" });
+            await db.SaveChangesAsync();
+        }
+
+        var games = new List<VideoGameExportData>();
+        await foreach (var game in provider.GetRequiredService<IVideoGameExportReader>().ReadAllAsync(new BatchOptions(2)))
+            games.Add(game);
+
+        var first = Assert.Single(games, x => x.Id == "g1");
+        var firstSpec = Assert.Single(first.RelatedData, x => x.Table == "TechnicalSpecification");
+        Assert.Equal("spec1", firstSpec.Id);
+        Assert.Equal("1", firstSpec.Fields["NoOfPlayersOffline"]);
+
+        var second = Assert.Single(games, x => x.Id == "g2");
+        var secondSpec = Assert.Single(second.RelatedData, x => x.Table == "TechnicalSpecification");
+        Assert.Equal("spec2", secondSpec.Id);
+        Assert.Equal("4", secondSpec.Fields["NoOfPlayersOffline"]);
+    }
+
 }
