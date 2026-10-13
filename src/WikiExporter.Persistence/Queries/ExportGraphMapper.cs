@@ -78,7 +78,7 @@ internal static class ExportGraphMapper
             }
         }
 
-        return included.Select(key => ExportGraphMapper.ToRow(key.TypeEntity, graph.Entities[key]))
+        return included.Select(key => ExportGraphLoader.ToRow(key.TypeEntity, graph.Entities[key]))
             .OrderBy(x => x.Table, StringComparer.Ordinal).ThenBy(x => x.Order, StringComparer.Ordinal).ThenBy(x => x.Id, StringComparer.Ordinal)
             .ToArray();
     }
