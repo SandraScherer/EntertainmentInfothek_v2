@@ -282,4 +282,75 @@ public sealed class RelationshipReaderTests
         Assert.DoesNotContain("LastUpdated", row.Fields.Keys);
     }
 
+
+    [Fact]
+    public async Task AllSevenReaders_ReadAllUseStableIdOrderAcrossSmallBatches()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.MovieEntity.AddRange(new MovieEntity { Id = "m3", OriginalTitle = "Third" }, new MovieEntity { Id = "m1", OriginalTitle = "First" }, new MovieEntity { Id = "m2", OriginalTitle = "Second" });
+            db.SeriesEntity.AddRange(new SeriesEntity { Id = "s3", OriginalTitle = "Third" }, new SeriesEntity { Id = "s1", OriginalTitle = "First" }, new SeriesEntity { Id = "s2", OriginalTitle = "Second" });
+            db.EpisodeEntity.AddRange(new EpisodeEntity { Id = "e3", OriginalTitle = "Third" }, new EpisodeEntity { Id = "e1", OriginalTitle = "First" }, new EpisodeEntity { Id = "e2", OriginalTitle = "Second" });
+            db.BookEntity.AddRange(new BookEntity { Id = "b3", OriginalTitle = "Third" }, new BookEntity { Id = "b1", OriginalTitle = "First" }, new BookEntity { Id = "b2", OriginalTitle = "Second" });
+            db.VideoGameEntity.AddRange(new VideoGameEntity { Id = "g3", OriginalTitle = "Third" }, new VideoGameEntity { Id = "g1", OriginalTitle = "First" }, new VideoGameEntity { Id = "g2", OriginalTitle = "Second" });
+            db.PersonEntity.AddRange(new PersonEntity { Id = "p3", FirstName = "Third" }, new PersonEntity { Id = "p1", FirstName = "First" }, new PersonEntity { Id = "p2", FirstName = "Second" });
+            db.ConnectionEntity.AddRange(new ConnectionEntity { Id = "c3", OriginalName = "Third" }, new ConnectionEntity { Id = "c1", OriginalName = "First" }, new ConnectionEntity { Id = "c2", OriginalName = "Second" });
+            await db.SaveChangesAsync();
+        }
+
+        static async Task<string[]> Ids<T>(IAsyncEnumerable<T> stream, Func<T, string> getId)
+        {
+            var values = new List<string>();
+            await foreach (var value in stream) values.Add(getId(value));
+            return values.ToArray();
+        }
+
+        var batch = new BatchOptions(1);
+        Assert.Equal(new[] { "m1", "m2", "m3" }, await Ids(provider.GetRequiredService<IMovieExportReader>().ReadAllAsync(batch), x => x.Id));
+        Assert.Equal(new[] { "s1", "s2", "s3" }, await Ids(provider.GetRequiredService<ISeriesExportReader>().ReadAllAsync(batch), x => x.Id));
+        Assert.Equal(new[] { "e1", "e2", "e3" }, await Ids(provider.GetRequiredService<IEpisodeExportReader>().ReadAllAsync(batch), x => x.Id));
+        Assert.Equal(new[] { "b1", "b2", "b3" }, await Ids(provider.GetRequiredService<IBookExportReader>().ReadAllAsync(batch), x => x.Id));
+        Assert.Equal(new[] { "g1", "g2", "g3" }, await Ids(provider.GetRequiredService<IVideoGameExportReader>().ReadAllAsync(batch), x => x.Id));
+        Assert.Equal(new[] { "p1", "p2", "p3" }, await Ids(provider.GetRequiredService<IPersonExportReader>().ReadAllAsync(batch), x => x.Id));
+        Assert.Equal(new[] { "c1", "c2", "c3" }, await Ids(provider.GetRequiredService<IConnectionExportReader>().ReadAllAsync(batch), x => x.Id));
+    }
+
+    [Fact]
+    public async Task AllSevenReaders_RespectCancellationBeforeStartingReadAll()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+            await db.Database.EnsureCreatedAsync();
+
+        using var source = new CancellationTokenSource();
+        source.Cancel();
+        var ct = source.Token;
+        static async Task AssertCanceled<T>(IAsyncEnumerable<T> stream, CancellationToken token)
+        {
+            await using var enumerator = stream.GetAsyncEnumerator(token);
+            await Assert.ThrowsAnyAsync<OperationCanceledException>(async () => await enumerator.MoveNextAsync());
+        }
+
+        var batch = new BatchOptions(2);
+        await AssertCanceled(provider.GetRequiredService<IMovieExportReader>().ReadAllAsync(batch, ct), ct);
+        await AssertCanceled(provider.GetRequiredService<ISeriesExportReader>().ReadAllAsync(batch, ct), ct);
+        await AssertCanceled(provider.GetRequiredService<IEpisodeExportReader>().ReadAllAsync(batch, ct), ct);
+        await AssertCanceled(provider.GetRequiredService<IBookExportReader>().ReadAllAsync(batch, ct), ct);
+        await AssertCanceled(provider.GetRequiredService<IVideoGameExportReader>().ReadAllAsync(batch, ct), ct);
+        await AssertCanceled(provider.GetRequiredService<IPersonExportReader>().ReadAllAsync(batch, ct), ct);
+        await AssertCanceled(provider.GetRequiredService<IConnectionExportReader>().ReadAllAsync(batch, ct), ct);
+    }
+
 }

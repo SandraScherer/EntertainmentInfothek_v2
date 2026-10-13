@@ -168,3 +168,10 @@ These tests were added but not executed in this environment because the .NET SDK
 - **Empty document rendering**: verifies both renderers still return a stable Markdown path and a final newline for a document with no blocks or metadata.
 
 The .NET SDK is unavailable in this editing environment, so these tests have not been executed here. Run `dotnet test` locally to validate the package.
+
+## Additional test batch (2026-10-13, persistence reader consistency)
+
+- `AllSevenReaders_ReadAllUseStableIdOrderAcrossSmallBatches`: seeds all seven export entity types in deliberately unsorted order, reads with batch size one, and verifies each reader returns every ID in deterministic ascending order across batch boundaries.
+- `AllSevenReaders_RespectCancellationBeforeStartingReadAll`: supplies an already-cancelled token to each reader's async stream and verifies enumeration observes cancellation before returning an item.
+
+These tests were added but not executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
