@@ -142,3 +142,12 @@ These tests were added but not executed in this environment because the .NET SDK
 - The scalar tests exposed a serialization gap: quote-only, backslash, and type-like scalar values were not consistently quoted. The Obsidian YAML scalar writer was tightened accordingly.
 
 These tests have not been executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
+
+
+## Additional test batch (2026-10-13, relationship ordering and YAML scalars)
+
+- `ConnectionBuilder_EmitsParentChildrenAndWorksAsSortedReferences`: checks that parent and child connections remain links, children are sorted by display label with ID fallback, and referenced works are grouped by type and sorted by localized title.
+- `SeriesBuilder_OrdersEpisodesBySeasonThenEpisodeAndKeepsThemAsLinks`: checks season/episode ordering, selected-language labels, and that episodes are represented as lightweight links.
+- `ObsidianRenderer_QuotesYamlReservedAndAmbiguousScalars`: checks quoting for YAML-reserved values (`yes`, `~`), leading dashes, colon-containing strings, and strings with leading/trailing whitespace.
+
+The .NET SDK is unavailable in this editing environment, so this batch has not been executed here. Run `dotnet test` locally before treating the package as verified.

@@ -273,4 +273,28 @@ public sealed class ExportInfrastructureTests
         Assert.Throws<ArgumentOutOfRangeException>(() => resolver.Resolve((ExportFormat)999));
     }
 
+
+    [Fact]
+    public void ObsidianRenderer_QuotesYamlReservedAndAmbiguousScalars()
+    {
+        var paths = new ExportPathResolver(new ExportFileNameGenerator());
+        var renderer = new ObsidianRenderer(paths, new ExportLinkResolver(paths));
+        var document = new MarkdownDocument("Movie", "movie-yaml-reserved", new Dictionary<string, string?>
+        {
+            ["booleanLike"] = "yes",
+            ["nullLike"] = "~",
+            ["leadingDash"] = "-leading",
+            ["colon"] = "key: value",
+            ["withSpaces"] = " leading and trailing "
+        }, Array.Empty<MarkdownBlock>());
+
+        var content = renderer.Render(document).Content.Replace("\r\n", "\n", StringComparison.Ordinal);
+
+        Assert.Contains("booleanLike: \"yes\"", content);
+        Assert.Contains("nullLike: \"~\"", content);
+        Assert.Contains("leadingDash: \"-leading\"", content);
+        Assert.Contains("colon: \"key: value\"", content);
+        Assert.Contains("withSpaces: \" leading and trailing \"", content);
+    }
+
 }
