@@ -151,3 +151,11 @@ These tests have not been executed in this environment because the .NET SDK is u
 - `ObsidianRenderer_QuotesYamlReservedAndAmbiguousScalars`: checks quoting for YAML-reserved values (`yes`, `~`), leading dashes, colon-containing strings, and strings with leading/trailing whitespace.
 
 The .NET SDK is unavailable in this editing environment, so this batch has not been executed here. Run `dotnet test` locally before treating the package as verified.
+
+
+## Additional test batch (2026-10-13, end-to-end file export)
+
+- `ExportService_WritesDocumentAndResolvableCrossDocumentLink`: runs the real renderer resolver, both renderers, stable filename/path generation, link resolution, and filesystem writer together for Obsidian and DokuWiki; verifies files and emitted link targets.
+- `ExportService_ReExportingSameEntityIdOverwritesItsFileWithoutCreatingDuplicate`: verifies repeated exports of one stable entity ID update the same Markdown file instead of creating a duplicate.
+
+These tests were added but not executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
