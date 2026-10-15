@@ -510,4 +510,47 @@ public sealed class RelationshipReaderTests
         Assert.DoesNotContain(second.Episodes, x => x.Id == "e1");
     }
 
+
+    [Fact]
+    public async Task EpisodeReader_ScopesCastRowsToTheirOwningEpisodeAcrossBatch()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.SeriesEntity.Add(new SeriesEntity { Id = "s1", OriginalTitle = "Series" });
+            db.EpisodeEntity.AddRange(
+                new EpisodeEntity { Id = "e1", SeriesId = "s1", OriginalTitle = "Episode One", Notes = "private episode one" },
+                new EpisodeEntity { Id = "e2", SeriesId = "s1", OriginalTitle = "Episode Two", Notes = "private episode two" });
+            db.EpisodeCastEntity.AddRange(
+                new EpisodeCastEntity { Id = "cast1", EpisodeId = "e1", EnglishRole = "Lead One", Details = "cast details one", Notes = "private cast one" },
+                new EpisodeCastEntity { Id = "cast2", EpisodeId = "e2", EnglishRole = "Lead Two", Details = "cast details two", Notes = "private cast two" });
+            await db.SaveChangesAsync();
+        }
+
+        var episodes = new List<EpisodeExportData>();
+        await foreach (var episode in provider.GetRequiredService<IEpisodeExportReader>().ReadAllAsync(new BatchOptions(2)))
+            episodes.Add(episode);
+
+        var first = Assert.Single(episodes, x => x.Id == "e1");
+        var firstCast = Assert.Single(first.RelatedData, x => x.Table == "Episode_Cast");
+        Assert.Equal("cast1", firstCast.Id);
+        Assert.Equal("Lead One", firstCast.Fields["EnglishRole"]);
+        Assert.Equal("cast details one", firstCast.Fields["Details"]);
+        Assert.DoesNotContain("Notes", firstCast.Fields.Keys);
+        Assert.DoesNotContain(first.RelatedData, x => x.Table == "Episode_Cast" && x.Id == "cast2");
+
+        var second = Assert.Single(episodes, x => x.Id == "e2");
+        var secondCast = Assert.Single(second.RelatedData, x => x.Table == "Episode_Cast");
+        Assert.Equal("cast2", secondCast.Id);
+        Assert.Equal("Lead Two", secondCast.Fields["EnglishRole"]);
+        Assert.Equal("cast details two", secondCast.Fields["Details"]);
+        Assert.DoesNotContain(second.RelatedData, x => x.Table == "Episode_Cast" && x.Id == "cast1");
+    }
+
 }

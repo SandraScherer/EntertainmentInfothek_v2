@@ -205,3 +205,10 @@ These tests were added but not executed in this environment because the .NET SDK
 - Fixed `SeriesExportReader` so episode references are filtered by their owning `SeriesId` when the batch graph contains more than one series.
 - The cross-batch regression test `SeriesReader_ScopesEpisodeReferencesToTheirOwningSeriesAcrossBatch` verifies that each series only receives its own episode references.
 - Local `dotnet test` execution is still required to validate this correction in the target environment.
+
+
+## Additional test batch (2026-10-15, episode relationship isolation)
+
+- `EpisodeReader_ScopesCastRowsToTheirOwningEpisodeAcrossBatch`: seeds two episodes in one series, each with its own `Episode_Cast` row, and verifies the reader includes only the owning episode's cast row, retains role and `Details` values, and excludes `Notes`.
+
+The .NET SDK is not available in the editing environment, so this test has not been executed here. Run `dotnet test` locally to validate it.
