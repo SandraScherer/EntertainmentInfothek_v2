@@ -229,3 +229,13 @@ These tests have been added but not executed in this editing environment because
 - Updated `CommandLineParser.ParseEnum` to require both successful parsing and `Enum.IsDefined`.
 
 The .NET SDK is unavailable in the editing environment, so these tests have not been executed here. Run `dotnet test` locally to validate the package.
+
+## Additional test batch (2026-10-15, CLI value parsing boundaries)
+
+- `Parser_RejectsEmptyInlineValuesForEveryValueOption`: verifies that `--database=`, `--output=`, `--id=`, enum options, and `--batch-size=` are rejected rather than accepted as empty strings.
+- `Parser_DoesNotTreatFollowingOptionAsMissingOptionValue`: verifies that a subsequent switch such as `--all` or `--help` is not consumed as the previous option's value.
+- `Parser_PreservesEqualsSignsInsideInlineValue`: verifies that inline paths/values containing additional `=` characters remain intact.
+- `Parser_RejectsBatchSizesOutsideInt32Range`: verifies numeric overflow and underflow are rejected.
+- Updated `CommandLineParser.Split` to reject blank inline values and recognize a following option as a missing value. This avoids silently swallowing command switches.
+
+The .NET SDK is unavailable in this editing environment, so these tests have not been executed here. Run `dotnet test` locally to validate the package.

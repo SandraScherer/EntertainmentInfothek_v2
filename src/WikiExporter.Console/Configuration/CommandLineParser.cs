@@ -47,8 +47,19 @@ public static class CommandLineParser
     private static (string Name, string Value) Split(string arg, string[] args, ref int index)
     {
         var equals = arg.IndexOf('=');
-        if (equals > 0) return (arg[..equals], arg[(equals + 1)..]);
-        if (index + 1 >= args.Length) throw new ArgumentException($"Missing value for '{arg}'.");
+        if (equals > 0)
+        {
+            var inlineValue = arg[(equals + 1)..];
+            if (string.IsNullOrWhiteSpace(inlineValue))
+                throw new ArgumentException($"Missing value for '{arg[..equals]}'.");
+            return (arg[..equals], inlineValue);
+        }
+
+        if (index + 1 >= args.Length ||
+            args[index + 1] is "-h" or "--help" or "--all" ||
+            args[index + 1].StartsWith("--", StringComparison.Ordinal))
+            throw new ArgumentException($"Missing value for '{arg}'.");
+
         return (arg, args[++index]);
     }
 

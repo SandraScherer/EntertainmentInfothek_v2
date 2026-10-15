@@ -89,6 +89,40 @@ public sealed class ConsoleTests
     public void Parser_RejectsInvalidBatchSizes(string argument, string value)
         => Assert.Throws<ArgumentException>(() => CommandLineParser.Parse(new[] { argument, value }));
 
+
+
+    [Theory]
+    [InlineData("--database=")]
+    [InlineData("--output=")]
+    [InlineData("--id=")]
+    [InlineData("--type=")]
+    [InlineData("--language=")]
+    [InlineData("--format=")]
+    [InlineData("--batch-size=")]
+    public void Parser_RejectsEmptyInlineValuesForEveryValueOption(string argument)
+        => Assert.Throws<ArgumentException>(() => CommandLineParser.Parse(new[] { argument }));
+
+    [Theory]
+    [InlineData("--database", "--all")]
+    [InlineData("--output", "--help")]
+    [InlineData("--id", "--type")]
+    public void Parser_DoesNotTreatFollowingOptionAsMissingOptionValue(string argument, string followingOption)
+        => Assert.Throws<ArgumentException>(() => CommandLineParser.Parse(new[] { argument, followingOption }));
+
+    [Fact]
+    public void Parser_PreservesEqualsSignsInsideInlineValue()
+    {
+        var options = CommandLineParser.Parse(new[] { "--database=C:\\data\\movie=archive.sqlite" });
+
+        Assert.Equal("C:\\data\\movie=archive.sqlite", options.DatabasePath);
+    }
+
+    [Theory]
+    [InlineData("2147483648")]
+    [InlineData("-2147483649")]
+    public void Parser_RejectsBatchSizesOutsideInt32Range(string value)
+        => Assert.Throws<ArgumentException>(() => CommandLineParser.Parse(new[] { "--batch-size", value }));
+
     [Fact]
     public void Parser_RejectsUnknownArguments()
         => Assert.Throws<ArgumentException>(() => CommandLineParser.Parse(new[] { "--unknown" }));
