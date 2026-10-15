@@ -33,6 +33,32 @@ public sealed class ConsoleTests
     public void Parser_RejectsUnknownEnumValues(string argument, string value)
         => Assert.Throws<ArgumentException>(() => CommandLineParser.Parse(new[] { argument, value }));
 
+
+    [Theory]
+    [InlineData("--type", "999")]
+    [InlineData("--language", "999")]
+    [InlineData("--format", "999")]
+    public void Parser_RejectsUndefinedNumericEnumValues(string argument, string value)
+        => Assert.Throws<ArgumentException>(() => CommandLineParser.Parse(new[] { argument, value }));
+
+    [Theory]
+    [InlineData("--type", "movie", "Movie")]
+    [InlineData("--language", "gErMaN", "German")]
+    [InlineData("--format", "obsidian", "Obsidian")]
+    public void Parser_AcceptsDefinedEnumValuesCaseInsensitively(string argument, string value, string expected)
+    {
+        var options = CommandLineParser.Parse(new[] { argument, value });
+        var actual = argument switch
+        {
+            "--type" => options.EntityType?.ToString(),
+            "--language" => options.Language?.ToString(),
+            "--format" => options.Format?.ToString(),
+            _ => throw new ArgumentOutOfRangeException(nameof(argument))
+        };
+
+        Assert.Equal(expected, actual);
+    }
+
     [Fact]
     public void Parser_RejectsEmptyEqualsValue()
         => Assert.Throws<ArgumentException>(() => CommandLineParser.Parse(new[] { "--type=" }));

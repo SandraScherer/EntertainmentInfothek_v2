@@ -53,7 +53,10 @@ public static class CommandLineParser
     }
 
     private static T ParseEnum<T>(string value, string argument) where T : struct, Enum
-        => Enum.TryParse<T>(value, ignoreCase: true, out var parsed)
-            ? parsed
-            : throw new ArgumentException($"Invalid value '{value}' for {argument}.");
+    {
+        if (Enum.TryParse<T>(value, ignoreCase: true, out var parsed) && Enum.IsDefined(parsed))
+            return parsed;
+
+        throw new ArgumentException($"Invalid value '{value}' for {argument}.");
+    }
 }

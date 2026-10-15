@@ -220,3 +220,12 @@ The .NET SDK is not available in the editing environment, so this test has not b
 - `PersonReader_IncludesNameAddOnInDisplayNameWithoutLeakingNotes`: verifies that the person's first name, last name, and name add-on are combined in the display name, that public details are preserved, and that private notes are omitted from related export fields.
 
 These tests have been added but not executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate them.
+
+
+## Additional test batch (2026-10-15, command-line enum validation)
+
+- `Parser_RejectsUndefinedNumericEnumValues`: verifies that numeric enum values outside the declared `ExportEntityType`, `ExportLanguage`, and `ExportFormat` members are rejected. This closes a parser edge case because `Enum.TryParse` alone accepts undefined numeric values.
+- `Parser_AcceptsDefinedEnumValuesCaseInsensitively`: verifies valid named enum members remain case-insensitive for entity type, language, and format.
+- Updated `CommandLineParser.ParseEnum` to require both successful parsing and `Enum.IsDefined`.
+
+The .NET SDK is unavailable in the editing environment, so these tests have not been executed here. Run `dotnet test` locally to validate the package.
