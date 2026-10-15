@@ -213,6 +213,49 @@ public sealed class ExportUseCaseTests
         builder.Verify(x => x.Build(It.Is<ExportDataBase>(data => data.Id != "m-first"), It.IsAny<ExportLanguage>()), Times.Never);
     }
 
+    [Fact]
+    public async Task SingleExport_PropagatesCancellationRaisedDuringDocumentBuild()
+    {
+        using var cancellation = new CancellationTokenSource();
+        var token = cancellation.Token;
+        var reader = new Mock<IExportReaderAdapter>();
+        var builder = new Mock<IDocumentBuilder>();
+        var readers = new Mock<IExportReaderResolver>();
+        var builders = new Mock<IDocumentBuilderResolver>();
+        var data = new MovieExportData("m-build-cancel", new("Original", "Movie", "Film"), null, null, null, null, null, null, Array.Empty<ExportRowData>());
+        reader.Setup(x => x.GetAsync("m-build-cancel", token)).ReturnsAsync(data);
+        builder.Setup(x => x.Build(data, ExportLanguage.English)).Callback<ExportDataBase, ExportLanguage>((_, _) => cancellation.Cancel())
+            .Throws(new OperationCanceledException(token));
+        readers.Setup(x => x.Resolve(ExportEntityType.Movie)).Returns(reader.Object);
+        builders.Setup(x => x.Resolve(ExportEntityType.Movie)).Returns(builder.Object);
+        var sut = new ExportUseCase(readers.Object, builders.Object, new Mock<ILocalizedValueSelector>().Object, NullLogger<ExportUseCase>.Instance);
+
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => sut.ExecuteAsync(
+            new ExportRequest(ExportEntityType.Movie, new ExportScope.Single("m-build-cancel"), ExportLanguage.English), token));
+    }
+
+    [Fact]
+    public async Task AllExport_PropagatesCancellationRaisedDuringDocumentBuild()
+    {
+        using var cancellation = new CancellationTokenSource();
+        var token = cancellation.Token;
+        var reader = new Mock<IExportReaderAdapter>();
+        var builder = new Mock<IDocumentBuilder>();
+        var readers = new Mock<IExportReaderResolver>();
+        var builders = new Mock<IDocumentBuilderResolver>();
+        var data = new MovieExportData("m-build-cancel", new("Original", "Movie", "Film"), null, null, null, null, null, null, Array.Empty<ExportRowData>());
+        reader.Setup(x => x.ReadAllAsync(It.IsAny<BatchOptions>(), token))
+            .Returns((BatchOptions _, CancellationToken _) => Yield(data));
+        builder.Setup(x => x.Build(data, ExportLanguage.English)).Callback<ExportDataBase, ExportLanguage>((_, _) => cancellation.Cancel())
+            .Throws(new OperationCanceledException(token));
+        readers.Setup(x => x.Resolve(ExportEntityType.Movie)).Returns(reader.Object);
+        builders.Setup(x => x.Resolve(ExportEntityType.Movie)).Returns(builder.Object);
+        var sut = new ExportUseCase(readers.Object, builders.Object, new Mock<ILocalizedValueSelector>().Object, NullLogger<ExportUseCase>.Instance);
+
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => sut.ExecuteAsync(
+            new ExportRequest(ExportEntityType.Movie, new ExportScope.All(1), ExportLanguage.English), token));
+    }
+
     private static async IAsyncEnumerable<ExportDataBase> YieldThenCancel(ExportDataBase first, CancellationToken ct)
     {
         await Task.Yield();

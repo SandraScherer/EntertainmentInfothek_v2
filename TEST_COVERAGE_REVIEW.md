@@ -239,3 +239,12 @@ The .NET SDK is unavailable in the editing environment, so these tests have not 
 - Updated `CommandLineParser.Split` to reject blank inline values and recognize a following option as a missing value. This avoids silently swallowing command switches.
 
 The .NET SDK is unavailable in this editing environment, so these tests have not been executed here. Run `dotnet test` locally to validate the package.
+
+
+## Additional test batch (2026-10-15, cancellation during document building)
+
+- `SingleExport_PropagatesCancellationRaisedDuringDocumentBuild`: verifies cancellation requested while a single entity is being built is propagated rather than recorded as an ordinary document-build failure.
+- `AllExport_PropagatesCancellationRaisedDuringDocumentBuild`: verifies the same cancellation semantics during an export-all stream.
+- Updated `ExportUseCase` to rethrow `OperationCanceledException` when the caller's cancellation token has been cancelled, for both single and all-export paths. Other builder exceptions continue to be recorded as per-entity failures.
+
+These tests have not been executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
