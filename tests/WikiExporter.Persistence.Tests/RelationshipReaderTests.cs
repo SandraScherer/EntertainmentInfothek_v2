@@ -38,6 +38,68 @@ public sealed class RelationshipReaderTests
     }
 
     [Fact]
+    public async Task SeriesReader_GetAsyncReturnsOnlyEpisodesOwnedByRequestedSeries()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.SeriesEntity.AddRange(
+                new SeriesEntity { Id = "s1", OriginalTitle = "Series One" },
+                new SeriesEntity { Id = "s2", OriginalTitle = "Series Two" });
+            db.EpisodeEntity.AddRange(
+                new EpisodeEntity { Id = "e1", SeriesId = "s1", OriginalTitle = "Pilot One", SeasonNo = "1", EpisodeNo = "1" },
+                new EpisodeEntity { Id = "e2", SeriesId = "s2", OriginalTitle = "Pilot Two", SeasonNo = "1", EpisodeNo = "1" });
+            await db.SaveChangesAsync();
+        }
+
+        var result = await provider.GetRequiredService<ISeriesExportReader>().GetAsync("s1");
+
+        Assert.NotNull(result);
+        var episode = Assert.Single(result!.Episodes);
+        Assert.Equal("e1", episode.Id);
+        Assert.Equal("Pilot One", episode.Title.Original);
+    }
+
+    [Fact]
+    public async Task PersonReader_IncludesNameAddOnInDisplayNameWithoutLeakingNotes()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.PersonEntity.Add(new PersonEntity
+            {
+                Id = "p-addon",
+                FirstName = "Ada",
+                LastName = "Lovelace",
+                NameAddOn = "Countess of Lovelace",
+                Details = "public details",
+                Notes = "private note"
+            });
+            await db.SaveChangesAsync();
+        }
+
+        var result = await provider.GetRequiredService<IPersonExportReader>().GetAsync("p-addon");
+
+        Assert.NotNull(result);
+        Assert.Equal("Ada Lovelace Countess of Lovelace", result!.Name.Original);
+        Assert.Equal("public details", result.Details);
+        var personRow = Assert.Single(result.RelatedData, row => row.Table == "Person");
+        Assert.DoesNotContain("Notes", personRow.Fields.Keys);
+    }
+
+    [Fact]
     public async Task AllSevenExportReaders_ReturnNullForMissingIds()
     {
         await using var connection = new SqliteConnection("Data Source=:memory:");

@@ -212,3 +212,11 @@ These tests were added but not executed in this environment because the .NET SDK
 - `EpisodeReader_ScopesCastRowsToTheirOwningEpisodeAcrossBatch`: seeds two episodes in one series, each with its own `Episode_Cast` row, and verifies the reader includes only the owning episode's cast row, retains role and `Details` values, and excludes `Notes`.
 
 The .NET SDK is not available in the editing environment, so this test has not been executed here. Run `dotnet test` locally to validate it.
+
+
+## Additional test batch (2026-10-15, direct-reader paths)
+
+- `SeriesReader_GetAsyncReturnsOnlyEpisodesOwnedByRequestedSeries`: creates two series with one episode each, requests a single series through `GetAsync`, and verifies that only that series' episode reference is returned. This complements the existing batch enumeration regression test with the single-entity access path.
+- `PersonReader_IncludesNameAddOnInDisplayNameWithoutLeakingNotes`: verifies that the person's first name, last name, and name add-on are combined in the display name, that public details are preserved, and that private notes are omitted from related export fields.
+
+These tests have been added but not executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate them.
