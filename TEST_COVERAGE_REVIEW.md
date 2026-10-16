@@ -12,6 +12,9 @@ The test suite was reviewed by responsibility across Domain, Application, Export
 - **Localization**
   - Whitespace-only translations are skipped and a missing translation returns `null`.
 - **Export infrastructure**
+  - Both renderers produce deterministic paths and content for identical documents.
+  - DokuWiki output does not leak Obsidian YAML frontmatter; Obsidian metadata ordering does not alter content-block order.
+  - DokuWiki table headers and cells escape pipes and normalize line breaks.
   - File names are deterministic for the same entity ID and differ for different IDs.
   - Every known document type maps to its expected output folder, with an unknown-type fallback.
   - DokuWiki table cells escape pipe characters.

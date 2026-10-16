@@ -2,6 +2,7 @@ using WikiExporter.Application.Documents.Models;
 using WikiExporter.Application.Export.Requests;
 using WikiExporter.Export.FileNames;
 using WikiExporter.Export.Links;
+using WikiExporter.Export.Markdown;
 using WikiExporter.Export.Markdown.DokuWiki;
 using WikiExporter.Export.Markdown.Obsidian;
 using WikiExporter.Export.Paths;
@@ -32,7 +33,7 @@ public sealed class RendererDeterminismAndFormatIsolationTests
                 new ParagraphBlock("First line\r\nSecond line"),
                 new ListBlock(new[] { "one", "two" })
             });
-        var renderer = format == ExportFormat.Obsidian ? obsidian : dokuWiki;
+        IMarkdownRenderer renderer = format == ExportFormat.Obsidian ? obsidian : dokuWiki;
 
         var first = renderer.Render(document);
         var second = renderer.Render(document);
