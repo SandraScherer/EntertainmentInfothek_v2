@@ -264,3 +264,12 @@ These tests have not been executed in this environment because the .NET SDK is u
 - Updated `ObsidianRenderer.Yaml` to escape `\r`, `\n`, and `\t` after escaping backslashes and quotes.
 
 This regression test and renderer correction were not executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally.
+
+## Additional path and file-name edge cases (MoreTests27)
+
+- **Output folder mapping**: all seven known document types and the unknown-type fallback are checked for both export formats.
+- **Stable file names**: metadata and block-content changes do not alter a file name when type and entity ID remain the same; changing the ID changes the file name.
+- **Unsafe document-type characters**: path separators and reserved punctuation are sanitized while the stable ID hash remains present.
+- **Portable relative paths**: generated relative paths use forward slashes and retain the expected entity folder and `.md` extension.
+
+Validation note: the .NET SDK is not available in the editing environment. Run `dotnet test` locally to validate this test batch.
