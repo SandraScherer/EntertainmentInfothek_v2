@@ -302,3 +302,10 @@ These tests have not been executed in this editing environment because the .NET 
 - `LinkResolver_UsesTargetTypeAndIdButNeverTargetTitleForStableNames`: verifies that stable link targets change when the target ID or target type changes, but remain stable when unrelated source metadata changes.
 
 These tests have not been executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
+
+## Additional persistence reader edge cases (MoreTests31)
+
+- `ConnectionReader_GetAsyncReturnsOnlyDirectChildrenAndDirectWorks`: verifies the single-entity connection read returns only immediate child connections and works assigned directly to that connection, not grandchildren or work assigned to another connection/child.
+- `MovieReader_ReadAllHonorsCancellationBetweenBatches`: verifies cancelling after the first item of a one-item batch stops subsequent reads and propagates cancellation.
+
+These tests have not been executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.

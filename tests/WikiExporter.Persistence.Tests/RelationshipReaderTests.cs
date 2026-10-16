@@ -615,4 +615,73 @@ public sealed class RelationshipReaderTests
         Assert.DoesNotContain(second.RelatedData, x => x.Table == "Episode_Cast" && x.Id == "cast1");
     }
 
+
+    [Fact]
+    public async Task ConnectionReader_GetAsyncReturnsOnlyDirectChildrenAndDirectWorks()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.ConnectionEntity.AddRange(
+                new ConnectionEntity { Id = "root-a", OriginalName = "Root A" },
+                new ConnectionEntity { Id = "root-b", OriginalName = "Root B" },
+                new ConnectionEntity { Id = "child-a", OriginalName = "Child A", ConnectionId = "root-a" },
+                new ConnectionEntity { Id = "grandchild-a", OriginalName = "Grandchild A", ConnectionId = "child-a" },
+                new ConnectionEntity { Id = "child-b", OriginalName = "Child B", ConnectionId = "root-b" });
+            db.MovieEntity.AddRange(
+                new MovieEntity { Id = "movie-a", OriginalTitle = "Movie A", ConnectionId = "root-a" },
+                new MovieEntity { Id = "movie-child", OriginalTitle = "Movie Child", ConnectionId = "child-a" },
+                new MovieEntity { Id = "movie-b", OriginalTitle = "Movie B", ConnectionId = "root-b" });
+            await db.SaveChangesAsync();
+        }
+
+        var result = await provider.GetRequiredService<IConnectionExportReader>().GetAsync("root-a");
+
+        Assert.NotNull(result);
+        Assert.Equal("root-a", result!.Id);
+        Assert.Equal(new[] { "child-a" }, result.Children.Select(x => x.Id));
+        Assert.Equal(new[] { "movie-a" }, result.Works.Select(x => x.Id));
+        Assert.DoesNotContain(result.Children, x => x.Id == "grandchild-a");
+        Assert.DoesNotContain(result.Works, x => x.Id == "movie-child" || x.Id == "movie-b");
+    }
+
+    [Fact]
+    public async Task MovieReader_ReadAllHonorsCancellationBetweenBatches()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        var services = new ServiceCollection();
+        services.AddWikiExporterPersistence("Data Source=:memory:");
+        services.AddPooledDbContextFactory<EntertainmentInfothekDbContext>(o => o.UseSqlite(connection));
+        await using var provider = services.BuildServiceProvider();
+        await using (var db = provider.GetRequiredService<IDbContextFactory<EntertainmentInfothekDbContext>>().CreateDbContext())
+        {
+            await db.Database.EnsureCreatedAsync();
+            db.MovieEntity.AddRange(
+                new MovieEntity { Id = "m1", OriginalTitle = "First" },
+                new MovieEntity { Id = "m2", OriginalTitle = "Second" });
+            await db.SaveChangesAsync();
+        }
+
+        using var cancellation = new CancellationTokenSource();
+        var reader = provider.GetRequiredService<IMovieExportReader>();
+        var observed = new List<string>();
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(async () =>
+        {
+            await foreach (var movie in reader.ReadAllAsync(new BatchOptions(1), cancellation.Token))
+            {
+                observed.Add(movie.Id);
+                cancellation.Cancel();
+            }
+        });
+
+        Assert.Equal(new[] { "m1" }, observed);
+    }
+
 }
