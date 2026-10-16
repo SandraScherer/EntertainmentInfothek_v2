@@ -273,3 +273,12 @@ This regression test and renderer correction were not executed in this editing e
 - **Portable relative paths**: generated relative paths use forward slashes and retain the expected entity folder and `.md` extension.
 
 Validation note: the .NET SDK is not available in the editing environment. Run `dotnet test` locally to validate this test batch.
+
+## Additional test batch (2026-10-16, renderer determinism and format boundaries)
+
+- `Renderer_RenderingSameDocumentTwiceProducesIdenticalPathAndContent`: checks deterministic output for both Obsidian and DokuWiki, including stable paths and a final newline.
+- `DokuWikiRenderer_DoesNotEmitObsidianYamlFrontmatter`: ensures metadata is not accidentally serialized as Obsidian YAML in DokuWiki output.
+- `ObsidianRenderer_EmitsMetadataWithoutChangingContentBlockOrder`: verifies ordinal metadata ordering and preservation of document block order.
+- `DokuWikiRenderer_EscapesPipesAndLineBreaksInTableHeadersAndRows`: verifies table delimiter and line-break escaping for both headers and row cells.
+
+These tests were added but could not be executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate them.
