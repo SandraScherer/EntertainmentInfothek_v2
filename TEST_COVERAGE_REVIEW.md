@@ -285,3 +285,13 @@ Validation note: the .NET SDK is not available in the editing environment. Run `
 - `DokuWikiRenderer_EscapesPipesAndLineBreaksInTableHeadersAndRows`: verifies table delimiter and line-break escaping for both headers and row cells.
 
 These tests were added but could not be executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate them.
+
+## Additional test batch (2026-10-16, filesystem writer safety)
+
+- `WriteAsync_CreatesNestedDirectoriesAndWritesUtf8WithoutBom`: verifies nested folder creation, Unicode-preserving UTF-8 output, and the absence of a UTF-8 byte-order mark.
+- `WriteAsync_RejectsRelativePathThatEscapesOutputDirectory`: verifies parent-directory traversal is rejected.
+- `WriteAsync_RejectsRootedPathOutsideOutputDirectory`: verifies an absolute path outside the configured root is rejected.
+- `WriteAsync_RejectsBlankRelativePath`: verifies blank relative output paths are rejected before writing.
+- `WriteAsync_PropagatesCancellationBeforeWritingFile`: verifies a pre-cancelled token prevents the target file from being written.
+
+These tests have not been executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate them.
