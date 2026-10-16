@@ -324,3 +324,11 @@ These tests have not been executed in this editing environment because the .NET 
 - The test also checks that exactly seven Markdown files are produced and that each file's contents match the returned rendered result.
 
 These tests have not been executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate them.
+
+## Connection document builder regressions (MoreTests34)
+
+- `Build_IncludesParentAndOnlyProvidedDirectChildrenInStableOrder`: verifies parent links and direct-child links, stable child ordering by display name then ID, and connection target typing.
+- `Build_GroupsWorksByTypeAndOrdersEachGroupByLocalizedTitleThenId`: verifies work-type groups are ordered consistently, work links use the requested localized titles, ties are resolved by stable ID, and public details remain present.
+- `Build_UsesIdWhenChildDisplayNameIsMissingAndOmitsEmptyParentAndSections`: verifies missing display labels fall back to IDs and blank optional parent/details sections are omitted.
+
+The .NET SDK is not available in the editing environment. Run `dotnet test` locally to compile and execute these tests.
