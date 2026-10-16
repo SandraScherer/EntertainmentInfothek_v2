@@ -316,3 +316,11 @@ These tests have not been executed in this editing environment because the .NET 
 - `ObsidianRenderer_UsesOneFinalNewlineForEmptyAndPopulatedDocuments`: verifies consistent single-newline termination for empty and populated Obsidian documents.
 
 These tests have not been executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate this test batch.
+
+## All-seven-document-type integration tests (MoreTests33)
+
+- `ExportService_ExportsAllSevenTypesWithLinksToExistingTargetFiles`: runs the real Markdown export service and file writer for both Obsidian and DokuWiki, creates all seven supported document types, and checks the expected output folders and Markdown files.
+- Each exported document links to the other six document types. The test verifies each rendered link target against the target file's real path and confirms all referenced files exist, catching mismatches between link resolution, path generation, renderer syntax, and filesystem output.
+- The test also checks that exactly seven Markdown files are produced and that each file's contents match the returned rendered result.
+
+These tests have not been executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate them.
