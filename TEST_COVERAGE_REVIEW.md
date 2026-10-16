@@ -309,3 +309,10 @@ These tests have not been executed in this environment because the .NET SDK is u
 - `MovieReader_ReadAllHonorsCancellationBetweenBatches`: verifies cancelling after the first item of a one-item batch stops subsequent reads and propagates cancellation.
 
 These tests have not been executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
+
+## Additional YAML scalar regression tests (MoreTests32)
+
+- `ObsidianRenderer_QuotesYamlScalarsThatAreNotSafePlainStrings`: checks null, safe plain strings, YAML boolean-like/reserved values, numeric-looking strings, whitespace, quotes, backslashes, and embedded newlines.
+- `ObsidianRenderer_UsesOneFinalNewlineForEmptyAndPopulatedDocuments`: verifies consistent single-newline termination for empty and populated Obsidian documents.
+
+These tests have not been executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate this test batch.
