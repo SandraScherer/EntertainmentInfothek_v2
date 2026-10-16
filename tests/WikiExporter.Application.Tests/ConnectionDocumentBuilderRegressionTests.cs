@@ -16,7 +16,7 @@ public sealed class ConnectionDocumentBuilderRegressionTests
     {
         var data = new ConnectionExportData(
             "universe-1",
-            new LocalizedValue("Universe", "Universum", "Universe EN"),
+            new LocalizedValue("Universe", "Universe EN", "Universum"),
             "parent-1",
             null,
             new[]
@@ -43,16 +43,16 @@ public sealed class ConnectionDocumentBuilderRegressionTests
     {
         var data = new ConnectionExportData(
             "universe-2",
-            new LocalizedValue("Universum", null, "Universe"),
+            new LocalizedValue("Universum", "Universe", null),
             null,
             "Public details",
             Array.Empty<EntityReference>(),
             new[]
             {
-                new WorkReference("Movie", "movie-z", new LocalizedValue("Zeta", "Zeta DE", "Zulu")),
-                new WorkReference("Book", "book-1", new LocalizedValue("Book", "Buch", "Alpha")),
-                new WorkReference("Movie", "movie-b", new LocalizedValue("Beta", "Beta DE", "Alpha")),
-                new WorkReference("Movie", "movie-a", new LocalizedValue("Alpha", "Alpha DE", "Alpha"))
+                new WorkReference("Movie", "movie-z", new LocalizedValue("Zeta", "Zulu", "Zeta DE")),
+                new WorkReference("Book", "book-1", new LocalizedValue("Book", "Alpha", "Buch")),
+                new WorkReference("Movie", "movie-b", new LocalizedValue("Beta", "Alpha", "Beta DE")),
+                new WorkReference("Movie", "movie-a", new LocalizedValue("Alpha", "Alpha", "Alpha DE"))
             },
             Array.Empty<ExportRowData>());
 

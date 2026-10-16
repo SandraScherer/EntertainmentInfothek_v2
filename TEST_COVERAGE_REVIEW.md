@@ -332,3 +332,7 @@ These tests have not been executed in this editing environment because the .NET 
 - `Build_UsesIdWhenChildDisplayNameIsMissingAndOmitsEmptyParentAndSections`: verifies missing display labels fall back to IDs and blank optional parent/details sections are omitted.
 
 The .NET SDK is not available in the editing environment. Run `dotnet test` locally to compile and execute these tests.
+
+## MoreTests34 test-data correction
+
+The first local test run identified incorrectly ordered constructor arguments in `ConnectionDocumentBuilderRegressionTests`: `LocalizedValue` is declared as `(Original, English, German)`, but the new tests had supplied some values as `(Original, German, English)`. Corrected those test fixtures to match the domain record's declared field order; production localization behavior was not changed. The .NET SDK is not available in this editing environment, so rerun `dotnet test` locally to verify the correction.
