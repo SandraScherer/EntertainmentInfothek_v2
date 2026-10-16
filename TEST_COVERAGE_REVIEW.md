@@ -248,3 +248,12 @@ The .NET SDK is unavailable in this editing environment, so these tests have not
 - Updated `ExportUseCase` to rethrow `OperationCanceledException` when the caller's cancellation token has been cancelled, for both single and all-export paths. Other builder exceptions continue to be recorded as per-entity failures.
 
 These tests have not been executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
+
+## Additional test batch (2026-10-16, Markdown export orchestration)
+
+- `ExportAsync_ResolvesRequestedFormat_WritesRenderedDocumentAndReturnsIt`: verifies the requested format is resolved, the exact neutral document is rendered, the rendered result is passed to the writer with the requested output directory, and the same result is returned.
+- `ExportAsync_WhenRendererThrows_DoesNotCallWriter`: verifies rendering failures propagate and no file write is attempted.
+- `ExportAsync_WhenWriterIsCancelled_PropagatesCancellationAndForwardsToken`: verifies cancellation from the writer propagates and the caller's token reaches persistence.
+- `ExportAsync_WithNullDocument_ThrowsBeforeResolvingRenderer` and `ExportAsync_WithBlankOutputDirectory_ThrowsBeforeRendering`: verify invalid inputs are rejected before downstream components are invoked.
+
+These tests have not been executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
