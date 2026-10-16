@@ -65,6 +65,6 @@ public sealed class ObsidianRenderer(IExportPathResolver paths, IExportLinkResol
             && value.All(c => char.IsAsciiLetterOrDigit(c) || c is '_' or '-');
 
         if (simplePlainScalar && !reserved) return value;
-        return "\"" + value.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"";
+        return "\"" + value.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\r", "\\r").Replace("\n", "\\n").Replace("\t", "\\t") + "\"";
     }
 }

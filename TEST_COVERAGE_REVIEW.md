@@ -257,3 +257,10 @@ These tests have not been executed in this environment because the .NET SDK is u
 - `ExportAsync_WithNullDocument_ThrowsBeforeResolvingRenderer` and `ExportAsync_WithBlankOutputDirectory_ThrowsBeforeRendering`: verify invalid inputs are rejected before downstream components are invoked.
 
 These tests have not been executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
+
+## Additional test batch (2026-10-16, YAML control-character escaping)
+
+- `ObsidianRenderer_EscapesControlCharactersInYamlMetadata`: verifies newline, carriage-return, tab, and backslash characters in metadata values are escaped within quoted YAML scalars instead of introducing unintended physical lines or malformed values.
+- Updated `ObsidianRenderer.Yaml` to escape `\r`, `\n`, and `\t` after escaping backslashes and quotes.
+
+This regression test and renderer correction were not executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally.

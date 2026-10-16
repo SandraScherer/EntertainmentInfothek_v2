@@ -293,6 +293,26 @@ public sealed class ExportInfrastructureTests
 
 
     [Fact]
+    public void ObsidianRenderer_EscapesControlCharactersInYamlMetadata()
+    {
+        var paths = new ExportPathResolver(new ExportFileNameGenerator());
+        var renderer = new ObsidianRenderer(paths, new ExportLinkResolver(paths));
+        var document = new MarkdownDocument("Movie", "movie-yaml-control", new Dictionary<string, string?>
+        {
+            ["lineBreaks"] = "first\nsecond\rthird",
+            ["tab"] = "left\tright",
+            ["backslashAndNewline"] = "path\\segment\nnext"
+        }, Array.Empty<MarkdownBlock>());
+
+        var content = renderer.Render(document).Content.Replace("\r\n", "\n", StringComparison.Ordinal);
+
+        Assert.Contains("lineBreaks: \"first\\nsecond\\rthird\"", content);
+        Assert.Contains("tab: \"left\\tright\"", content);
+        Assert.Contains("backslashAndNewline: \"path\\\\segment\\nnext\"", content);
+        Assert.DoesNotContain("first\nsecond", content);
+    }
+
+    [Fact]
     public void ObsidianRenderer_QuotesYamlReservedAndAmbiguousScalars()
     {
         var paths = new ExportPathResolver(new ExportFileNameGenerator());
