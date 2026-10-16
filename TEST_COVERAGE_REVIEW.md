@@ -295,3 +295,10 @@ These tests were added but could not be executed in this environment because the
 - `WriteAsync_PropagatesCancellationBeforeWritingFile`: verifies a pre-cancelled token prevents the target file from being written.
 
 These tests have not been executed in this editing environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate them.
+
+## Additional cross-entity link matrix tests (MoreTests30)
+
+- `LinkResolver_UsesCorrectStableNamespaceForEverySourceAndTargetType`: covers all 49 source/target combinations across Movie, Series, Episode, Book, VideoGame, Person, and Connection, for both Obsidian relative links and DokuWiki namespace links. It also checks extension removal and slash conventions.
+- `LinkResolver_UsesTargetTypeAndIdButNeverTargetTitleForStableNames`: verifies that stable link targets change when the target ID or target type changes, but remain stable when unrelated source metadata changes.
+
+These tests have not been executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
