@@ -52,3 +52,10 @@ All EF Core entity classes in `WikiExporter.Persistence.Entities` use the `*Enti
 ### Latest test additions
 
 MoreTests35 adds regression coverage for deterministic ordering of episodes within a series, absent/blank series references on episode documents, and fallback to a series ID when related display data is missing. See `TEST_COVERAGE_REVIEW.md` for details.
+
+
+### MoreTests36 – title localization consistency
+
+Added `DocumentTitleLocalizationConsistencyTests.cs` with 42 parameterized cases covering all seven document builders, all three export languages, consistency between the first heading and metadata title, and the fallback to `Untitled` when every localized title value is blank. No production code was changed.
+
+Run the complete suite with `dotnet test`. The test suite has not been run in the authoring environment because the .NET SDK is unavailable.

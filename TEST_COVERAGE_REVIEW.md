@@ -344,3 +344,11 @@ The first local test run identified incorrectly ordered constructor arguments in
 - `EpisodeBuilder_UsesSeriesIdAsLinkLabelWhenRelatedSeriesIsUnavailable`: verifies the episode keeps a stable link to its series ID when the related series display data is unavailable, and that missing season/episode values are omitted from the information table.
 
 The .NET SDK is not available in this editing environment. Run `dotnet test` locally to compile and execute this test batch.
+
+
+## Document title localization consistency (MoreTests36)
+
+- `EveryBuilder_UsesSelectedTitleInHeadingAndMetadata`: parameterized across all seven document types and all three export languages. Confirms the visible first-level heading, metadata `title`, and stable entity ID stay consistent when all localized title variants are present.
+- `EveryBuilder_FallsBackToUntitledWhenAllTitleVariantsAreBlank`: parameterized across all seven document types and all three export languages. Confirms null/whitespace-only localized values use the documented `Untitled` fallback consistently in both heading and metadata.
+
+This test batch covers 42 cases without changing production code. The .NET SDK is not available in the editing environment; run `dotnet test` locally to compile and execute the tests.
