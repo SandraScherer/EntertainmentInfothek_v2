@@ -336,3 +336,11 @@ The .NET SDK is not available in the editing environment. Run `dotnet test` loca
 ## MoreTests34 test-data correction
 
 The first local test run identified incorrectly ordered constructor arguments in `ConnectionDocumentBuilderRegressionTests`: `LocalizedValue` is declared as `(Original, English, German)`, but the new tests had supplied some values as `(Original, German, English)`. Corrected those test fixtures to match the domain record's declared field order; production localization behavior was not changed. The .NET SDK is not available in this editing environment, so rerun `dotnet test` locally to verify the correction.
+
+## Series/episode relationship edge cases (MoreTests35)
+
+- `SeriesBuilder_UsesIdAsTieBreakerForEpisodesWithSameSeasonAndEpisodeNumber`: verifies stable episode ordering when season and episode numbers match, using episode ID as the final tie-breaker.
+- `EpisodeBuilder_OmitsSeriesReferenceWhenSeriesIdIsMissingOrBlank`: covers null, empty, and whitespace-only series IDs and confirms no empty series section/link is emitted while episode details remain available.
+- `EpisodeBuilder_UsesSeriesIdAsLinkLabelWhenRelatedSeriesIsUnavailable`: verifies the episode keeps a stable link to its series ID when the related series display data is unavailable, and that missing season/episode values are omitted from the information table.
+
+The .NET SDK is not available in this editing environment. Run `dotnet test` locally to compile and execute this test batch.

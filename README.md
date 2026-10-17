@@ -48,3 +48,7 @@ The latest project baseline was reported by the project owner to build and pass 
 ## Persistence entity naming
 
 All EF Core entity classes in `WikiExporter.Persistence.Entities` use the `*Entity` suffix, e.g. `BookEntity`, `MovieEntity`, `DepartmentEntity`. Database table names remain unchanged and are configured explicitly with `ToTable(...)`.
+
+### Latest test additions
+
+MoreTests35 adds regression coverage for deterministic ordering of episodes within a series, absent/blank series references on episode documents, and fallback to a series ID when related display data is missing. See `TEST_COVERAGE_REVIEW.md` for details.
