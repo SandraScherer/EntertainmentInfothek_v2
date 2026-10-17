@@ -375,3 +375,11 @@ Added `LocalizedRolesAndPersonRelationsTests.cs` to cover localized role labels 
 - Person cause-of-death sections use the language-specific value and are omitted when both translations are blank.
 
 These are application-level builder tests and do not require a database or filesystem. The .NET SDK was unavailable in the authoring environment; run `dotnet test` locally to compile and execute the tests.
+
+## Additional test batch (localized credits and awards)
+
+- `LocalizedCreditAndAwardTests` checks English/German crew-role selection and omission of an empty crew section when the row has no usable person or role.
+- Company-credit tests verify localized role labels while preserving department/country values and the stable company reference.
+- Award contributor tests verify localized award titles and contributor roles, retain person links when the role label is blank, and cover the `Movie_AwardID` foreign-key naming variant.
+
+The editing environment does not have the .NET SDK, so these tests were not executed here. Run `dotnet test` locally to validate the package.
