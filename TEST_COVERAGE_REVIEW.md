@@ -363,3 +363,15 @@ Added `RelatedReferenceLocalizationTests.cs` to cover language selection on name
 - A missing/blank English work title falls back to the original title for all requested languages where that is the first available fallback.
 
 These are application-level builder tests using the format-neutral document model; they do not require a database or filesystem. The .NET SDK was not available in the authoring environment, so the suite must be verified with `dotnet test` locally.
+
+## MoreTests38 — localized roles and person relations
+
+Added `LocalizedRolesAndPersonRelationsTests.cs` to cover localized role labels and person-specific relationship sections:
+
+- Movie cast roles select English or German text according to the requested export language, with the original-language request following the current fallback behavior.
+- Blank cast-role translations do not produce an empty role paragraph.
+- Person family relationships preserve the target Person ID/type and include relationship labels and localized role text.
+- Blank requested relationship-role values fall back to the next available supported value.
+- Person cause-of-death sections use the language-specific value and are omitted when both translations are blank.
+
+These are application-level builder tests and do not require a database or filesystem. The .NET SDK was unavailable in the authoring environment; run `dotnet test` locally to compile and execute the tests.

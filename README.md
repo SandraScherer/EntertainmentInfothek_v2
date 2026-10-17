@@ -59,3 +59,7 @@ MoreTests35 adds regression coverage for deterministic ordering of episodes with
 Added `DocumentTitleLocalizationConsistencyTests.cs` with 42 parameterized cases covering all seven document builders, all three export languages, consistency between the first heading and metadata title, and the fallback to `Untitled` when every localized title value is blank. No production code was changed.
 
 Run the complete suite with `dotnet test`. The test suite has not been run in the authoring environment because the .NET SDK is unavailable.
+
+### MoreTests38 — localized roles and person relationships
+
+This package adds application tests for language-dependent cast roles, family relationship labels, person references, and cause-of-death sections. Run `dotnet test` from the solution directory to validate the full suite.
