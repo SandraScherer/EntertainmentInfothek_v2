@@ -352,3 +352,14 @@ The .NET SDK is not available in this editing environment. Run `dotnet test` loc
 - `EveryBuilder_FallsBackToUntitledWhenAllTitleVariantsAreBlank`: parameterized across all seven document types and all three export languages. Confirms null/whitespace-only localized values use the documented `Untitled` fallback consistently in both heading and metadata.
 
 This test batch covers 42 cases without changing production code. The .NET SDK is not available in the editing environment; run `dotnet test` locally to compile and execute the tests.
+
+## MoreTests37 — localized related references
+
+Added `RelatedReferenceLocalizationTests.cs` to cover language selection on names and titles referenced from other documents:
+
+- Movie cast links use the requested language for referenced person names.
+- A missing/blank English person name falls back to the original name before German.
+- Connection work links use the requested language for referenced work titles.
+- A missing/blank English work title falls back to the original title for all requested languages where that is the first available fallback.
+
+These are application-level builder tests using the format-neutral document model; they do not require a database or filesystem. The .NET SDK was not available in the authoring environment, so the suite must be verified with `dotnet test` locally.
