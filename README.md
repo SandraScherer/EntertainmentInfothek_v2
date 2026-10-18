@@ -75,3 +75,7 @@ The `AwardAndRelationIsolationTests` application test class adds coverage for aw
 ### MoreTests42 — empty person relationship rows
 
 Adds ten parameterized regression cases across family, employer, position, profession, and species relationships. Empty/whitespace target IDs must not create empty relationship sections; when valid and blank rows coexist, only valid relationship references are emitted. The person relationship builder was adjusted to filter unusable target IDs before creating a section. Run `dotnet test` locally; the .NET SDK is not available in the authoring environment.
+
+### MoreTests43 — repeated relationships and stable output
+
+The latest test batch adds regression coverage for multiple family relationships to the same person, output ordering independent of input row order, and repeated work/episode references whose display titles match. Run `dotnet test` from the solution directory to validate locally.

@@ -409,3 +409,12 @@ These tests have been added but could not be executed in this environment becaus
 - `PersonDocumentBuilder.AddRelationList` now filters rows with blank target IDs before deciding whether a section should be emitted, preventing empty relationship headings.
 
 Validation: not run in this authoring environment because the .NET SDK is unavailable. Run `dotnet test` locally.
+
+## MoreTests43 — repeated references and deterministic ordering
+
+- `PersonBuilder_PreservesMultipleFamilyRelationshipsToSamePerson` checks that two distinct family relationship rows targeting the same person remain separate and retain their own relationship labels.
+- `PersonBuilder_ProducesSameRelationshipOrderWhenInputRowsAreReversed` verifies employer links are ordered deterministically regardless of the incoming row order.
+- `ConnectionBuilder_PreservesRepeatedWorkReferencesAndOrdersThemByIdWhenTitlesMatch` checks same-title work references use ID as a stable tie-breaker and repeated references are not silently removed.
+- `SeriesBuilder_PreservesEpisodeReferencesWithSameTitleAndNumbersButDifferentIds` verifies episodes with identical displayed title and season/episode numbers remain distinct and sort by ID.
+
+These tests specify preservation of distinct relationship records rather than applying blanket de-duplication, since repeated references can carry separate relationship meaning. Tests were not run in the authoring environment because the .NET SDK is unavailable; run `dotnet test` locally.
