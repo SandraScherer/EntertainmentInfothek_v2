@@ -2,6 +2,7 @@ using WikiExporter.Application.Documents.Models;
 using WikiExporter.Application.Export.Requests;
 using WikiExporter.Export.FileNames;
 using WikiExporter.Export.Links;
+using WikiExporter.Export.Markdown;
 using WikiExporter.Export.Markdown.DokuWiki;
 using WikiExporter.Export.Markdown.Obsidian;
 using WikiExporter.Export.Paths;
@@ -50,7 +51,7 @@ public sealed class RendererBoundaryBehaviorTests
     public void Renderer_OmitsImageBlockWhenFileNameIsNullOrWhitespace(ExportFormat format)
     {
         var (obsidian, dokuWiki) = CreateRenderers();
-        var renderer = format == ExportFormat.Obsidian ? obsidian : dokuWiki;
+        IMarkdownRenderer renderer = format == ExportFormat.Obsidian ? obsidian : dokuWiki;
         var document = CreateDocument("Movie", "empty-image", new MarkdownBlock[]
         {
             new ImageBlock(null!, "description"),
@@ -70,7 +71,7 @@ public sealed class RendererBoundaryBehaviorTests
     public void Renderer_PreservesCodeContentWhenLanguageIsNull(ExportFormat format)
     {
         var (obsidian, dokuWiki) = CreateRenderers();
-        var renderer = format == ExportFormat.Obsidian ? obsidian : dokuWiki;
+        IMarkdownRenderer renderer = format == ExportFormat.Obsidian ? obsidian : dokuWiki;
         const string code = "line one\nline two";
         var document = CreateDocument("Book", "code-no-language", new MarkdownBlock[] { new CodeBlock(code, null) });
 
