@@ -79,3 +79,7 @@ Adds ten parameterized regression cases across family, employer, position, profe
 ### MoreTests43 — repeated relationships and stable output
 
 The latest test batch adds regression coverage for multiple family relationships to the same person, output ordering independent of input row order, and repeated work/episode references whose display titles match. Run `dotnet test` from the solution directory to validate locally.
+
+### MoreTests44 — repeated export writes and persistence failures
+
+Adds tests for overwriting stale Markdown output, repeated writes to the same path with UTF-8 content, and propagation of file-writer failures through `MarkdownExportService`. Run `dotnet test` from the solution directory to validate locally; the .NET SDK is unavailable in the authoring environment.

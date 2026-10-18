@@ -92,6 +92,47 @@ public sealed class FileSystemExportFileWriterSecurityTests
     }
 
     [Fact]
+    public async Task WriteAsync_OverwritesExistingMarkdownFileWithLatestContent()
+    {
+        var root = CreateTemporaryDirectory();
+        try
+        {
+            var writer = new FileSystemExportFileWriter();
+            var target = Path.Combine(root, "Movies", "movie-42.md");
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            await File.WriteAllTextAsync(target, "stale content");
+
+            await writer.WriteAsync(new RenderedDocument("Movies/movie-42.md", "fresh content"), root);
+
+            Assert.Equal("fresh content", await File.ReadAllTextAsync(target, Encoding.UTF8));
+        }
+        finally
+        {
+            DeleteTemporaryDirectory(root);
+        }
+    }
+
+    [Fact]
+    public async Task WriteAsync_RepeatedWriteToSamePathProducesExactLatestBytes()
+    {
+        var root = CreateTemporaryDirectory();
+        try
+        {
+            var writer = new FileSystemExportFileWriter();
+            var path = Path.Combine(root, "Books", "book-7.md");
+            await writer.WriteAsync(new RenderedDocument("Books/book-7.md", "first\n"), root);
+            await writer.WriteAsync(new RenderedDocument("Books/book-7.md", "second\n第二"), root);
+
+            Assert.Equal("second\n第二", await File.ReadAllTextAsync(path, Encoding.UTF8));
+            Assert.Single(Directory.GetFiles(Path.Combine(root, "Books")));
+        }
+        finally
+        {
+            DeleteTemporaryDirectory(root);
+        }
+    }
+
+    [Fact]
     public async Task WriteAsync_PropagatesCancellationBeforeWritingFile()
     {
         var root = CreateTemporaryDirectory();

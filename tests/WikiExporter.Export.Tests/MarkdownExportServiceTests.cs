@@ -46,6 +46,25 @@ public sealed class MarkdownExportServiceTests
     }
 
     [Fact]
+    public async Task ExportAsync_WhenWriterFails_PropagatesOriginalExceptionAfterRendering()
+    {
+        var document = new MarkdownDocument("Movie", "movie-write-fail", new Dictionary<string, string?>(), Array.Empty<MarkdownBlock>());
+        var rendered = new RenderedDocument("Movies/movie-write-fail.md", "content");
+        var expected = new IOException("disk unavailable");
+        var renderer = new StubRenderer(ExportFormat.Obsidian, rendered);
+        var writer = new RecordingWriter(expected);
+        var sut = new MarkdownExportService(new RecordingRendererResolver(renderer), writer);
+
+        var actual = await Assert.ThrowsAsync<IOException>(() =>
+            sut.ExportAsync(document, ExportFormat.Obsidian, "target-output"));
+
+        Assert.Same(expected, actual);
+        Assert.Same(document, renderer.LastDocument);
+        Assert.Same(rendered, writer.LastDocument);
+        Assert.Equal("target-output", writer.OutputDirectory);
+    }
+
+    [Fact]
     public async Task ExportAsync_WhenWriterIsCancelled_PropagatesCancellationAndForwardsToken()
     {
         using var cancellation = new CancellationTokenSource();

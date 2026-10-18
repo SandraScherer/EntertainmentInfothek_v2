@@ -418,3 +418,11 @@ Validation: not run in this authoring environment because the .NET SDK is unavai
 - `SeriesBuilder_PreservesEpisodeReferencesWithSameTitleAndNumbersButDifferentIds` verifies episodes with identical displayed title and season/episode numbers remain distinct and sort by ID.
 
 These tests specify preservation of distinct relationship records rather than applying blanket de-duplication, since repeated references can carry separate relationship meaning. Tests were not run in the authoring environment because the .NET SDK is unavailable; run `dotnet test` locally.
+
+## MoreTests44 — writer overwrite behavior and export failure propagation
+
+- `FileSystemExportFileWriter_OverwritesExistingMarkdownFileWithLatestContent` verifies rerunning an export replaces stale file contents instead of leaving old text behind.
+- `FileSystemExportFileWriter_RepeatedWriteToSamePathProducesExactLatestBytes` checks repeated writes to a stable path leave the latest exact UTF-8 content and do not create extra files.
+- `MarkdownExportService_WhenWriterFails_PropagatesOriginalExceptionAfterRendering` verifies a persistence error is propagated unchanged after rendering, and confirms the writer received the rendered document and output directory.
+
+These tests target repeat-export correctness and error transparency. They were not executed in the authoring environment because the .NET SDK is unavailable; run `dotnet test` locally.
