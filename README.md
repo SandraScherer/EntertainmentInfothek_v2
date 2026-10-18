@@ -91,3 +91,7 @@ MoreTests45 adds filesystem path-boundary regression tests and checks the filena
 ### Renderer boundary regression tests
 
 `RendererBoundaryBehaviorTests` verifies heading-level clamping, omission of image blocks without a usable file name, and preservation of code content when no language is specified, for both supported renderers.
+
+### MoreTests47 — renderer text normalization and tables
+
+Adds regression tests for newline normalization across headings, paragraphs, list items, link labels, and code blocks; table-cell escaping for pipes and embedded line breaks; and preservation of table row order in both Obsidian and DokuWiki output. Run `dotnet test` locally to validate; the authoring environment does not have the .NET SDK installed.

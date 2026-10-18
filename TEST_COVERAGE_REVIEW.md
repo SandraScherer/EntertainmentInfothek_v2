@@ -444,3 +444,11 @@ Added `RendererBoundaryBehaviorTests` with eight test executions covering:
 - Code blocks with no language retain their code content in both output formats.
 
 These are regression tests for renderer behavior at model boundaries; they do not replace integration tests against actual Obsidian or DokuWiki parsers.
+
+## Additional renderer regression batch (MoreTests47)
+
+- `Renderer_NormalizesCrLfAndCrAcrossTextualBlocks`: checks CRLF and lone CR normalization in headings, paragraphs, list items, link labels, and code content for both Obsidian and DokuWiki.
+- `Renderer_EscapesPipesAndConvertsEmbeddedLineBreaksInTableCells`: checks pipe escaping and embedded line-break conversion in table headers and cells for both renderers.
+- `Renderer_KeepsTableRowsInInputOrder`: verifies that rendering preserves the source order of table rows for both output formats.
+
+These tests were added against the current renderer contracts but could not be compiled or executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
