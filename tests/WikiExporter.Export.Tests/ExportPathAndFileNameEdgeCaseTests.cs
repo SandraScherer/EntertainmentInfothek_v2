@@ -60,6 +60,17 @@ public sealed class ExportPathAndFileNameEdgeCaseTests
         Assert.DoesNotContain(':', actual);
     }
 
+    [Theory]
+    [InlineData(".")]
+    [InlineData("...")]
+    public void FileNameGenerator_UsesFallbackWhenSanitizedTypeContainsOnlyDots(string documentType)
+    {
+        var document = CreateDocument(documentType, "stable-id");
+        var hash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes("stable-id"))).ToLowerInvariant()[..8];
+
+        Assert.Equal($"Document-{hash}.md", new ExportFileNameGenerator().Generate(document));
+    }
+
     [Fact]
     public void PathResolver_UsesForwardSlashesInRelativePaths()
     {

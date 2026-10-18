@@ -21,6 +21,7 @@ public sealed class ExportFileNameGenerator : IExportFileNameGenerator
     {
         var invalid = new string(Path.GetInvalidFileNameChars()) + "#%&{}\\<>*?$!'\"@+`|=:/";
         var safe = Regex.Replace(value, $"[{Regex.Escape(invalid)}]", "_");
-        return string.IsNullOrWhiteSpace(safe) ? "Document" : safe.Trim('.');
+        var trimmed = safe.Trim('.');
+        return string.IsNullOrWhiteSpace(trimmed) ? "Document" : trimmed;
     }
 }

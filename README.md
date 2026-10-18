@@ -83,3 +83,7 @@ The latest test batch adds regression coverage for multiple family relationships
 ### MoreTests44 — repeated export writes and persistence failures
 
 Adds tests for overwriting stale Markdown output, repeated writes to the same path with UTF-8 content, and propagation of file-writer failures through `MarkdownExportService`. Run `dotnet test` from the solution directory to validate locally; the .NET SDK is unavailable in the authoring environment.
+
+### Latest test additions
+
+MoreTests45 adds filesystem path-boundary regression tests and checks the filename generator's fallback when a document type sanitizes to only dots. Run `dotnet test` locally; this editing environment does not have the .NET SDK installed.

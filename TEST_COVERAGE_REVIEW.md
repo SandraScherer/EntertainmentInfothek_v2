@@ -426,3 +426,10 @@ These tests specify preservation of distinct relationship records rather than ap
 - `MarkdownExportService_WhenWriterFails_PropagatesOriginalExceptionAfterRendering` verifies a persistence error is propagated unchanged after rendering, and confirms the writer received the rendered document and output directory.
 
 These tests target repeat-export correctness and error transparency. They were not executed in the authoring environment because the .NET SDK is unavailable; run `dotnet test` locally.
+
+## Additional test batch (2026-10-18, path boundaries and filename fallback)
+
+- `FileSystemExportFileWriterPathBoundaryTests` verifies that a traversal target cannot escape into a sibling directory whose name shares the output root's prefix, a trailing separator on the configured root is accepted, and a NUL character in the relative path is rejected before any file is created.
+- `FileNameGenerator_UsesFallbackWhenSanitizedTypeContainsOnlyDots` covers document types such as `.` and `...`. This exposed a fallback edge case after trimming dots; the generator now applies the `Document` fallback after trimming.
+
+The .NET SDK is unavailable in this editing environment, so these tests have not been executed here. Run `dotnet test` locally to validate the package.
