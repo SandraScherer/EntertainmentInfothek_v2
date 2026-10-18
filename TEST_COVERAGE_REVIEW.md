@@ -383,3 +383,12 @@ These are application-level builder tests and do not require a database or files
 - Award contributor tests verify localized award titles and contributor roles, retain person links when the role label is blank, and cover the `Movie_AwardID` foreign-key naming variant.
 
 The editing environment does not have the .NET SDK, so these tests were not executed here. Run `dotnet test` locally to validate the package.
+
+## MoreTests40 — relationship ordering and incomplete cast rows
+
+- `MovieBuilder_OrdersCastByExplicitOrderThenStableRowId` verifies cast rows sort by their explicit order and use row ID as a deterministic tie-breaker.
+- `MovieBuilder_OrdersCastByRowIdWhenOrderValuesAreEqualOrMissing` verifies stable ordering when order values are equal or absent.
+- `MovieBuilder_KeepsCharacterAndDubberReferencesWhenActorIsMissing` ensures other person relationships are not lost just because the actor reference is blank.
+- `MovieBuilder_DoesNotEmitCastSectionForRowsWithoutAnyUsableRelationshipOrRole` checks that an empty relationship row does not create an empty Cast section.
+
+These application-level regression tests do not require a database or filesystem. The .NET SDK is not available in the authoring environment; run `dotnet test` locally to compile and execute this batch.

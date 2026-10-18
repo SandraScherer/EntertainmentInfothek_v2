@@ -63,3 +63,7 @@ Run the complete suite with `dotnet test`. The test suite has not been run in th
 ### MoreTests38 — localized roles and person relationships
 
 This package adds application tests for language-dependent cast roles, family relationship labels, person references, and cause-of-death sections. Run `dotnet test` from the solution directory to validate the full suite.
+
+### MoreTests40
+
+Added regression tests for deterministic cast ordering (explicit order and stable ID tie-breaker), preservation of character/dubber links when an actor is missing, and omission of empty cast sections for rows with no usable relationship data. Run `dotnet test` to validate locally.
