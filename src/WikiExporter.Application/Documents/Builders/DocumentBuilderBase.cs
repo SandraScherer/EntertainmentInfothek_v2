@@ -79,7 +79,13 @@ public abstract class DocumentBuilderBase(ILocalizedValueSelector selector)
     protected void AddCast(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language, bool enabled = true)
     {
         if (!enabled) return;
-        var cast = rows.Where(r => r.Table.EndsWith("_Cast", StringComparison.Ordinal)).OrderBy(OrderKey).ThenBy(r => r.Id, StringComparer.Ordinal).ToArray();
+        var cast = rows.Where(r => r.Table.EndsWith("_Cast", StringComparison.Ordinal))
+            .Where(r => !string.IsNullOrWhiteSpace(Field(r, "ActorID"))
+                     || !string.IsNullOrWhiteSpace(Field(r, "CharacterID"))
+                     || !string.IsNullOrWhiteSpace(Field(r, "EnglishDubberID"))
+                     || !string.IsNullOrWhiteSpace(Field(r, "GermanDubberID"))
+                     || !string.IsNullOrWhiteSpace(LocalizedField(r, language, "EnglishRole", "GermanRole")))
+            .OrderBy(OrderKey).ThenBy(r => r.Id, StringComparer.Ordinal).ToArray();
         if (cast.Length == 0) return;
 
         blocks.Add(new HeadingBlock(2, "Cast"));
