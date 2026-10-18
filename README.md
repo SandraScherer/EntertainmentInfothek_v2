@@ -67,3 +67,7 @@ This package adds application tests for language-dependent cast roles, family re
 ### MoreTests40
 
 Added regression tests for deterministic cast ordering (explicit order and stable ID tie-breaker), preservation of character/dubber links when an actor is missing, and omission of empty cast sections for rows with no usable relationship data. Run `dotnet test` to validate locally.
+
+### Latest regression tests
+
+The `AwardAndRelationIsolationTests` application test class adds coverage for award-contributor scoping, deterministic award ordering, company-credit ordering, and person family-reference ordering. Run `dotnet test` to validate the complete solution.

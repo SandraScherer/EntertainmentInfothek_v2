@@ -392,3 +392,12 @@ The editing environment does not have the .NET SDK, so these tests were not exec
 - `MovieBuilder_DoesNotEmitCastSectionForRowsWithoutAnyUsableRelationshipOrRole` checks that an empty relationship row does not create an empty Cast section.
 
 These application-level regression tests do not require a database or filesystem. The .NET SDK is not available in the authoring environment; run `dotnet test` locally to compile and execute this batch.
+
+## Additional test batch (2026-10-18, relationship isolation and ordering)
+
+- `MovieBuilder_AssignsAwardContributorsOnlyToTheirOwningAward`: ensures contributors are scoped to their parent award and do not appear under another award.
+- `MovieBuilder_OrdersAwardsByOrderThenStableId`: verifies deterministic award ordering when explicit order values tie.
+- `MovieBuilder_OrdersCompanyCreditsByOrderThenStableId`: verifies company-credit ordering is deterministic across equal order values.
+- `PersonBuilder_OrdersFamilyReferencesByOrderThenStableId`: verifies family links follow explicit order and stable row ID tie-breaking.
+
+These tests have been added but could not be executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
