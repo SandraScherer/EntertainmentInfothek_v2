@@ -433,3 +433,14 @@ These tests target repeat-export correctness and error transparency. They were n
 - `FileNameGenerator_UsesFallbackWhenSanitizedTypeContainsOnlyDots` covers document types such as `.` and `...`. This exposed a fallback edge case after trimming dots; the generator now applies the `Document` fallback after trimming.
 
 The .NET SDK is unavailable in this editing environment, so these tests have not been executed here. Run `dotnet test` locally to validate the package.
+
+## MoreTests46 – Renderer boundary behavior
+
+Added `RendererBoundaryBehaviorTests` with eight test executions covering:
+
+- Obsidian heading levels below and above the supported Markdown range.
+- DokuWiki heading levels below and above the supported range.
+- Image blocks with null or whitespace-only file names are omitted by both renderers.
+- Code blocks with no language retain their code content in both output formats.
+
+These are regression tests for renderer behavior at model boundaries; they do not replace integration tests against actual Obsidian or DokuWiki parsers.

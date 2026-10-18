@@ -87,3 +87,7 @@ Adds tests for overwriting stale Markdown output, repeated writes to the same pa
 ### Latest test additions
 
 MoreTests45 adds filesystem path-boundary regression tests and checks the filename generator's fallback when a document type sanitizes to only dots. Run `dotnet test` locally; this editing environment does not have the .NET SDK installed.
+
+### Renderer boundary regression tests
+
+`RendererBoundaryBehaviorTests` verifies heading-level clamping, omission of image blocks without a usable file name, and preservation of code content when no language is specified, for both supported renderers.
