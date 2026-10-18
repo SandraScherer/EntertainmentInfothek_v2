@@ -71,3 +71,7 @@ Added regression tests for deterministic cast ordering (explicit order and stabl
 ### Latest regression tests
 
 The `AwardAndRelationIsolationTests` application test class adds coverage for award-contributor scoping, deterministic award ordering, company-credit ordering, and person family-reference ordering. Run `dotnet test` to validate the complete solution.
+
+### MoreTests42 — empty person relationship rows
+
+Adds ten parameterized regression cases across family, employer, position, profession, and species relationships. Empty/whitespace target IDs must not create empty relationship sections; when valid and blank rows coexist, only valid relationship references are emitted. The person relationship builder was adjusted to filter unusable target IDs before creating a section. Run `dotnet test` locally; the .NET SDK is not available in the authoring environment.

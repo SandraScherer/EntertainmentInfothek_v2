@@ -401,3 +401,11 @@ These application-level regression tests do not require a database or filesystem
 - `PersonBuilder_OrdersFamilyReferencesByOrderThenStableId`: verifies family links follow explicit order and stable row ID tie-breaking.
 
 These tests have been added but could not be executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
+
+## Additional tests in MoreTests42 — person relationship edge cases
+
+- Five cases verify that family, employer, position, profession, and species sections are omitted when every target ID is null or whitespace, even if a row contains role text.
+- Five cases verify that a valid reference remains while a blank-target relationship row is ignored, and that the corresponding section is present.
+- `PersonDocumentBuilder.AddRelationList` now filters rows with blank target IDs before deciding whether a section should be emitted, preventing empty relationship headings.
+
+Validation: not run in this authoring environment because the .NET SDK is unavailable. Run `dotnet test` locally.

@@ -38,12 +38,16 @@ public sealed class PersonDocumentBuilder(ILocalizedValueSelector s) : DocumentB
 /// <summary>Performs the add relation list operation.</summary>
     private void AddRelationList(List<MarkdownBlock> blocks, IReadOnlyList<ExportRowData> rows, ExportLanguage language, string heading, string table, string targetField, string? relationField)
     {
-        var selected = rows.Where(r => r.Table.Equals(table, StringComparison.Ordinal)).OrderBy(OrderKey).ThenBy(r => r.Id, StringComparer.Ordinal).ToArray();
+        var selected = rows
+            .Where(r => r.Table.Equals(table, StringComparison.Ordinal) && !string.IsNullOrWhiteSpace(Field(r, targetField)))
+            .OrderBy(OrderKey)
+            .ThenBy(r => r.Id, StringComparer.Ordinal)
+            .ToArray();
         if (selected.Length == 0) return;
         blocks.Add(new HeadingBlock(2, heading));
         foreach (var row in selected)
         {
-            var id = Field(row, targetField); if (string.IsNullOrWhiteSpace(id)) continue;
+            var id = Field(row, targetField);
             var targetTable = targetField[..^2];
             var targetType = targetTable switch { "Family" => "Person", "Employer" => "Employer", "Position" => "Position", "Profession" => "Profession", "Species" => "Species", _ => targetTable };
             blocks.Add(new LinkBlock(ReferenceName(rows, targetType, id, language), targetType, id));
