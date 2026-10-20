@@ -2972,4 +2972,24 @@ FROM Episode_Cast, Person
 WHERE Episode_Cast.ActorID = Person.ID;
 */
 
+CREATE VIEW "TitlesWithMostLinksList" AS
+SELECT Movie.ID, Movie.OriginalTitle, 
+COUNT(DISTINCT Movie_Cast.ID) AS CastLinks,
+COUNT(DISTINCT Movie_Crew.ID) AS CrewLinks,
+COUNT(DISTINCT Movie_Cast.ID) + COUNT(DISTINCT Movie_Crew.ID) AS TotalLinks
+FROM Movie
+LEFT JOIN Movie_Cast ON Movie_Cast.MovieID = Movie.ID
+LEFT JOIN Movie_Crew ON Movie_Crew.MovieID = Movie.ID
+GROUP BY Movie.ID, Movie.OriginalTitle
+UNION
+SELECT Series.ID, Series.OriginalTitle,
+COUNT(DISTINCT Series_Cast.ID) AS CastLinks,
+COUNT(DISTINCT Series_Crew.ID) AS CrewLinks,
+COUNT(DISTINCT Series_Cast.ID) + COUNT(DISTINCT Series_Crew.ID) AS TotalLinks
+FROM Series
+LEFT JOIN Series_Cast ON Series_Cast.SeriesID = Series.ID
+LEFT JOIN Series_Crew ON Series_Crew.SeriesID = Series.ID
+GROUP BY Series.ID, Series.OriginalTitle
+ORDER BY TotalLinks DESC, OriginalTitle;
+
 COMMIT;
