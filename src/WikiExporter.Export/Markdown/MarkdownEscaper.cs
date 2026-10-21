@@ -5,7 +5,7 @@ internal static class MarkdownEscaper
 {
 /// <summary>Performs the text operation.</summary>
     public static string NormalizeLineEndings(string? value) =>
-        value?.Replace("\\r\\n", "\\n", StringComparison.Ordinal).Replace('\\r', '\\n') ?? string.Empty;
+        value?.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n') ?? string.Empty;
 
 /// <summary>Normalizes line endings in text.</summary>
     public static string Text(string? value) => NormalizeLineEndings(value);
