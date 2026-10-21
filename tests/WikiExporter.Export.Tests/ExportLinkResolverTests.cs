@@ -92,6 +92,34 @@ public sealed class ExportLinkResolverTests
         Assert.DoesNotContain("/", emptyIdLink);
     }
 
+
+    [Fact]
+    public void LinkFormats_ResolveSameTargetToDifferentDialects()
+    {
+        var resolver = CreateResolver();
+        var source = Source("Movie");
+
+        var obsidian = resolver.Resolve(source, "Person", "person-42", ExportFormat.Obsidian);
+        var dokuWiki = resolver.Resolve(source, "Person", "person-42", ExportFormat.DokuWiki);
+
+        Assert.StartsWith("../Persons/", obsidian);
+        Assert.StartsWith("Persons:", dokuWiki);
+        Assert.DoesNotContain(":", obsidian);
+        Assert.DoesNotContain("/", dokuWiki);
+        Assert.DoesNotContain(".md", obsidian, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain(".md", dokuWiki, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void ObsidianLink_FromUnknownSourceFolderUsesOtherAsSourceNamespace()
+    {
+        var resolver = CreateResolver();
+
+        var link = resolver.Resolve(Source("FutureType"), "Movie", "movie-target", ExportFormat.Obsidian);
+
+        Assert.StartsWith("../Movies/", link);
+    }
+
     private static ExportLinkResolver CreateResolver() =>
         new(new ExportPathResolver(new ExportFileNameGenerator()));
 

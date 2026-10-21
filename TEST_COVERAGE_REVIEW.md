@@ -452,3 +452,13 @@ These are regression tests for renderer behavior at model boundaries; they do no
 - `Renderer_KeepsTableRowsInInputOrder`: verifies that rendering preserves the source order of table rows for both output formats.
 
 These tests were added against the current renderer contracts but could not be compiled or executed in this environment because the .NET SDK is unavailable. Run `dotnet test` locally to validate the package.
+
+## Additional regression tests (2026-10-21)
+
+- **Renderer line endings and boundaries**: CRLF, CR-only, and LF text input all render as LF; rendered content has exactly one final newline and no carriage returns or literal `\\n` suffix.
+- **Empty renderer output**: empty Obsidian documents retain only YAML frontmatter; empty DokuWiki documents remain empty apart from the required final newline.
+- **Metadata determinism**: Obsidian metadata is sorted by key while body-block order remains unchanged.
+- **File-name edge cases**: empty, path-like, and Unicode entity IDs still produce safe `.md` filenames.
+- **Link format isolation**: the same target resolves to Obsidian relative-link syntax and DokuWiki namespace syntax; unknown source types use the `Other` source namespace.
+
+Validation note: the execution environment does not provide the .NET SDK, so the expanded test suite could not be run here. Run `dotnet test .\\WikiExporter.sln --configuration Release` locally before merging.
