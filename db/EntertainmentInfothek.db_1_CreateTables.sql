@@ -2992,4 +2992,24 @@ LEFT JOIN Series_Crew ON Series_Crew.SeriesID = Series.ID
 GROUP BY Series.ID, Series.OriginalTitle
 ORDER BY TotalLinks DESC, OriginalTitle;
 
+CREATE VIEW "PersonsWithMostLinksList" AS
+SELECT Person.ID, Person.FirstName, Person.LastName, 
+COUNT(DISTINCT Movie_Cast.ActorID) AS MovieCastLinks,
+COUNT(DISTINCT Movie_Crew.PersonID) AS MovieCrewLinks,
+COUNT(DISTINCT Series_Cast.ActorID) AS SeriesCastLinks,
+COUNT(DISTINCT Series_Crew.PersonID) AS SeriesCrewLinks,
+(
+COUNT(DISTINCT Movie_Cast.ActorID) +
+COUNT(DISTINCT Movie_Crew.PersonID) +
+COUNT(DISTINCT Series_Cast.ActorID) +
+COUNT(DISTINCT Series_Crew.PersonID)
+) AS TotalLinks
+FROM Person
+LEFT JOIN Movie_Cast ON Movie_Cast.ActorID = Person.ID
+LEFT JOIN Movie_Crew ON Movie_Crew.PersonID = Person.ID
+LEFT JOIN Series_Cast ON Series_Cast.ActorID = Person.ID
+LEFT JOIN Series_Crew ON Series_Crew.PersonID = Person.ID
+GROUP BY Person.ID
+ORDER BY TotalLinks DESC, Person.ID;
+
 COMMIT;
