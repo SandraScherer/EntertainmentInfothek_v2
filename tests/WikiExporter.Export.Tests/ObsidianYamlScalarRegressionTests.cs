@@ -55,7 +55,7 @@ public sealed class ObsidianYamlScalarRegressionTests
         foreach (var document in new[] { empty, populated })
         {
             var content = renderer.Render(document).Content;
-            Assert.EndsWith(Environment.NewLine, content);
+            Assert.EndsWith("\n", content);
             Assert.False(content.EndsWith(Environment.NewLine + Environment.NewLine, StringComparison.Ordinal));
         }
     }

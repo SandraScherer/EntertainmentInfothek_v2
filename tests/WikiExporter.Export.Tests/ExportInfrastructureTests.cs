@@ -276,7 +276,7 @@ public sealed class ExportInfrastructureTests
 
         Assert.StartsWith("Movies/", rendered.RelativePath);
         Assert.EndsWith(".md", rendered.RelativePath);
-        Assert.EndsWith(Environment.NewLine, rendered.Content);
+        Assert.EndsWith("\n", rendered.Content);
         Assert.DoesNotContain("empty-movie", rendered.Content);
     }
 

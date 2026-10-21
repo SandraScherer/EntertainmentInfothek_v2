@@ -28,7 +28,7 @@ public sealed class DokuWikiRenderer(IExportPathResolver paths, IExportLinkResol
                 case HorizontalRuleBlock: sb.AppendLine("----"); sb.AppendLine(); break;
             }
         }
-        return new(paths.GetRelativePath(document, Format), MarkdownEscaper.NormalizeLineEndings(sb.ToString().TrimEnd()) + "\\n");
+        return new(paths.GetRelativePath(document, Format), MarkdownEscaper.NormalizeLineEndings(sb.ToString().TrimEnd()) + "\n");
     }
 
 /// <summary>Performs the render table operation.</summary>
